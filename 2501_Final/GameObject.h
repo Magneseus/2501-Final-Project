@@ -5,7 +5,10 @@
 	(Renderable, Updateable, etc.)
 	 - GameObject
 	 |-> Updateable
+	 |-> Collideable
 	 |-> Drawable
+	 |
+	 | |-> Entity (All three)
 */
 
 #include <SFML\Graphics\Drawable.hpp>
@@ -39,7 +42,7 @@ class Updateable : public GameObject
 {
 public:
 	virtual ~Updateable();
-	virtual void update(const sf::Time&);
+	virtual void update(const sf::Time&) = 0;
 };
 
 /*                      DRAWABLE
@@ -50,5 +53,28 @@ class Drawable : public GameObject, public sf::Drawable
 public:
 	virtual ~Drawable();
 private:
-	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
+	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const = 0;
+};
+
+/*						COLLIDEABLE
+	All objects of this type must contain a Collider.
+	Also must implement a collide(Collideable& other) function.
+
+	TODO: Make a Collider
+*/
+class Collideable : public GameObject
+{
+public:
+	virtual ~Collideable();
+	virtual bool collide(const Collideable& other) = 0;
+};
+
+/*						ENTITY
+	This object will comprise the majority of in-game objects.
+	It will have all three of the above components.
+*/
+class Entity : public Drawable, public Updateable, public Collideable
+{
+public:
+	virtual ~Entity();
 };
