@@ -22,7 +22,8 @@ void Model::update(const sf::Time& delta)
 		}
 		else
 		{
-			(*it)->update(delta);
+			if (*it != NULL)
+				(*it)->update(delta);
 			++it;
 		}
 

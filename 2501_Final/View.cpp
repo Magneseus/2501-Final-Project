@@ -27,7 +27,8 @@ void View::render()
 		}
 		else
 		{
-			window.draw(**it);
+			if (*it != NULL)
+				window.draw(**it);
 			++it;
 		}
 

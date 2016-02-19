@@ -12,6 +12,8 @@ public:
 	~Controller();
 	
 	void input();
+
+	const enum GSTATES{} GSTATE;
 	
 private:
 	Model* model;
