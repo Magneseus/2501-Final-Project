@@ -6,7 +6,7 @@ View::View(Model* m)
 	WINDOW_HEIGHT(480),
 	window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Space Pirates...?")
 {
-	
+	window.setFramerateLimit(60);
 }
 
 View::~View()

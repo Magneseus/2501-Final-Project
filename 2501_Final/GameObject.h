@@ -31,7 +31,7 @@ public:
 	bool removeFunc() { return should_remove; }
 	void deleteObject() { should_remove = true; }
 
-private:
+protected:
 	bool should_remove = false;
 };
 
@@ -52,7 +52,7 @@ class Drawable : public GameObject, public sf::Drawable
 {
 public:
 	virtual ~Drawable();
-private:
+protected:
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const = 0;
 };
 
