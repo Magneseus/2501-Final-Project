@@ -18,6 +18,15 @@ void View::render()
 {
 	window.clear();
 
+	// Sprite sheet testing
+
+	SpriteSheet ss("img/spritesheet_characters.png");
+
+	sf::Sprite test;
+	test.setTexture(*ss.getTex("character_black_blue.png"));
+
+	window.draw(test);
+
 	for (auto it = drawables.begin(); it != drawables.end(); )
 	{
 		// Check if it needs to be removed

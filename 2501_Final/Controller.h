@@ -13,7 +13,7 @@ public:
 	
 	void input();
 
-	const enum GSTATES{} GSTATE;
+	const enum GSTATES{MENU, GAME, SIZE} GSTATE;
 	
 private:
 	Model* model;

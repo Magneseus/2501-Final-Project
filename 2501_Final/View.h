@@ -2,6 +2,8 @@
 
 #include "Model.h"
 #include "GameObject.h"
+#include "SpriteSheet.h"
+
 #include <SFML\Window.hpp>
 #include <SFML\Graphics.hpp>
 

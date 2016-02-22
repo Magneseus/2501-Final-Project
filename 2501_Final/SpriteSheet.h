@@ -30,5 +30,5 @@ private:
 
 	sf::String sheetName;
 	sf::Image* sheetImage;
-	std::unordered_map<sf::String, texStruct> texMap;
+	std::unordered_map<std::string, texStruct> texMap;
 };

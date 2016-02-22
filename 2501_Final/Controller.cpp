@@ -2,7 +2,8 @@
 
 Controller::Controller(Model* m, View* v)
 	: model(m),
-	view(v)
+	view(v),
+	GSTATE(GSTATES::GAME)
 {
 	
 }

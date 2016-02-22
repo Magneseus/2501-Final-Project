@@ -30,8 +30,26 @@ SpriteSheet::~SpriteSheet()
 }
 
 
+/*
+	Returns a pointer to a texture loaded from the spritesheet.
+
+	If the texture doesn't exist, but the key is there then the
+	texture will be loaded in and returned.
+
+	If the texture doesn't exist and there is no key then NULL
+	will be returned.
+
+	Parameters:
+		- texName : Key to search for (texture file name).
+	Return:
+		- pointer to texture, or NULL if key is invalid
+*/
 sf::Texture* SpriteSheet::getTex(const sf::String& texName)
 {
+	// Check to see if the key exists
+	if (texMap.count(texName) <= 0)
+		return NULL;
+
 	texStruct& val = texMap[texName];
 
 	// Check if the texture doesn't exist
@@ -53,9 +71,12 @@ sf::Texture* SpriteSheet::getTex(const sf::String& texName)
 bool SpriteSheet::loadFile(const sf::String& fileName)
 {
 	// Try to load and mask the image
-	if (!sheetImage->loadFromFile(fileName))
+
+	sheetImage = new sf::Image();
+	if ( !(sheetImage->loadFromFile(fileName)) )
 	{
 		sf::err() << "Failed to load spritesheet file: " << fileName.toAnsiString() << std::endl;
+		delete sheetImage;
 		sheetImage = NULL;
 
 		return false;
@@ -67,7 +88,7 @@ bool SpriteSheet::loadFile(const sf::String& fileName)
 
 	// Get the XML name
 	sf::String sheetNameXML = sheetName;
-	sheetNameXML.substring(0, sheetNameXML.getSize() - 3);
+	sheetNameXML = sheetNameXML.substring(0, sheetNameXML.getSize() - 4);
 	sheetNameXML += ".xml";
 
 	// Now parse the spritesheet's XML file for the tex coordinates
@@ -104,6 +125,8 @@ bool SpriteSheet::loadFile(const sf::String& fileName)
 
 		texMap[key] = newTexStruct;
 	}
+
+	ssDoc.close();
 
 	return true;
 }
