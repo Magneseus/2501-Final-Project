@@ -14,6 +14,7 @@
 #include <SFML\Graphics\Drawable.hpp>
 #include <SFML\Graphics\Transformable.hpp>
 #include <SFML\System\Time.hpp>
+#include <SFML\System\String.hpp>
 #include <vector>
 #include <algorithm>
 
@@ -66,7 +67,13 @@ class Collideable : public GameObject
 {
 public:
 	virtual ~Collideable();
-	virtual bool collide(const Collideable& other) = 0;
+	virtual void onCollide(const Collideable& other) = 0;
+
+	const sf::String getTag() const { return tag; }
+	void setTag(sf::String& newTag) { tag = newTag; }
+
+protected:
+	sf::String tag;
 };
 
 /*						ENTITY
