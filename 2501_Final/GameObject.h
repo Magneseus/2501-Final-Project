@@ -26,7 +26,7 @@
 class GameObject : public sf::Transformable
 {
 public:
-	virtual ~GameObject();
+	virtual ~GameObject() {};
 	
 	//  Functions for erase()
 	bool removeFunc() { return should_remove; }
@@ -42,7 +42,7 @@ protected:
 class Updateable : public GameObject
 {
 public:
-	virtual ~Updateable();
+	virtual ~Updateable() {};
 	virtual void update(const sf::Time&) = 0;
 };
 
@@ -52,7 +52,7 @@ public:
 class Drawable : public GameObject, public sf::Drawable
 {
 public:
-	virtual ~Drawable();
+	virtual ~Drawable() {};
 protected:
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const = 0;
 };
@@ -66,7 +66,7 @@ protected:
 class Collideable : public GameObject
 {
 public:
-	virtual ~Collideable();
+	virtual ~Collideable() {};
 	virtual void onCollide(const Collideable& other) = 0;
 
 	const sf::String getTag() const { return tag; }
@@ -83,5 +83,5 @@ protected:
 class Entity : public Drawable, public Updateable, public Collideable
 {
 public:
-	virtual ~Entity();
+	virtual ~Entity() {};
 };

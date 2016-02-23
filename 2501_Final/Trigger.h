@@ -9,8 +9,12 @@
 */
 
 class Trigger : public Collideable {
+public:
 	Trigger(void (*)());
+	~Trigger();
 
-	void (*react)();
-	void onCollide(const Collideable& other);
+	virtual void onCollide(const Collideable& other);
+
+private:
+	void(*react)();
 };
