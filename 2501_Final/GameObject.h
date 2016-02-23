@@ -5,7 +5,7 @@
 	(Renderable, Updateable, etc.)
 	 - GameObject
 	 |-> Updateable
-	 |-> Collideable
+	 |-> Collidable
 	 |-> Drawable
 	 |
 	 | |-> Entity (All three)
@@ -63,11 +63,11 @@ protected:
 
 	TODO: Make a Collider
 */
-class Collideable : public GameObject
+class Collidable : public GameObject
 {
 public:
-	virtual ~Collideable() {};
-	virtual void onCollide(const Collideable& other) = 0;
+	virtual ~Collidable() {};
+	virtual void onCollide(const Collidable& other) = 0;
 
 	const sf::String getTag() const { return tag; }
 	void setTag(sf::String& newTag) { tag = newTag; }
@@ -80,7 +80,7 @@ protected:
 	This object will comprise the majority of in-game objects.
 	It will have all three of the above components.
 */
-class Entity : public Drawable, public Updateable, public Collideable
+class Entity : public Drawable, public Updateable, public Collidable
 {
 public:
 	virtual ~Entity() {};

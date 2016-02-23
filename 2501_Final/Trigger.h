@@ -8,12 +8,12 @@
 	- react is a function, called when the trigger is collided with
 */
 
-class Trigger : public Collideable {
+class Trigger : public Collidable {
 public:
 	Trigger(void (*)());
 	~Trigger();
 
-	virtual void onCollide(const Collideable& other);
+	virtual void onCollide(const Collidable& other);
 
 private:
 	void(*react)();

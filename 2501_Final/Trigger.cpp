@@ -9,6 +9,6 @@ Trigger::~Trigger() {
 
 }
 
-void Trigger::onCollide(const Collideable& other) {
+void Trigger::onCollide(const Collidable& other) {
 	react();
 }
