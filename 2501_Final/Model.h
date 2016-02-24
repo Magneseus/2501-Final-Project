@@ -1,6 +1,7 @@
 #pragma once
 
 #include "GameObject.h"
+#include "Player.h"
 #include <SFML\System.hpp>
 
 class Model
@@ -10,10 +11,13 @@ public:
 	~Model();
 	
 	void update(const sf::Time&);
-	void addUpdateable(Updateable*);
-	bool delUpdateable(Updateable*);
+	void addUpdatable(Updatable*);
+	bool delUpdatable(Updatable*);
+	void addCollidable(Collidable*);
+	bool delCollidable(Collidable*);
 	
 private:
-	std::vector<Updateable*> updateables;
+	std::vector<Updatable*> updatables;
+	std::vector<Collidable*> collidables;
 	
 };
