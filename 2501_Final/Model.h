@@ -1,7 +1,6 @@
 #pragma once
 
 #include "GameObject.h"
-#include "Player.h"
 #include <SFML\System.hpp>
 
 class Model

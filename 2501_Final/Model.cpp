@@ -2,11 +2,7 @@
 
 Model::Model()
 {
-	Player p;
 
-	std::cout << std::endl << p.isUpdatable()
-		<< " " << p.isDrawable()
-		<< " " << p.isCollidable();
 }
 
 Model::~Model()
