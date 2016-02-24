@@ -3,7 +3,7 @@
 
 Player::Player()
 {
-	std::cout << GameObject::gameObjectType;
+
 }
 
 Player::~Player()

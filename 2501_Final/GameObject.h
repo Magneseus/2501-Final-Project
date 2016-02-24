@@ -43,7 +43,7 @@ protected:
 	int gameObjectType = 0;
 };
 
-/*                    	UPDATEABLE
+/*                    	UPDATABLE
 	All objects of this type must implement an update(sf::Time) method.
 */
 class Updatable : public virtual GameObject
@@ -67,9 +67,9 @@ protected:
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const = 0;
 };
 
-/*						COLLIDEABLE
+/*						COLLIDABLE
 	All objects of this type must contain a Collider.
-	Also must implement a collide(Collideable& other) function.
+	Also must implement a collide(Collidable& other) function.
 
 	TODO: Make a Collider
 */
