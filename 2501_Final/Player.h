@@ -1,6 +1,7 @@
 #pragma once
 
 #include "GameObject.h"
+#include "SpriteSheet.h"
 
 #include <SFML\System.hpp>
 #include <SFML\Graphics.hpp>

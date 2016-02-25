@@ -16,7 +16,10 @@ void Model::update(const sf::Time& delta)
 	for (auto it = collidables.begin(); it != collidables.end(); )
 	{
 		if ((*it)->removeFunc())
+		{
+			(*it)->andType(0b110);
 			it = collidables.erase(it);
+		}
 		else
 			++it;
 	}
@@ -42,6 +45,7 @@ void Model::update(const sf::Time& delta)
 		// Check if it needs to be removed
 		if ((*it)->removeFunc())
 		{
+			(*it)->andType(0b011);
 			it = updatables.erase(it);
 		}
 		else
@@ -65,6 +69,9 @@ This function simply adds a Updatable object to the list to be rendered.
 */
 void Model::addUpdatable(Updatable* u)
 {
+	// If we have a null pointer, don't add it to the list
+	if (!u) return;
+
 	updatables.push_back(u);
 }
 
@@ -82,12 +89,18 @@ bool Model::delUpdatable(Updatable* u)
 	{
 		// Object was found
 		if (*it == u)
+		{
 			contains = true;
+			break;
+		}
 	}
 
 	// If we have a pointer to the object stored, "delete" it
 	if (contains)
+	{
 		u->deleteObject();
+		u->andType(0b011);
+	}
 
 	// Tell them if we had an object stored and flagged it
 	return contains;
@@ -98,6 +111,9 @@ This function simply adds a Collidable object to the list to be rendered.
 */
 void Model::addCollidable(Collidable* u)
 {
+	// If we have a null pointer, don't add it to the list
+	if (!u) return;
+
 	collidables.push_back(u);
 }
 
@@ -115,12 +131,18 @@ bool Model::delCollidable(Collidable* u)
 	{
 		// Object was found
 		if (*it == u)
+		{
 			contains = true;
+			break;
+		}
 	}
 
 	// If we have a pointer to the object stored, "delete" it
 	if (contains)
+	{
 		u->deleteObject();
+		u->andType(0b110);
+	}
 
 	// Tell them if we had an object stored and flagged it
 	return contains;

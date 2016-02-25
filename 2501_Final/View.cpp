@@ -23,6 +23,7 @@ void View::render()
 		// Check if it needs to be removed
 		if ((*it)->removeFunc())
 		{
+			(*it)->andType(0b101);
 			it = drawables.erase(it);
 		}
 		else
@@ -42,6 +43,9 @@ void View::render()
 */
 void View::addDrawable(Drawable* d)
 {
+	// If we have a null pointer, don't add it to the list
+	if (!d) return;
+
 	drawables.push_back(d);
 }
 
@@ -59,12 +63,18 @@ bool View::delDrawable(Drawable* d)
 	{
 		// Object was found
 		if (*it == d)
+		{
 			contains = true;
+			break;
+		}
 	}
 
 	// If we have a pointer to the object stored, "delete" it
 	if (contains)
+	{
 		d->deleteObject();
+		d->andType(0b101);
+	}
 
 	// Tell them if we had an object stored and flagged it
 	return contains;

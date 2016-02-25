@@ -37,6 +37,10 @@ public:
 	bool isUpdatable()  { return (gameObjectType & 0b001) == 1; }
 	bool isDrawable()   { return (gameObjectType & 0b010) >> 1 == 1; }
 	bool isCollidable() { return (gameObjectType & 0b100) >> 2 == 1; }
+	bool isNone()       { return gameObjectType == 0; }
+
+	// Functions for manipulating type
+	void andType(int x) { gameObjectType &= x; }
 
 protected:
 	bool should_remove = false;
