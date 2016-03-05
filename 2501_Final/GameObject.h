@@ -19,6 +19,7 @@
 #include <algorithm>
 #include <iostream>
 
+#include "Vector.h"
 
 
 /*                   	GAME OBJECT

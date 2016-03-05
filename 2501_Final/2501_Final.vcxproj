@@ -141,6 +141,7 @@
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Model.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="Shape.h" />
     <ClInclude Include="SpriteSheet.h" />
     <ClInclude Include="Trigger.h" />
     <ClInclude Include="Vector.h" />
