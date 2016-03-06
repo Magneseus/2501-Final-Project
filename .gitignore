@@ -287,3 +287,4 @@ $RECYCLE.BIN/
 *.vcxproj
 2501_Final/2501_Final.vcxproj.filters
 *.filters
+*.opendb
