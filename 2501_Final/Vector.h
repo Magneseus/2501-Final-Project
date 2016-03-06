@@ -9,6 +9,13 @@ namespace vec
 	{
 	public:
 		Vector2();
+
+		// Amgle Ctr
+		Vector2(int);
+		Vector2(float);
+		Vector2(double);
+
+		// X & Y Co-ord Ctrs
 		Vector2(int, int);
 		Vector2(float, float);
 		Vector2(double, double);
@@ -34,6 +41,7 @@ namespace vec
 		double dot(const Vector2&) const;
 		double cross(const Vector2&) const;
 		double dist(const Vector2&) const;
+		double angleBetween(const Vector2&) const;
 
 	private:
 		void _mag();
@@ -53,6 +61,7 @@ namespace vec
 	double dot(const Vector2&, const Vector2&);
 	double cross(const Vector2&, const Vector2&);
 	double dist(const Vector2&, const Vector2&);
+	double angleBetween(const Vector2&, const Vector2&);
 }
 
 // OTHER OPERATIONS

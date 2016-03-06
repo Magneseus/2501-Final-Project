@@ -9,6 +9,29 @@ namespace vec
 		_mag();
 	}
 
+	// ANGLE CONSTRUCTOR (Radians)
+	Vector2::Vector2(int angle)
+		: x(std::cos(angle)),
+		y(std::sin(angle))
+	{
+		_mag();
+	}
+
+	Vector2::Vector2(float angle)
+		: x(std::cos(angle)),
+		y(std::sin(angle))
+	{
+		_mag();
+	}
+
+	Vector2::Vector2(double angle)
+		: x(std::cos(angle)),
+		y(std::sin(angle))
+	{
+		_mag();
+	}
+
+	// X&Y CONSTRUCTORS
 	Vector2::Vector2(int _x, int _y)
 		: x(_x),
 		y(_y)
@@ -148,6 +171,14 @@ namespace vec
 		return std::sqrt((dx * dx) + (dy* dy));
 	}
 
+	double Vector2::angleBetween(const Vector2& r) const
+	{
+		return ( dot(r) / (getMag() * r.getMag()) );
+	}
+
+
+
+	// PRIVATE FUNCTIONS
 	void Vector2::_mag()
 	{
 		mag = std::sqrt((x * x) + (y * y));
@@ -209,6 +240,12 @@ namespace vec
 	{
 		return (l - r).getMag();
 	}
+
+	double angleBetween(const Vector2& l, const Vector2& r)
+	{
+		return (dot(l, r) / (l.getMag() * r.getMag()));
+	}
+
 
 }
 
