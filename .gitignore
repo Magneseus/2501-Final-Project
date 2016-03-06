@@ -283,3 +283,7 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+2501_Final/2501_Final.vcxproj
+*.vcxproj
+2501_Final/2501_Final.vcxproj.filters
+*.filters
