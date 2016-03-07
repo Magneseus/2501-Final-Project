@@ -24,21 +24,6 @@ void Model::update(const sf::Time& delta)
 			++it;
 	}
 
-	// Collide all objects
-	for (auto colA = collidables.begin(); colA != collidables.end(); ++colA)
-	{
-		// Otherwise, collide with all other objects
-		for (auto colB = colA; colB != collidables.end(); ++colB)
-		{
-			// If they are determined to be colliding, call the callback function for both
-			if (Collidable::collide(**colA, **colB))
-			{
-				(*colA)->onCollide(**colB);
-				(*colB)->onCollide(**colA);
-			}
-		}
-	}
-
 	// Update all the updateables
 	for (auto it = updatables.begin(); it != updatables.end(); )
 	{
@@ -55,6 +40,21 @@ void Model::update(const sf::Time& delta)
 			++it;
 		}
 
+	}
+
+	// Collide all objects
+	for (auto colA = collidables.begin(); colA != collidables.end(); ++colA)
+	{
+		// Otherwise, collide with all other objects
+		for (auto colB = colA + 1; colB != collidables.end(); ++colB)
+		{
+			// If they are determined to be colliding, call the callback function for both
+			if (Collidable::collide(**colA, **colB))
+			{
+				(*colA)->onCollide(**colB);
+				(*colB)->onCollide(**colA);
+			}
+		}
 	}
 }
 

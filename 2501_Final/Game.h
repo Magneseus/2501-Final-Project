@@ -20,4 +20,7 @@ private:
 	Controller* controller;
 
 	sf::Clock clock;
+	sf::Clock renderClock;
+	sf::Time timePerFrame;
+	const float frameRate = 60.0f;
 };

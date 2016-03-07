@@ -176,6 +176,17 @@ namespace vec
 		return ( dot(r) / (getMag() * r.getMag()) );
 	}
 
+	Vector2& Vector2::rotate(const double angle)
+	{
+		double _x = x * std::cos(angle) - y * std::sin(angle);
+		double _y = x * std::sin(angle) + y * std::cos(angle);
+
+		x = _x;
+		y = _y;
+
+		return *this;
+	}
+
 
 
 	// PRIVATE FUNCTIONS
@@ -244,6 +255,14 @@ namespace vec
 	double angleBetween(const Vector2& l, const Vector2& r)
 	{
 		return (dot(l, r) / (l.getMag() * r.getMag()));
+	}
+
+	Vector2 rotate(const Vector2& vec, const double angle)
+	{
+		vec::Vector2 newVec = vec;
+		newVec.rotate(angle);
+
+		return newVec;
 	}
 
 

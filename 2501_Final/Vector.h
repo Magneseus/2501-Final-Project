@@ -2,6 +2,7 @@
 
 #include <iostream>
 #include <string>
+#include <SFML\System\Vector2.hpp>
 
 namespace vec
 {
@@ -42,6 +43,7 @@ namespace vec
 		double cross(const Vector2&) const;
 		double dist(const Vector2&) const;
 		double angleBetween(const Vector2&) const;
+		Vector2& rotate(const double);
 
 	private:
 		void _mag();
@@ -62,6 +64,7 @@ namespace vec
 	double cross(const Vector2&, const Vector2&);
 	double dist(const Vector2&, const Vector2&);
 	double angleBetween(const Vector2&, const Vector2&);
+	Vector2 rotate(const Vector2&, const double);
 }
 
 // OTHER OPERATIONS
