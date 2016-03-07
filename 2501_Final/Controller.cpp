@@ -5,7 +5,10 @@ Controller::Controller(Model* m, View* v)
 	view(v),
 	GSTATE(GSTATES::GAME)
 {
+	addObject(&p);
+	addObject(&p1);
 
+	p1.setMCoords(sf::Vector2i(400, 400));
 }
 
 Controller::~Controller()
@@ -32,7 +35,8 @@ void Controller::input()
 	}
 
 	// REAL-TIME INPUT
-
+	p.setMCoords(sf::Mouse::getPosition(view->window));
+	p1.rot(0.0000000001f);
 }
 
 void Controller::gameController()

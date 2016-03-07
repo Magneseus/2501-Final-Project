@@ -1,5 +1,7 @@
 #pragma once
 
+#define PI 3.141592653589793
+
 #include <iostream>
 #include <string>
 #include <SFML\System\Vector2.hpp>
