@@ -1,10 +1,11 @@
 
 #include "AnimatedSprite.h"
+#include <iostream>
 
 AnimatedSprite::AnimatedSprite() {
 	elapsedTime = 0;
 	frameIndex = 0;
-	timer.restart();
+	std::cout << timer.restart().asSeconds() << std::endl;
 }
 
 AnimatedSprite::~AnimatedSprite() {}
@@ -17,11 +18,13 @@ bool AnimatedSprite::create(std::vector<sf::Texture*> inFrames, int inFrameRate)
 }
 
 void AnimatedSprite::update() {
+
 	elapsedTime += timer.restart().asSeconds();	// add passed time
 
-	float timePerFrame = 1 / frameRate;	// inverse of fps - seconds per frame
+	float timePerFrame = 1.0 / frameRate;	// inverse of fps - seconds per frame
 
-	int numFrames = elapsedTime / timePerFrame;		// number of frames that should pass
+
+	int numFrames = elapsedTime / timePerFrame;		// number of frames that should 
 
 	// if we should pass more frames than we're allowed, don't
 	if (numFrames > maxFrameSkip) numFrames = maxFrameSkip;
@@ -34,4 +37,3 @@ void AnimatedSprite::update() {
 const sf::Texture* AnimatedSprite::getTexture() {
 	return frames[frameIndex];
 }
-
