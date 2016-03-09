@@ -71,3 +71,6 @@ namespace vec
 
 // OTHER OPERATIONS
 std::ostream& operator<<(std::ostream&, const vec::Vector2&);
+
+double toRadians(double);
+double toDegrees(double);

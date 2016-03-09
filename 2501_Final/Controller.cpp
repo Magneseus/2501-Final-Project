@@ -36,7 +36,6 @@ void Controller::input()
 
 	// REAL-TIME INPUT
 	p.setMCoords(sf::Mouse::getPosition(view->window));
-	p1.rot(0.0000000001f);
 }
 
 void Controller::gameController()

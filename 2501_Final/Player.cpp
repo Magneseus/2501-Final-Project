@@ -4,10 +4,10 @@
 Player::Player()
 {
 	Rect* r = new Rect(
-		vec::Vector2(-20, -20), 
-		vec::Vector2(20, 0),
+		vec::Vector2(0, 0), 
 		vec::Vector2(40, 20),
-		vec::Vector2(-40, 40));
+		vec::Vector2(60, 40),
+		vec::Vector2(-20, 60));
 	col.addShape(r);
 
 	Circ* c = new Circ(vec::Vector2(50, 0), 20);
@@ -31,6 +31,8 @@ void Player::update(const sf::Time& delta)
 	col.moveTo(newPosH);
 
 	time = delta;
+
+	col.rotate(0.1f * delta.asSeconds());
 }
 
 void Player::onCollide(const Collidable& other)

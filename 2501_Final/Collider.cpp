@@ -92,7 +92,7 @@ void Collider::move(const vec::Vector2& _vec)
 {
 	for (auto it = hitbox.begin(); it != hitbox.end(); ++it)
 	{
-		(*it)->setPos(_vec);
+		(*it)->move(_vec);
 	}
 	position += _vec;
 }
@@ -117,13 +117,20 @@ void Collider::moveTo(const vec::Vector2& _vec)
 */
 void Collider::rotate(float _ang)
 {
+	// Bind angle to within 0-2PI bounds
+	angle += _ang;
+	if (angle > 2.0 * PI)
+		angle = std::fmod(angle, (2.0 * PI));
+	else if (angle < 0.0)
+		angle = std::fmod(std::abs(angle), (2.0 * PI));
+
 	for (auto it = hitbox.begin(); it != hitbox.end(); ++it)
 	{
 		// Check for RECT shapes
 		if ((*it)->getTypeEnum() == RECT)
 		{
 			Rect* r = dynamic_cast<Rect*>((*it));
-			r->rotate(_ang);
+			r->rotateTo(angle);
 		}
 
 		//Get center of each shape
@@ -139,13 +146,6 @@ void Collider::rotate(float _ang)
 		//Re-set the position
 		(*it)->setPos(tpos);
 	}
-
-	// Bind angle to within 0-2PI bounds
-	angle += _ang;
-	if (angle > 2.0 * PI)
-		angle = std::fmod(angle, (2.0 * PI));
-	else if (angle < 0.0)
-		angle = std::fmod(std::abs(angle), (2.0 * PI));
 }
 
 /*

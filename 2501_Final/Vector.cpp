@@ -273,3 +273,13 @@ std::ostream& operator<<(std::ostream& out, const vec::Vector2& vec)
 {
 	return out << "(" << vec.getX() << ", " << vec.getY() << ")[" << vec.getMag() << "]";
 }
+
+double toRadians(double degrees)
+{
+	return degrees * PI / 180.0f;
+}
+
+double toDegrees(double radians)
+{
+	return radians * 180.0f / PI;
+}

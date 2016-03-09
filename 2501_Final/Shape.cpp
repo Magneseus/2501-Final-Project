@@ -131,7 +131,7 @@ void Rect::rotate(float _angle)
 // Rotate the object to a specific angle (radians)
 void Rect::rotateTo(float _angle)
 {
-	angle = _angle;
+	float d = _angle - angle;
 
 	// Record old center
 	vec::Vector2 _center = center;
@@ -140,13 +140,16 @@ void Rect::rotateTo(float _angle)
 	move(_center * -1);
 
 	// Rotate all vectors
-	tl.rotate(angle);
-	tr.rotate(angle);
-	br.rotate(angle);
-	bl.rotate(angle);
+	tl.rotate(d);
+	tr.rotate(d);
+	br.rotate(d);
+	bl.rotate(d);
 
 	// Translate back
 	move(_center);
+
+	// Set angle
+	angle = _angle;
 }
 
 bool Rect::pointInRect(const vec::Vector2& point) const
