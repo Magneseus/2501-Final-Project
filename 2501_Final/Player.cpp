@@ -4,13 +4,14 @@
 Player::Player()
 {
 	Rect* r = new Rect(
-		vec::Vector2(-20, -20), 
-		vec::Vector2(20, 0),
+		vec::Vector2(0, 0), 
 		vec::Vector2(40, 20),
-		vec::Vector2(-40, 40));
+		vec::Vector2(60, 40),
+		vec::Vector2(-20, 60));
+	col.addShape(r);
 
-	r->rotate(2.0f);
-	hitbox.push_back(r);
+	Circ* c = new Circ(vec::Vector2(50, 0), 20);
+	col.addShape(c);
 
 	setTag(sf::String("Player"));
 }
@@ -26,13 +27,12 @@ void Player::update(const sf::Time& delta)
 {
 	setPosition(mCoords);
 
-	for (auto it = hitbox.begin(); it != hitbox.end(); ++it)
-	{
-		vec::Vector2 newPosH(mCoords.x, mCoords.y);
-		(*it)->setPos(newPosH);
-	}
+	vec::Vector2 newPosH(mCoords.x, mCoords.y);
+	col.moveTo(newPosH);
 
 	time = delta;
+
+	col.rotate(0.1f * delta.asSeconds());
 }
 
 void Player::onCollide(const Collidable& other)
@@ -54,13 +54,15 @@ void Player::draw(sf::RenderTarget& target, sf::RenderStates states) const
 	target.draw(rec, states);
 	*/
 
-	for (auto it = hitbox.begin(); it != hitbox.end(); ++it)
-	{
-		target.draw(**it, states);
-	}
+	target.draw(col, states);
 }
 
-void Player::setMCoords(const sf::Vector2f& mouse)
+void Player::setMCoords(const sf::Vector2i& mouse)
 {
-	mCoords = mouse;
+	mCoords = sf::Vector2f(mouse.x, mouse.y);
+}
+
+void Player::rot(float x)
+{
+	col.rotate(x);
 }

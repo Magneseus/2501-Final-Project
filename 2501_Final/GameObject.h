@@ -20,7 +20,7 @@
 #include <iostream>
 
 #include "Vector.h"
-#include "Shape.h"
+#include "Collider.h"
 
 
 /*                   	GAME OBJECT
@@ -89,19 +89,7 @@ public:
 	// Collides two hitboxes together
 	static bool collide(const Collidable& c1, const Collidable& c2)
 	{
-		for (auto it1 = c1.hitbox.begin(); it1 != c1.hitbox.end(); ++it1)
-		{
-			const Shape* s1 = (*it1);
-			for (auto it2 = c2.hitbox.begin(); it2 != c2.hitbox.end(); ++it2)
-			{
-				const Shape* s2 = (*it2);
-
-				if (s1->collide(s2))
-					return true;
-			}
-		}
-
-		return false;
+		return c1.col.collide(c2.col);
 	}
 
 	const sf::String getTag() const { return tag; }
@@ -109,7 +97,7 @@ public:
 
 protected:
 	sf::String tag;
-	std::vector<Shape*> hitbox;
+	Collider col;
 };
 
 /*						ENTITY

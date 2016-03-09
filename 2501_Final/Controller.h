@@ -28,5 +28,7 @@ private:
 	View* view;
 
 	std::vector<GameObject*> gameObjects;
+
+	Player p, p1;
 	
 };
