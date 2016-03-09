@@ -19,9 +19,9 @@ public:
 	void gameController();
 
 	const enum GSTATES{MENU, GAME, SIZE} GSTATE;
-	
-private:
+
 	void addObject(GameObject*);
+private:
 	bool delObject(GameObject*);
 
 	Model* model;
@@ -29,6 +29,5 @@ private:
 
 	std::vector<GameObject*> gameObjects;
 
-	Player p, p1;
-	
+	Player* p;
 };

@@ -5,10 +5,13 @@ Controller::Controller(Model* m, View* v)
 	view(v),
 	GSTATE(GSTATES::GAME)
 {
-	addObject(&p);
-	addObject(&p1);
+	//addObject(&p);
+	//addObject(&p1);
 
-	p1.setMCoords(sf::Vector2i(400, 400));
+	GameObject* player = new Player();
+
+	p = dynamic_cast<Player*>(player);
+	addObject(player);
 }
 
 Controller::~Controller()
@@ -35,7 +38,24 @@ void Controller::input()
 	}
 
 	// REAL-TIME INPUT
-	p.setMCoords(sf::Mouse::getPosition(view->window));
+//	p.setMCoords(sf::Mouse::getPosition(view->window));
+
+	p->motion = p->STILL;
+	p->turning = p->STILL;
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
+		p->motion = p->FORWARD;
+	} else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
+		p->motion = p->REVERSE;
+	}
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
+		p->turning = p->CLWISE;
+	}
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
+		p->turning = p->COCLWISE;
+	}
+
 }
 
 void Controller::gameController()

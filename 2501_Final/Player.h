@@ -2,6 +2,7 @@
 
 #include "GameObject.h"
 #include "SpriteSheet.h"
+#include "Vector.h"
 
 #include <SFML\System.hpp>
 #include <SFML\Graphics.hpp>
@@ -13,10 +14,22 @@ public:
 	Player();
 	~Player();
 
-	virtual void update(const sf::Time&);
-	virtual void onCollide(const Collidable& other);
+	sf::Vector2f pos;	// the in world coords of player, player is always drawn at w/2, h/2
+	sf::Vector2f vel;
+	float bearing = 50;		// in degrees
+
+	enum {FORWARD = 1, REVERSE = -1, STILL = 0, CLWISE = 1, COCLWISE = -1};
+	int motion, turning;
+
+	sf::Texture shipTexture;
+	sf::Texture shipThrusting;
+	sf::Texture shipStill;
+	sf::Sprite ship;
+
+	virtual void update(const sf::Time&);										// from Updatable
+	virtual void onCollide(const Collidable& other);							// from Collidable
 
 private:
-	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
+	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;	// from Drawable
 
 };
