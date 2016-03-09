@@ -11,6 +11,8 @@ Player::Player()
 
 	ship.setTexture(shipTexture);
 
+	ship.setOrigin(30, 42.5);
+
 	pos = sf::Vector2f(300, 100);
 
 	bearing = 0;
@@ -25,10 +27,26 @@ Player::~Player()
 }
 
 void Player::update(const sf::Time& delta) {
+
+	motion = STILL;
+	turning = STILL;
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
+		motion = FORWARD;
+	}
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
+		motion = REVERSE;
+	}
+
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
+		turning = CLWISE;
+	}
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
+		turning = COCLWISE;
+	}
+
 	float speed = 250;
 	float rotateSpeed = 180.f;	// 180° per second
-
-	//std::cout << delta.asSeconds() << " " << delta.asMilliseconds() << " " << delta.asMicroseconds() << std::endl;
 
 	bearing += delta.asSeconds() * rotateSpeed * turning;
 
@@ -55,7 +73,7 @@ void Player::onCollide(const Collidable& other)
 
 void Player::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
-	states.transform.rotate(bearing, pos.x + 30, pos.y + 42.5);
+	states.transform.rotate(bearing, pos.x, pos.y);
 
 	target.draw(ship, states);
 

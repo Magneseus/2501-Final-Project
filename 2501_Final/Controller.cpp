@@ -40,22 +40,7 @@ void Controller::input()
 	// REAL-TIME INPUT
 //	p.setMCoords(sf::Mouse::getPosition(view->window));
 
-	p->motion = p->STILL;
-	p->turning = p->STILL;
-
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
-		p->motion = p->FORWARD;
-	} else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
-		p->motion = p->REVERSE;
-	}
-
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
-		p->turning = p->CLWISE;
-	}
-	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
-		p->turning = p->COCLWISE;
-	}
-
+	
 }
 
 void Controller::gameController()
