@@ -4,12 +4,13 @@
 
 View::View(Model* m)
 	: model(m),
-	WINDOW_WIDTH(720),
-	WINDOW_HEIGHT(480),
+	WINDOW_WIDTH(800),
+	WINDOW_HEIGHT(800),
 	window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Space Pirates...?")
 {
 	window.setFramerateLimit(60);
 
+	/*
 	temp = new AnimatedSprite();
 
 	std::vector<sf::Texture*> files;
@@ -31,6 +32,16 @@ View::View(Model* m)
 	temp->create(files, 10);
 
 	temp->setPosition(100, 100);
+	*/
+
+	// Random hangar tiles
+	hangar_tile.loadFromFile("img/tile_64.png");
+	hangar_tile.setRepeated(true);
+
+	hangar.setTexture(hangar_tile);
+	hangar.setTextureRect(sf::IntRect(0, 0, 64 * 6, 64 * 6));
+	hangar.setOrigin(64 * 3, 64 * 3);
+	hangar.setPosition(400, 400);
 }
 
 View::~View()
@@ -41,6 +52,8 @@ View::~View()
 void View::render()
 {
 	window.clear();
+
+	window.draw(hangar);
 
 	for (auto it = drawables.begin(); it != drawables.end(); )
 	{
@@ -59,7 +72,7 @@ void View::render()
 
 	}
 
-	temp->draw(&window);
+	//temp->draw(&window);
 	
 	window.display();
 }

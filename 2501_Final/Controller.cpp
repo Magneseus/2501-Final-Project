@@ -60,6 +60,18 @@ void Controller::input()
 
 void Controller::gameController()
 {
+	// Check the static list for objects to add
+	for (auto it = GameObject::staticGameObjects.begin(); it != GameObject::staticGameObjects.end(); ++it)
+	{
+		addObject(*it);
+	}
+
+	// Check the static list for objects to delete
+	for (auto it = GameObject::staticGameObjectsDel.begin(); it != GameObject::staticGameObjectsDel.end(); ++it)
+	{
+		delObject(*it);
+	}
+
 	// Check all game objects
 	for (auto it = gameObjects.begin(); it != gameObjects.end(); )
 	{
@@ -77,6 +89,18 @@ void Controller::gameController()
 		}
 	}
 }
+
+
+
+/*
+	This function creates and adds many GameObjects to the initial list for the game.
+*/
+void Controller::initObjects()
+{
+	
+}
+
+
 
 /*
 	This function adds a GameObject instance to the world. It will then add it to any applicable

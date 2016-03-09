@@ -22,9 +22,12 @@ public:
 	int WINDOW_WIDTH, WINDOW_HEIGHT;
 	sf::RenderWindow window;
 
-	sf::Texture *a, *b, *c, *d;
-	AnimatedSprite* temp;
+	//sf::Texture *a, *b, *c, *d;
+	//AnimatedSprite* temp;
 	
+	sf::Texture hangar_tile;
+	sf::Sprite hangar;
+
 private:
 	Model* model;
 

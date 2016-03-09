@@ -28,6 +28,8 @@
 */
 class GameObject : public sf::Transformable
 {
+	friend class Controller;
+
 public:
 	virtual ~GameObject() {};
 	
@@ -44,9 +46,26 @@ public:
 	// Functions for manipulating type
 	void andType(int x) { gameObjectType &= x; }
 
+
+	// Functions for addingObjects on the fly
+	static void addObjectStatic(GameObject* go)
+	{
+		staticGameObjects.push_back(go);
+	}
+
+	static void delObjectStatic(GameObject* go)
+	{
+		staticGameObjectsDel.push_back(go);
+	}
+
 protected:
 	bool should_remove = false;
 	int gameObjectType = 0;
+
+private:
+	static std::vector<GameObject*> staticGameObjects;
+	static std::vector<GameObject*> staticGameObjectsDel;
+
 };
 
 /*                    	UPDATABLE

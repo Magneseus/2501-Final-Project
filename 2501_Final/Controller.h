@@ -20,9 +20,11 @@ public:
 
 	const enum GSTATES{MENU, GAME, SIZE} GSTATE;
 
-	void addObject(GameObject*);
 private:
+	void addObject(GameObject*);
 	bool delObject(GameObject*);
+
+	void initObjects();
 
 	Model* model;
 	View* view;
