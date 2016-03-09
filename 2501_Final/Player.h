@@ -5,6 +5,7 @@
 
 #include <SFML\System.hpp>
 #include <SFML\Graphics.hpp>
+#include <iostream>
 
 class Player : public Entity
 {
@@ -15,13 +16,7 @@ public:
 	virtual void update(const sf::Time&);
 	virtual void onCollide(const Collidable& other);
 
-	void setMCoords(const sf::Vector2i&);
-	void rot(float);
-
 private:
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
-
-	sf::Vector2f mCoords;
-	sf::Time time;
 
 };
