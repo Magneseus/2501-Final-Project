@@ -23,6 +23,13 @@
 #include "Collider.h"
 
 
+// Some weird name-space stuff for static access to mouse co-ordinates
+namespace sf
+{
+	static sf::Vector2i mouseWindowCoords;
+}
+
+
 /*                   	GAME OBJECT
 	The base game object. All GameObjects will have a transform.
 */
