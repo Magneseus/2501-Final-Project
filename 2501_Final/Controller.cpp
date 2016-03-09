@@ -56,6 +56,12 @@ void Controller::input()
 		p->turning = p->COCLWISE;
 	}
 
+	// Set the view's global transform
+	sf::Transform playerPos;
+	playerPos.translate(-p->pos);
+	playerPos.translate(view->WINDOW_WIDTH / 2, view->WINDOW_HEIGHT / 2);
+
+	view->setTransform(playerPos);
 }
 
 void Controller::gameController()

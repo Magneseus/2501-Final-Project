@@ -18,6 +18,9 @@ public:
 	void render();
 	void addDrawable(Drawable*);
 	bool delDrawable(Drawable*);
+	
+	void setTransform(const sf::Transform&);
+	sf::Transform getTransform();
 
 	int WINDOW_WIDTH, WINDOW_HEIGHT;
 	sf::RenderWindow window;
@@ -30,6 +33,6 @@ public:
 
 private:
 	Model* model;
-
 	std::vector<Drawable*> drawables;
+	sf::Transform globalTransform;
 };
