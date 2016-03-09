@@ -53,7 +53,7 @@ void View::render()
 {
 	window.clear();
 
-	window.draw(hangar);
+	window.draw(hangar, globalTransform);
 
 	for (auto it = drawables.begin(); it != drawables.end(); )
 	{
@@ -66,7 +66,7 @@ void View::render()
 		else
 		{
 			if (*it != NULL)
-				window.draw(**it);
+				window.draw(**it, globalTransform);
 			++it;
 		}
 
@@ -117,4 +117,20 @@ bool View::delDrawable(Drawable* d)
 
 	// Tell them if we had an object stored and flagged it
 	return contains;
+}
+
+/*
+	This function sets the global transform object. Will be applied to all Drawables.
+*/
+void View::setTransform(const sf::Transform& _trans)
+{
+	globalTransform = _trans;
+}
+
+/*
+	Return transforms.
+*/
+sf::Transform View::getTransform()
+{
+	return globalTransform;
 }
