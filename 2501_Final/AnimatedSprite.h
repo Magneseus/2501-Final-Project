@@ -2,7 +2,7 @@
 
 #include "SFML\Graphics.hpp"
 
-class AnimatedSprite : sf::Sprite {
+class AnimatedSprite : public sf::Sprite {
 public:
 	AnimatedSprite();
 	~AnimatedSprite();

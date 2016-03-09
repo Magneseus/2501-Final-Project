@@ -1,5 +1,7 @@
 #include "View.h"
 
+#include <iostream>
+
 View::View(Model* m)
 	: model(m),
 	WINDOW_WIDTH(720),
@@ -7,6 +9,28 @@ View::View(Model* m)
 	window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Space Pirates...?")
 {
 	window.setFramerateLimit(60);
+
+	temp = new AnimatedSprite();
+
+	std::vector<sf::Texture*> files;
+
+	a = new sf::Texture();
+	b = new sf::Texture();
+	c = new sf::Texture();
+	d = new sf::Texture();
+	a->loadFromFile("img/test_1.png");
+	b->loadFromFile("img/test_2.png");
+	c->loadFromFile("img/test_3.png");
+	d->loadFromFile("img/test_4.png");
+
+	files.push_back(a);
+	files.push_back(b);
+	files.push_back(c);
+	files.push_back(d);
+
+	temp->create(files, 10);
+
+	temp->setPosition(100, 100);
 }
 
 View::~View()
@@ -16,6 +40,7 @@ View::~View()
 
 void View::render()
 {
+
 	window.clear();
 
 	for (auto it = drawables.begin(); it != drawables.end(); )
@@ -34,6 +59,10 @@ void View::render()
 		}
 
 	}
+
+	temp->setTexture(*(temp->getTexture()));
+	temp->update();
+	window.draw(*temp);
 
 	window.display();
 }
