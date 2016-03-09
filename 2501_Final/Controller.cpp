@@ -43,6 +43,13 @@ void Controller::input()
 
 void Controller::gameController()
 {
+	// Set the view's global transform
+	sf::Transform playerPos;
+	playerPos.translate(-p->pos);
+	playerPos.translate(view->WINDOW_WIDTH / 2, view->WINDOW_HEIGHT / 2);
+
+	view->setTransform(playerPos);
+
 	// Check the static list for objects to add
 	for (auto it = GameObject::staticGameObjects.begin(); it != GameObject::staticGameObjects.end(); ++it)
 	{

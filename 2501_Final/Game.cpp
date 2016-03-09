@@ -21,6 +21,7 @@ void Game::loop()
 	while (view->window.isOpen())
 	{
 		controller->input();
+		controller->gameController();
 		model->update(clock.restart());
 
 		if (renderClock.getElapsedTime() > timePerFrame)
