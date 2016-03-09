@@ -40,7 +40,6 @@ View::~View()
 
 void View::render()
 {
-
 	window.clear();
 
 	for (auto it = drawables.begin(); it != drawables.end(); )
@@ -60,10 +59,8 @@ void View::render()
 
 	}
 
-	temp->setTexture(*(temp->getTexture()));
-	temp->update();
-	window.draw(*temp);
-
+	temp->draw(&window);
+	
 	window.display();
 }
 

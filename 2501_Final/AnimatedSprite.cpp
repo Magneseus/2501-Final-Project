@@ -5,7 +5,6 @@
 AnimatedSprite::AnimatedSprite() {
 	elapsedTime = 0;
 	frameIndex = 0;
-	std::cout << timer.restart().asSeconds() << std::endl;
 }
 
 AnimatedSprite::~AnimatedSprite() {}
@@ -23,7 +22,6 @@ void AnimatedSprite::update() {
 
 	float timePerFrame = 1.0 / frameRate;	// inverse of fps - seconds per frame
 
-
 	int numFrames = elapsedTime / timePerFrame;		// number of frames that should 
 
 	// if we should pass more frames than we're allowed, don't
@@ -36,4 +34,11 @@ void AnimatedSprite::update() {
 
 const sf::Texture* AnimatedSprite::getTexture() {
 	return frames[frameIndex];
+}
+
+void AnimatedSprite::draw(sf::RenderWindow* w) {
+	update();
+
+	this->setTexture(*(getTexture()));
+	w->draw(*this);
 }
