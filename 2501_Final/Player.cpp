@@ -13,6 +13,8 @@ Player::Player()
 
 	pos = sf::Vector2f(300, 100);
 
+	bearing = 0;
+
 	// Set collision box tag
 	setTag(sf::String("Player"));
 }
@@ -23,30 +25,18 @@ Player::~Player()
 }
 
 void Player::update(const sf::Time& delta) {
-	/*float rotateSpeed = 90.f / 1000.f;
+	float speed = 250;
+	float rotateSpeed = 180.f;	// 180° per second
 
-	playerBearing += deltaTime * rotateSpeed * turning;
+	//std::cout << delta.asSeconds() << " " << delta.asMilliseconds() << " " << delta.asMicroseconds() << std::endl;
 
+	bearing += delta.asSeconds() * rotateSpeed * turning;
 
-	// find the components of the "forward" vector,
-	//	forward being relative to the rotation
+	vel.x += speed * motion * cos(toRadians(bearing)) * delta.asSeconds();
+	vel.y += speed * motion * sin(toRadians(bearing)) * delta.asSeconds();
 
-	float speed = 125.f / 1000.f;	// 100 pixels per second
-
-	playerPos.x += cos(((playerBearing + 90) * M_PI) / 180) * motion * speed * deltaTime;
-	playerPos.y += sin(((playerBearing + 90) * M_PI) / 180) * motion * speed * deltaTime;*/
-
-
-	float speed = 0.0005 / 1000000;		// 125 pixels per second
-	float rotateSpeed = 180.f / 1000000;	// 90° per second
-
-	vel.x += speed * motion * cos(toRadians(bearing)) * delta.asMicroseconds();
-	vel.y += speed * motion * sin(toRadians(bearing)) * delta.asMicroseconds();
-
-	bearing += delta.asMicroseconds() * rotateSpeed * turning;
-
-	pos.x += vel.x * delta.asMicroseconds() ;
-	pos.y += vel.y * delta.asMicroseconds() ;
+	pos.x += vel.x * delta.asSeconds();
+	pos.y += vel.y * delta.asSeconds();
 
 	ship.setPosition(pos.x, pos.y);
 
@@ -65,8 +55,7 @@ void Player::onCollide(const Collidable& other)
 
 void Player::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
-
-	states.transform.rotate(bearing, pos.x + 42.5, pos.y + 42.5);
+	states.transform.rotate(bearing, pos.x + 30, pos.y + 42.5);
 
 	target.draw(ship, states);
 
