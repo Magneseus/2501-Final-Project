@@ -173,7 +173,7 @@ namespace vec
 
 	double Vector2::angleBetween(const Vector2& r) const
 	{
-		return ( dot(r) / (getMag() * r.getMag()) );
+		return std::acos( dot(r) / (getMag() * r.getMag()) );
 	}
 
 	Vector2& Vector2::rotate(const double angle)
@@ -254,7 +254,7 @@ namespace vec
 
 	double angleBetween(const Vector2& l, const Vector2& r)
 	{
-		return (dot(l, r) / (l.getMag() * r.getMag()));
+		return std::acos(dot(l, r) / (l.getMag() * r.getMag()));
 	}
 
 	Vector2 rotate(const Vector2& vec, const double angle)

@@ -153,7 +153,8 @@ bool Rect::pointInRect(const vec::Vector2& point) const
 {
 	bool colliding = true;
 
-	float rSum = tl.dist(tr) * tl.dist(bl);
+	//float rSum = tl.dist(tr) * tl.dist(bl);
+	float rSum = areaOf(tl, tr, bl) + areaOf(tr, br, bl);
 
 	float a1 = areaOf(tl, point, bl);
 	float a2 = areaOf(bl, point, br);
@@ -196,6 +197,15 @@ float Rect::getRad() const
 
 void Rect::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
+	sf::CircleShape center;
+	center.setFillColor(sf::Color::Magenta);
+
+	center.setOrigin(2, 2);
+	center.setRadius(2);
+	center.setPosition(getPos().getX(), getPos().getY());
+
+	target.draw(center, states);
+
 	sf::ConvexShape drawRect;
 
 	drawRect.setPointCount(4);
@@ -263,7 +273,7 @@ Circ::Circ(const vec::Vector2& _pos, float _radius)
 	: pos(_pos),
 	radius(_radius)
 {
-
+	_type = CIRC;
 }
 
 Circ::~Circ() {}
@@ -332,9 +342,13 @@ float Circ::getRad() const
 void Circ::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
 	sf::CircleShape drawCircle;
-	drawCircle.setFillColor(sf::Color::Magenta);
+	drawCircle.setFillColor(sf::Color::Transparent);
+	drawCircle.setOutlineThickness(1);
+	drawCircle.setOutlineColor(sf::Color::Magenta);
+
+	drawCircle.setOrigin(radius, radius);
 	drawCircle.setRadius(getRad());
-	drawCircle.setPosition(sf::Vector2f(getPos().getX(), getPos().getX()));
+	drawCircle.setPosition(sf::Vector2f(getPos().getX(), getPos().getY()));
 	
 	target.draw(drawCircle, states);
 }
@@ -360,13 +374,13 @@ bool lineIntCirc(const vec::Vector2& p1, const vec::Vector2& p2, const Circ& c)
 	vec::Vector2 x4 = x1 * -1;
 	float theta2 = x4.angleBetween(x3);
 
-	if (theta1 > 3.141592653589793f / 2)
+	if (theta1 > PI / 2)
 	{
 		float d = x2.getMag();
 		if (d < c.getRad())
 			isInt = true;
 	}
-	else if (theta2 > 3.141592653589793f / 2)
+	else if (theta2 > PI / 2)
 	{
 		float d = x3.getMag();
 		if (d < c.getRad())

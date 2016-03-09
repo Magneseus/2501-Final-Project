@@ -143,9 +143,9 @@ void Collider::rotate(float _ang)
 	// Bind angle to within 0-2PI bounds
 	angle += _ang;
 	if (angle > 2.0 * PI)
-		angle = angle - (2.0 * PI);
+		angle = std::fmod(angle, (2.0 * PI));
 	else if (angle < 0.0)
-		angle = (2.0 * PI) + angle;
+		angle = std::fmod(std::abs(angle), (2.0 * PI));
 }
 
 /*
@@ -188,6 +188,15 @@ void Collider::rotateTo(float _ang)
 
 void Collider::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
+	sf::CircleShape center;
+	center.setFillColor(sf::Color::Magenta);
+	
+	center.setOrigin(4, 4);
+	center.setRadius(4);
+	center.setPosition(position.getX(), position.getY());
+
+	target.draw(center, states);
+
 	for (auto it = hitbox.begin(); it != hitbox.end(); ++it)
 	{
 		target.draw(**it, states);
