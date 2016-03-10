@@ -34,14 +34,14 @@ void Controller::input()
 	// REAL-TIME INPUT
 
 	// Set the static mouse coordinates
-	sf::mouseWindowCoords = sf::Mouse::getPosition(view->window);
+	Global::mouseWindowCoords = sf::Mouse::getPosition(view->window);
 }
 
 void Controller::gameController()
 {
 	// Set the view's global transform
 	sf::Transform playerPos;
-	playerPos.translate(-p->pos);
+	playerPos.translate(-(p->pos).getSfVec());
 	playerPos.translate(view->WINDOW_WIDTH / 2, view->WINDOW_HEIGHT / 2);
 
 	view->setTransform(playerPos);

@@ -122,7 +122,7 @@ void Collider::rotate(float _ang)
 	if (angle > 2.0 * PI)
 		angle = std::fmod(angle, (2.0 * PI));
 	else if (angle < 0.0)
-		angle = std::fmod(std::abs(angle), (2.0 * PI));
+		angle = (2.0 * PI) - std::fmod(std::abs(angle), (2.0 * PI));
 
 	for (auto it = hitbox.begin(); it != hitbox.end(); ++it)
 	{

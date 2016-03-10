@@ -14,12 +14,12 @@ public:
 	Player();
 	~Player();
 
-	sf::Vector2f pos;	// the in world coords of player, player is always drawn at w/2, h/2
-	sf::Vector2f vel;
-	sf::Vector2f accel; 
+	vec::Vector2 pos;	// the in world coords of player, player is always drawn at w/2, h/2
+	vec::Vector2 vel;
+	vec::Vector2 accel;
 	float bearing;		// in degrees
 
-	enum {FORWARD = 1, REVERSE = -1, STILL = 0, CLWISE = 1, COCLWISE = -1};
+	enum DIRECTION {FORWARD = 1, REVERSE = -1, STILL = 0, CLWISE = 1, COCLWISE = -1};
 	int motion, turning;
 
 	sf::Texture shipTexture;
