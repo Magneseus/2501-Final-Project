@@ -3,6 +3,7 @@
 #include "GameObject.h"
 #include "SpriteSheet.h"
 #include "Vector.h"
+#include "Vehicle.h"
 
 #include <SFML\System.hpp>
 #include <SFML\Graphics.hpp>
@@ -19,18 +20,21 @@ public:
 	sf::Vector2f accel; 
 	float bearing;		// in degrees
 
+	Vehicle* vehicle;
+
 	enum {FORWARD = 1, REVERSE = -1, STILL = 0, CLWISE = 1, COCLWISE = -1};
 	int motion, turning;
 
-	sf::Texture shipTexture;
-	sf::Texture shipThrusting;
-	sf::Texture shipStill;
-	sf::Sprite ship;
+	sf::Texture playerTexture;
+	sf::Sprite player;
 
 	virtual void update(const sf::Time&);										// from Updatable
 	virtual void onCollide(const Collidable& other);							// from Collidable
 
 private:
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;	// from Drawable
+
+	float getRotationSpeed();
+	float getAcceleration();
 
 };

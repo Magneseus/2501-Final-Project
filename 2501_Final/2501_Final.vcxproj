@@ -138,6 +138,7 @@
     <ClCompile Include="SpriteSheet.cpp" />
     <ClCompile Include="Trigger.cpp" />
     <ClCompile Include="Vector.cpp" />
+    <ClCompile Include="Vehicle.cpp" />
     <ClCompile Include="View.cpp" />
   </ItemGroup>
   <ItemGroup>

@@ -4,14 +4,12 @@ Player::Player()
 {
 	vel = sf::Vector2f(0,0);
 
-	shipStill.loadFromFile("img/medspeedster.png");
-	shipThrusting.loadFromFile("img/shipthrusting.png");
+	vehicle = new BasicShip();
 
-	shipTexture = shipStill;
-
-	ship.setTexture(shipTexture);
-
-	ship.setOrigin(30, 42.5);
+	playerTexture.loadFromFile("img/player.png");
+	player.setTexture(playerTexture);
+	
+	player.setOrigin(25, 25);
 
 	pos = sf::Vector2f(300, 100);
 
@@ -25,6 +23,9 @@ Player::~Player()
 {
 
 }
+
+float Player::getRotationSpeed() { return (vehicle == NULL) ? 180 : vehicle->getRotationSpeed(); }
+float Player::getAcceleration() { return (vehicle == NULL) ? 0 : vehicle->getAcceleration(); }
 
 void Player::update(const sf::Time& delta) {
 
@@ -45,24 +46,28 @@ void Player::update(const sf::Time& delta) {
 		turning = COCLWISE;
 	}
 
-	float speed = 250;
-	float rotateSpeed = 180.f;	// 180° per second
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::F)) vehicle = NULL;
+
+	float accel = getAcceleration();
+	float rotateSpeed = getRotationSpeed();
 
 	bearing += delta.asSeconds() * rotateSpeed * turning;
 
-	vel.x += speed * motion * cos(toRadians(bearing)) * delta.asSeconds();
-	vel.y += speed * motion * sin(toRadians(bearing)) * delta.asSeconds();
+	vel.x += accel * motion * cos(toRadians(bearing)) * delta.asSeconds();
+	vel.y += accel * motion * sin(toRadians(bearing)) * delta.asSeconds();
 
 	pos.x += vel.x * delta.asSeconds();
 	pos.y += vel.y * delta.asSeconds();
 
-	ship.setPosition(pos.x, pos.y);
+	player.setPosition(pos.x, pos.y);
+
+	if (vehicle != NULL) vehicle->ship.setPosition(pos.x, pos.y);
 
 	if (motion == FORWARD) {
-		shipTexture = shipThrusting;
+	//	shipTexture = shipThrusting;
 	}
 	else {
-		shipTexture = shipStill;
+		//shipTexture = shipStill;
 	}
 }
 
@@ -75,8 +80,11 @@ void Player::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
 	states.transform.rotate(bearing, pos.x, pos.y);
 
-	target.draw(ship, states);
-
+	if (vehicle != NULL) {
+		target.draw(*vehicle, states);
+	} else {
+		target.draw(player, states);
+	}
 	// Draw collision box
 	//target.draw(col, states);
 }
