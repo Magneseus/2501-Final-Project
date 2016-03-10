@@ -26,6 +26,7 @@ public:
 
 	sf::Texture playerTexture;
 	sf::Sprite player;
+	Vehicle* vehicle;
 
 	virtual void update(const sf::Time&);										// from Updatable
 	virtual void onCollide(const Collidable& other);							// from Collidable

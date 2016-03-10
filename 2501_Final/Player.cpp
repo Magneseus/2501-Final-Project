@@ -2,7 +2,7 @@
 
 Player::Player()
 {
-	vel = sf::Vector2f(0,0);
+	vel = vec::Vector2(0,0);
 
 	vehicle = new BasicShip();
 
@@ -48,7 +48,7 @@ void Player::update(const sf::Time& delta) {
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::F)) vehicle = NULL;
 
-	float accel = getAcceleration();
+	float speed = getAcceleration();
 	float rotateSpeed = getRotationSpeed();
 
 	// Get the vector between the mouse and the player
@@ -91,7 +91,7 @@ void Player::update(const sf::Time& delta) {
 
 	// Set the textures
 	if (motion == FORWARD) {
-	//	shipTexture = shipThrusting;
+		//shipTexture = shipThrusting;
 	}
 	else {
 		//shipTexture = shipStill;
