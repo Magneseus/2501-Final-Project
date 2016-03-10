@@ -1,0 +1,50 @@
+TODO ~~~
+
+- Inventory
+	> different ship types
+	> input from command line, spawn at your coords
+	> make function to spawn at specific coords
+	> add basic UI functionality
+	> have ship selection screen, spawns at specific coords
+
+- Tidy up
+	> Clean up player file
+	>> Remove unnecessary things in .h, lines in .cpp
+	> Give AnimatedSprite a sprite sheet
+	> Give Vehicle an AnimatedSprite
+	> Fix problem of having so many coordinate types
+	>> Transformable, position vector, sprite position
+	>> This fix will also aid in fixing hit boxes
+
+- Map
+	? Write map to file and load in, or just hardcode map in code
+		> Loading requires writing code to both read and write
+			maps from text, but opens the door up for a level 
+			creation program.
+		> Hardcoding is quicker, but not as flexible or easy to 
+			make maps with
+	> Test out Trigger functionality
+	> Have basic interactions - zooming when in hangar, doors open
+
+- Combat
+	> Create projectiles
+	>> Entity, delete self on collision
+	> Have player shoot projectiles out towards mouse
+	? Hit scan vs Projectiles
+	? Different projectiles, Faster/Stronger etc
+	> Add getFireRate(), getDamage() to Vehicle and Player/Entity
+	> Create turrets/defenses class
+	> Follow same turning as player, possibly move code from Player
+		to Entity, letting all moving entities turn the same way!
+	> When triggered (or Player nearby... even possibly make it
+		check if the player is seen with angleBetween method), have
+		turret turn towards the player, follow similar to how the 
+		Player follows the mouse
+	> Begin shooting at player, using getFireRate() (IN ENTITY!!)
+	> Have projectiles damage Entity on collision
+	> Create Weapon class:
+	>> fireRate, damage, icon (texture for bullet)
+	> Add Weapon to Entity and Vehicle (Vehicle is Entity...)
+	> getFireRate(), getDamage() changed to return either the
+		Entity's value, or Vehicle's value based on veh==NULL
+	> We gots combat now yo
