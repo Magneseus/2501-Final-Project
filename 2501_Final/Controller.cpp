@@ -5,13 +5,7 @@ Controller::Controller(Model* m, View* v)
 	view(v),
 	GSTATE(GSTATES::GAME)
 {
-	//addObject(&p);
-	//addObject(&p1);
-
-	GameObject* player = new Player();
-
-	p = dynamic_cast<Player*>(player);
-	addObject(player);
+	initObjects();
 }
 
 Controller::~Controller()
@@ -38,14 +32,16 @@ void Controller::input()
 	}
 
 	// REAL-TIME INPUT
-//	p.setMCoords(sf::Mouse::getPosition(view->window));
+
+	// Set the static mouse coordinates
+	Global::mouseWindowCoords = sf::Mouse::getPosition(view->window);
 }
 
 void Controller::gameController()
 {
 	// Set the view's global transform
 	sf::Transform playerPos;
-	playerPos.translate(-p->pos);
+	playerPos.translate(-(p->pos).getSfVec());
 	playerPos.translate(view->WINDOW_WIDTH / 2, view->WINDOW_HEIGHT / 2);
 
 	view->setTransform(playerPos);
@@ -87,7 +83,10 @@ void Controller::gameController()
 */
 void Controller::initObjects()
 {
-	
+	p = new Player();
+	addObject(p);
+
+
 }
 
 

@@ -61,6 +61,7 @@ namespace vec
 	double Vector2::getMag() const { return mag; }
 	double Vector2::getX() const { return x; }
 	double Vector2::getY() const { return y; }
+	sf::Vector2f Vector2::getSfVec() { return sf::Vector2f(x, y); }
 
 	// SETTERS
 	Vector2& Vector2::setMag(double m)
