@@ -20,9 +20,9 @@ public:
 	vec::Vector2 accel;
 	float bearing;		// in degrees
 
-	enum DIRECTION {FORWARD = 1, REVERSE = -1, STILL = 0, CLWISE = 1, COCLWISE = -1};
+	enum DIRECTION {FORWARD = 1, REVERSE = -1, STILL = 0, CLWISE = 1, COCLWISE = -1, LEFT = -1, RIGHT = 1};
 
-	int motion, turning;
+	int motion, turning, strafe;
 
 	sf::Texture playerTexture;
 	sf::Sprite player;
@@ -31,7 +31,7 @@ public:
 	sf::Clock vehicleEnterCooldown;
 	sf::Time vehicleEnterTime;
 
-	virtual void update(const sf::Time&);										// from Updatable
+	virtual void update(const sf::Time&);								// from Updatable
 	virtual void onCollide(Collidable& other);							// from Collidable
 
 private:

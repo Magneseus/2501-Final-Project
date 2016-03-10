@@ -37,19 +37,37 @@ void Player::update(const sf::Time& delta) {
 
 	motion = STILL;
 	turning = STILL;
+	strafe = STILL;
+
+	if (vehicle == NULL) {
+		vel.setX(0);
+		vel.setY(0);
+	}
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
+		if (vehicle == NULL) {
+			vel.setY(-100);
+		}
 		motion = FORWARD;
 	}
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
+		if (vehicle == NULL) {
+			vel.setY(100);
+		}
 		motion = REVERSE;
 	}
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
-		//turning = CLWISE;
+		if (vehicle == NULL) {
+			vel.setX(100);
+		}
+		strafe = RIGHT;
 	}
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
-		//turning = COCLWISE;
+		if (vehicle == NULL) {
+			vel.setX(-100);
+		}
+		strafe = LEFT;
 	}
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::F) && 
@@ -58,6 +76,8 @@ void Player::update(const sf::Time& delta) {
 		addObjectStatic(vehicle);
 
 		vehicle = NULL;
+		vel.setX(0);
+		vel.setY(0);
 		vehicleEnterCooldown.restart();
 	}
 
@@ -95,9 +115,12 @@ void Player::update(const sf::Time& delta) {
 	accel.setMag(speed * motion * delta.asSeconds());
 	vel += accel;
 
+	vec::Vector2 strafeAccel(toRadians(bearing+90));
+	strafeAccel.setMag(rotateSpeed * strafe * delta.asSeconds());
+	vel += strafeAccel;
+
 	// Calculate position
 	pos += vel * delta.asSeconds();
-
 
 	player.setPosition(pos.getX(), pos.getY());
 	col.moveTo(pos);
