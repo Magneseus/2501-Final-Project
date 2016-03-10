@@ -78,6 +78,7 @@ void Player::update(const sf::Time& delta) {
 		vehicle = NULL;
 		vel.setX(0);
 		vel.setY(0);
+
 		vehicleEnterCooldown.restart();
 	}
 
@@ -130,7 +131,10 @@ void Player::update(const sf::Time& delta) {
 	{
 		vehicle->ship.setPosition(pos.getX(), pos.getY());
 		vehicle->setPosition(pos.getX(), pos.getY());
+		vehicle->ship.setRotation(bearing);
 	}
+
+	player.setRotation(bearing);
 
 	// Set the textures
 	if (motion == FORWARD) {
@@ -155,6 +159,10 @@ void Player::onCollide(Collidable& other)
 			if (vehicle != NULL)
 				remObjectStatic(vehicle);
 
+			bearing = vehicle->ship.getRotation();
+			pos.setX(vehicle->getPosition().x);
+			pos.setY(vehicle->getPosition().y);
+
 			vehicleEnterCooldown.restart();
 		}
 	}
@@ -162,7 +170,7 @@ void Player::onCollide(Collidable& other)
 
 void Player::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
-	states.transform.rotate(bearing, pos.getX(), pos.getY());
+	//states.transform.rotate(bearing, pos.getX(), pos.getY());
 
 	if (vehicle != NULL) {
 		target.draw(*vehicle, states);
@@ -170,5 +178,5 @@ void Player::draw(sf::RenderTarget& target, sf::RenderStates states) const
 		target.draw(player, states);
 	}
 	// Draw collision box
-	//target.draw(col, states);
+	target.draw(col, states);
 }
