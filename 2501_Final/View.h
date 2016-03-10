@@ -18,6 +18,7 @@ public:
 	void render();
 	void addDrawable(Drawable*);
 	bool delDrawable(Drawable*);
+	bool remDrawable(Drawable*);
 	
 	void setTransform(const sf::Transform&);
 	sf::Transform getTransform();

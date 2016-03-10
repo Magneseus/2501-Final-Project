@@ -17,7 +17,7 @@ public:
 	// update is written by each ship
 	virtual void update(const sf::Time&) = 0;	// from Updatable
 
-	virtual void onCollide(const Collidable& other);	// from Collide
+	virtual void onCollide(Collidable& other);	// from Collide
 
 	float getAcceleration();
 	float getTopSpeed();

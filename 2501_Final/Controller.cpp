@@ -51,12 +51,31 @@ void Controller::gameController()
 	{
 		addObject(*it);
 	}
+	GameObject::staticGameObjects.clear();
 
 	// Check the static list for objects to delete
 	for (auto it = GameObject::staticGameObjectsDel.begin(); it != GameObject::staticGameObjectsDel.end(); ++it)
 	{
 		delObject(*it);
 	}
+	GameObject::staticGameObjectsDel.clear();
+
+	// Check the static list for objects to remove
+	for (auto it = GameObject::staticGameObjectsRem.begin(); it != GameObject::staticGameObjectsRem.end(); ++it)
+	{
+		auto remObj = std::find(gameObjects.begin(), gameObjects.end(), *it);
+
+		// Add it to the appropriate lists
+		if ((*remObj)->isUpdatable())
+			model->remUpdatable(dynamic_cast<Updatable*>(*remObj));
+		if ((*remObj)->isDrawable())
+			view->remDrawable(dynamic_cast<Drawable*>(*remObj));
+		if ((*remObj)->isCollidable())
+			model->remCollidable(dynamic_cast<Collidable*>(*remObj));
+
+		gameObjects.erase(remObj);
+	}
+	GameObject::staticGameObjectsRem.clear();
 
 	// Check all game objects
 	for (auto it = gameObjects.begin(); it != gameObjects.end(); )

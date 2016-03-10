@@ -5,6 +5,7 @@
 
 std::vector<GameObject*> GameObject::staticGameObjects;
 std::vector<GameObject*> GameObject::staticGameObjectsDel;
+std::vector<GameObject*> GameObject::staticGameObjectsRem;
 
 // Some more sp00ky global/static stuff
 sf::Vector2i Global::mouseWindowCoords;

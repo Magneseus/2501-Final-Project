@@ -64,6 +64,11 @@ public:
 		staticGameObjectsDel.push_back(go);
 	}
 
+	static void remObjectStatic(GameObject* go)
+	{
+		staticGameObjectsRem.push_back(go);
+	}
+
 protected:
 	bool should_remove = false;
 	int gameObjectType = 0;
@@ -71,6 +76,7 @@ protected:
 private:
 	static std::vector<GameObject*> staticGameObjects;
 	static std::vector<GameObject*> staticGameObjectsDel;
+	static std::vector<GameObject*> staticGameObjectsRem;
 
 };
 
@@ -109,10 +115,10 @@ class Collidable : public virtual GameObject
 public:
 	Collidable() { gameObjectType |= 0b100; }
 	virtual ~Collidable() {};
-	virtual void onCollide(const Collidable& other) = 0;
+	virtual void onCollide(Collidable& other) = 0;
 	
 	// Collides two hitboxes together
-	static bool collide(const Collidable& c1, const Collidable& c2)
+	static bool collide(Collidable& c1, Collidable& c2)
 	{
 		return c1.col.collide(c2.col);
 	}

@@ -12,8 +12,11 @@ public:
 	void update(const sf::Time&);
 	void addUpdatable(Updatable*);
 	bool delUpdatable(Updatable*);
+	bool remUpdatable(Updatable*);
+
 	void addCollidable(Collidable*);
 	bool delCollidable(Collidable*);
+	bool remCollidable(Collidable*);
 	
 private:
 	std::vector<Updatable*> updatables;

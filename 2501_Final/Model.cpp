@@ -106,6 +106,21 @@ bool Model::delUpdatable(Updatable* u)
 	return contains;
 }
 
+bool Model::remUpdatable(Updatable* u)
+{
+	for (auto it = updatables.begin(); it != updatables.end(); it++)
+	{
+		// Object was found
+		if (*it == u)
+		{
+			updatables.erase(it);
+			return true;
+		}
+	}
+
+	return false;
+}
+
 /*
 This function simply adds a Collidable object to the list to be rendered.
 */
@@ -146,4 +161,19 @@ bool Model::delCollidable(Collidable* u)
 
 	// Tell them if we had an object stored and flagged it
 	return contains;
+}
+
+bool Model::remCollidable(Collidable* u)
+{
+	for (auto it = collidables.begin(); it != collidables.end(); it++)
+	{
+		// Object was found
+		if (*it == u)
+		{
+			collidables.erase(it);
+			return true;
+		}
+	}
+
+	return false;
 }

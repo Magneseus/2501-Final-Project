@@ -10,7 +10,7 @@ public:
 	Collider(const std::vector<Shape*>, const vec::Vector2&);
 	~Collider();
 
-	bool collide(const Collider&) const;
+	bool collide(Collider&) const;
 
 	void move(const vec::Vector2&);
 	void moveTo(const vec::Vector2&);

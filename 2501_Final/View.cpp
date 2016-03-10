@@ -119,6 +119,21 @@ bool View::delDrawable(Drawable* d)
 	return contains;
 }
 
+bool View::remDrawable(Drawable* u)
+{
+	for (auto it = drawables.begin(); it != drawables.end(); it++)
+	{
+		// Object was found
+		if (*it == u)
+		{
+			drawables.erase(it);
+			return true;
+		}
+	}
+
+	return false;
+}
+
 /*
 	This function sets the global transform object. Will be applied to all Drawables.
 */

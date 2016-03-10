@@ -26,10 +26,13 @@ public:
 
 	sf::Texture playerTexture;
 	sf::Sprite player;
+
 	Vehicle* vehicle;
+	sf::Clock vehicleEnterCooldown;
+	sf::Time vehicleEnterTime;
 
 	virtual void update(const sf::Time&);										// from Updatable
-	virtual void onCollide(const Collidable& other);							// from Collidable
+	virtual void onCollide(Collidable& other);							// from Collidable
 
 private:
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;	// from Drawable

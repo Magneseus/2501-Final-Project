@@ -41,7 +41,7 @@ Collider::~Collider()
 
 	O(n^2) worst case
 */
-bool Collider::collide(const Collider& other) const
+bool Collider::collide(Collider& other) const
 {
 	// Loop through all shapes in each hitbox
 	for (auto it1 = hitbox.begin(); it1 != hitbox.end(); ++it1)

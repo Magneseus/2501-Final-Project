@@ -5,6 +5,7 @@ Player::Player()
 	vel = vec::Vector2(0,0);
 
 	vehicle = new BasicShip();
+	vehicleEnterTime = sf::seconds(1);
 
 	playerTexture.loadFromFile("img/player.png");
 	player.setTexture(playerTexture);
@@ -14,6 +15,11 @@ Player::Player()
 	pos = vec::Vector2(300, 100);
 
 	bearing = 0;
+
+
+	// Add a collison box for player
+	Rect* r = new Rect(vec::Vector2(-20, -20), vec::Vector2(20, 20));
+	col.addShape(r);
 
 	// Set collision box tag
 	setTag(sf::String("Player"));
@@ -46,7 +52,14 @@ void Player::update(const sf::Time& delta) {
 		//turning = COCLWISE;
 	}
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::F)) vehicle = NULL;
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::F) && 
+			vehicleEnterCooldown.getElapsedTime() > vehicleEnterTime)
+	{
+		addObjectStatic(vehicle);
+
+		vehicle = NULL;
+		vehicleEnterCooldown.restart();
+	}
 
 	float speed = getAcceleration();
 	float rotateSpeed = getRotationSpeed();
@@ -85,9 +98,16 @@ void Player::update(const sf::Time& delta) {
 	// Calculate position
 	pos += vel * delta.asSeconds();
 
-	player.setPosition(pos.getX(), pos.getY());
 
-	if (vehicle != NULL) vehicle->ship.setPosition(pos.getX(), pos.getY());
+	player.setPosition(pos.getX(), pos.getY());
+	col.moveTo(pos);
+	//col.rotateTo(bearing);
+
+	if (vehicle != NULL)
+	{
+		vehicle->ship.setPosition(pos.getX(), pos.getY());
+		vehicle->setPosition(pos.getX(), pos.getY());
+	}
 
 	// Set the textures
 	if (motion == FORWARD) {
@@ -98,9 +118,23 @@ void Player::update(const sf::Time& delta) {
 	}
 }
 
-void Player::onCollide(const Collidable& other)
+void Player::onCollide(Collidable& other)
 {
-	std::cout << "Collide!: " + other.getTag().toAnsiString();
+	std::cout << "COLLIDE!: " << other.getTag().toAnsiString() << std::endl;
+	if (other.getTag() == "Vehicle" && 
+			vehicle == NULL && 
+			vehicleEnterCooldown.getElapsedTime() > vehicleEnterTime)
+	{
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::F))
+		{
+			vehicle = dynamic_cast<Vehicle*>(&other);
+
+			if (vehicle != NULL)
+				remObjectStatic(vehicle);
+
+			vehicleEnterCooldown.restart();
+		}
+	}
 }
 
 void Player::draw(sf::RenderTarget& target, sf::RenderStates states) const
