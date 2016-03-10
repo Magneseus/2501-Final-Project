@@ -1,9 +1,6 @@
 #pragma once
 
 #include "GameObject.h"
-//#include "Player.h"
-
-class Player;
 
 /*					Vehicle
 	Entities visible on screen, can be interacted 
@@ -26,14 +23,11 @@ public:
 	float getTopSpeed();
 	float getRotationSpeed();
 
-	void enter(Player* pass);
-
 	sf::Sprite ship;
 
 protected:
 	float accel, topSpeed, rotateSpeed;
 	sf::Texture shipTexture;
-	Player* passenger;
 
 private:
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;	// from Drawable
