@@ -41,6 +41,7 @@ void Entity::update(const sf::Time& delta) {
 	vec::Vector2 accel(toRadians(bearing));
 	accel.setMag(accelRate * motion * delta.asSeconds());
 	vel += accel;
+	//vel *= .999999; DRAG?
 
 	if (vel.getMag() > topSpeed) vel.setMag(topSpeed);
 

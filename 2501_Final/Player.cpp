@@ -4,7 +4,7 @@ Player::Player()
 {
 	vel = vec::Vector2(0,0);
 
-	vehicle = new BasicShip();
+	vehicle = new TransportShip();
 
 	addObjectStatic(vehicle);
 
@@ -98,8 +98,13 @@ void Player::update(const sf::Time& delta) {
 		exitVehicle();
 	}
 
+	float temp = bearing;
+
 	Entity::update(delta);
 	
+	float deltaBearing = temp - bearing;
+	//if (deltaBearing) std::cout << "Bearing changed by " << deltaBearing << std::endl;
+
 	player.setPosition(pos.getX(), pos.getY());
 	col.moveTo(pos);
 	//col.rotateTo(bearing);
@@ -151,7 +156,7 @@ void Player::exitVehicle() {
 
 		accelRate = onFootAccel;
 		topSpeed = onFootTopSpeed;
-		rotateSpeed = onFootTopSpeed;
+		rotateSpeed = onFootRotateSpeed;
 
 		vehicleEnterCooldown.restart();
 	}

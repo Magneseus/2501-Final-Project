@@ -15,7 +15,7 @@ public:
 	virtual ~Vehicle() {}
 
 	// update is written by each ship
-	virtual void update(const sf::Time&) = 0;	// from Updatable
+	void update(const sf::Time&);	// from Updatable
 
 	virtual void onCollide(Collidable& other);	// from Collide
 
@@ -38,5 +38,11 @@ public:
 	BasicShip();
 	~BasicShip();
 
-	void update(const sf::Time&);
+	//void update(const sf::Time&);
+};
+
+class TransportShip : public Vehicle {
+public:
+	TransportShip();
+	~TransportShip();
 };
