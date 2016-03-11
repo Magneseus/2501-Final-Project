@@ -26,7 +26,7 @@ public:
 	sf::Sprite ship;
 
 protected:
-	float accel, topSpeed, rotateSpeed;
+	float baseAccel, baseTopSpeed, baseRotateSpeed;
 	sf::Texture shipTexture;
 
 private:

@@ -15,15 +15,6 @@ public:
 	Player();
 	~Player();
 
-	vec::Vector2 pos;	// the in world coords of player, player is always drawn at w/2, h/2
-	vec::Vector2 vel;
-	vec::Vector2 accel;
-	float bearing;		// in degrees
-
-	enum DIRECTION {FORWARD = 1, REVERSE = -1, STILL = 0, CLWISE = 1, COCLWISE = -1, LEFT = -1, RIGHT = 1};
-
-	int motion, turning, strafe;
-
 	sf::Texture playerTexture;
 	sf::Sprite player;
 
@@ -34,10 +25,13 @@ public:
 	virtual void update(const sf::Time&);								// from Updatable
 	virtual void onCollide(Collidable& other);							// from Collidable
 
+	void enterVehicle(Vehicle* v);
+	void exitVehicle();
+
 private:
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;	// from Drawable
 
-	float getRotationSpeed();
-	float getAcceleration();
-
+	const float onFootAccel = 0;
+	const float onFootTopSpeed = 100;
+	const float onFootRotateSpeed = 180;
 };

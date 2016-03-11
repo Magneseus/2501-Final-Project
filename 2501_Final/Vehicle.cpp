@@ -3,20 +3,21 @@
 
 void Vehicle::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 	target.draw(ship, states);
-	//target.draw(col, states);
+	target.draw(col, states);
 }
 
 void Vehicle::onCollide(Collidable& other) {
 
 }
 
-float Vehicle::getAcceleration()	{ return accel; }
-float Vehicle::getRotationSpeed()	{ return rotateSpeed; }
-float Vehicle::getTopSpeed()		{ return topSpeed; }
+float Vehicle::getAcceleration()	{ return baseAccel; }
+float Vehicle::getRotationSpeed()	{ return baseRotateSpeed; }
+float Vehicle::getTopSpeed()		{ return baseTopSpeed; }
 
 BasicShip::BasicShip() {
-	accel = 250;
-	rotateSpeed = 180;
+	baseAccel = 250;
+	baseRotateSpeed = 180;
+	baseTopSpeed = 1000;
 
 	shipTexture.loadFromFile("img/medspeedster.png");
 
@@ -35,5 +36,10 @@ BasicShip::~BasicShip() {
 }
 
 void BasicShip::update(const sf::Time& delta) {
+	ship.setPosition(pos.getX(), pos.getY());
+	setPosition(pos.getX(), pos.getY());
+	ship.setRotation(bearing);
+
 	col.moveTo(vec::Vector2(getPosition().x, getPosition().y));
+	col.rotateTo(toRadians(bearing));
 }

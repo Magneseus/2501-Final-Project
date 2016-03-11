@@ -5,6 +5,17 @@ Player::Player()
 	vel = vec::Vector2(0,0);
 
 	vehicle = new BasicShip();
+
+	addObjectStatic(vehicle);
+
+	vehicle = new BasicShip();
+	vehicle->pos = vec::Vector2(200, 250);
+	vehicle->vel = vec::Vector2(10, 10);
+
+	addObjectStatic(vehicle);
+
+	vehicle = NULL;
+
 	vehicleEnterTime = sf::seconds(1);
 
 	playerTexture.loadFromFile("img/player.png");
@@ -12,10 +23,13 @@ Player::Player()
 	
 	player.setOrigin(25, 25);
 
-	pos = vec::Vector2(300, 100);
+	pos = vec::Vector2(300, 300);
 
 	bearing = 0;
 
+	accelRate = onFootAccel;
+	topSpeed = onFootTopSpeed;
+	rotateSpeed = onFootRotateSpeed;
 
 	// Add a collison box for player
 	Rect* r = new Rect(vec::Vector2(-20, -20), vec::Vector2(20, 20));
@@ -30,8 +44,8 @@ Player::~Player()
 
 }
 
-float Player::getRotationSpeed() { return (vehicle == NULL) ? 180 : vehicle->getRotationSpeed(); }
-float Player::getAcceleration() { return (vehicle == NULL) ? 0 : vehicle->getAcceleration(); }
+//float Player::getRotationSpeed() { return (vehicle == NULL) ? 180 : vehicle->getRotationSpeed(); }
+//float Player::getAcceleration() { return (vehicle == NULL) ? 0 : vehicle->getAcceleration(); }
 
 void Player::update(const sf::Time& delta) {
 
@@ -48,90 +62,52 @@ void Player::update(const sf::Time& delta) {
 		if (vehicle == NULL) {
 			vel.setY(-100);
 		}
-		motion = FORWARD;
+		else {
+			motion = FORWARD;
+		}
 	}
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
 		if (vehicle == NULL) {
 			vel.setY(100);
 		}
-		motion = REVERSE;
+		else {
+			motion = REVERSE;
+		}
 	}
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
 		if (vehicle == NULL) {
 			vel.setX(100);
 		}
-		strafe = RIGHT;
+		else {
+			strafe = RIGHT;
+		}
 	}
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
 		if (vehicle == NULL) {
 			vel.setX(-100);
 		}
-		strafe = LEFT;
+		else {
+			strafe = LEFT;
+		}
 	}
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::F) && 
 			vehicleEnterCooldown.getElapsedTime() > vehicleEnterTime)
 	{
-		addObjectStatic(vehicle);
-
-		vehicle = NULL;
-		vel.setX(0);
-		vel.setY(0);
-
-		vehicleEnterCooldown.restart();
+		exitVehicle();
 	}
 
-	float speed = getAcceleration();
-	float rotateSpeed = getRotationSpeed();
-
-	// Get the vector between the mouse and the player
-	vec::Vector2 mousePos = vec::Vector2(Global::mouseWindowCoords.x, Global::mouseWindowCoords.y);
-	vec::Vector2 mDif = mousePos - vec::Vector2(400, 400);
-
-	// Get the current turning direction
-	vec::Vector2 turnVec(toRadians(bearing));
-
-	// Set the turning direction
-	double angDif = toDegrees(mDif.angleBetween(turnVec));
-	angDif *= mDif.cross(turnVec) < 0 ? -1 : 1;
-
-	if (angDif < 1 && angDif > -1)
-		turning = STILL;
-	else if (angDif < -1)
-		turning = CLWISE;
-	else
-		turning = COCLWISE;
-
-	bearing += delta.asSeconds() * rotateSpeed * turning;
-
-	// Bind bearing
-	if (bearing > 360)
-		bearing = std::fmod(bearing, 360.0f);
-	else if (bearing < 0)
-		bearing = 360.0f - std::fmod(std::abs(bearing), 360.0f);
-
-	// Calculate acceleration
-	vec::Vector2 accel(toRadians(bearing));
-	accel.setMag(speed * motion * delta.asSeconds());
-	vel += accel;
-
-	vec::Vector2 strafeAccel(toRadians(bearing+90));
-	strafeAccel.setMag(rotateSpeed * strafe * delta.asSeconds());
-	vel += strafeAccel;
-
-	// Calculate position
-	pos += vel * delta.asSeconds();
-
+	Entity::update(delta);
+	
 	player.setPosition(pos.getX(), pos.getY());
 	col.moveTo(pos);
 	//col.rotateTo(bearing);
 
-	if (vehicle != NULL)
-	{
-		vehicle->ship.setPosition(pos.getX(), pos.getY());
-		vehicle->setPosition(pos.getX(), pos.getY());
-		vehicle->ship.setRotation(bearing);
+	if (vehicle != NULL) {
+		vehicle->pos = pos;
+		vehicle->bearing = bearing;
+		vehicle->update(delta);
 	}
 
 	player.setRotation(bearing);
@@ -145,6 +121,42 @@ void Player::update(const sf::Time& delta) {
 	}
 }
 
+void Player::enterVehicle(Vehicle* v) {
+	if (v != NULL) {
+		remObjectStatic(v);
+	}
+	else { return; }	// if it's not a vehicle, don't try to use it
+
+	vehicle = v;
+
+	bearing = v->ship.getRotation();
+	pos.setX(v->getPosition().x);
+	pos.setY(v->getPosition().y);
+
+	accelRate = v->getAcceleration();
+	topSpeed = v->getTopSpeed();
+	rotateSpeed = v->getRotationSpeed();
+
+	vehicleEnterCooldown.restart();
+}
+
+void Player::exitVehicle() {
+	if (vel.getMag() < 50) {
+
+		addObjectStatic(vehicle);
+
+		vehicle = NULL;
+		vel.setX(0);
+		vel.setY(0);
+
+		accelRate = onFootAccel;
+		topSpeed = onFootTopSpeed;
+		rotateSpeed = onFootTopSpeed;
+
+		vehicleEnterCooldown.restart();
+	}
+}
+
 void Player::onCollide(Collidable& other)
 {
 	std::cout << "COLLIDE!: " << other.getTag().toAnsiString() << std::endl;
@@ -154,16 +166,7 @@ void Player::onCollide(Collidable& other)
 	{
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::F))
 		{
-			vehicle = dynamic_cast<Vehicle*>(&other);
-
-			if (vehicle != NULL)
-				remObjectStatic(vehicle);
-
-			bearing = vehicle->ship.getRotation();
-			pos.setX(vehicle->getPosition().x);
-			pos.setY(vehicle->getPosition().y);
-
-			vehicleEnterCooldown.restart();
+			enterVehicle(dynamic_cast<Vehicle*>(&other));
 		}
 	}
 }
@@ -178,5 +181,5 @@ void Player::draw(sf::RenderTarget& target, sf::RenderStates states) const
 		target.draw(player, states);
 	}
 	// Draw collision box
-	target.draw(col, states);
+	// target.draw(col, states);
 }

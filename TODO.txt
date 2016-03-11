@@ -1,5 +1,11 @@
 TODO ~~~
 
+- To Add:
+	> Deceleration value in Entity, with accelRate
+	>> ? either slow down player with this value, or slow
+		them down with drag, and slow them down with decel
+		value only when decellerating 
+
 - Inventory
 	> different ship types
 	> input from command line, spawn at your coords
@@ -15,6 +21,9 @@ TODO ~~~
 	> Fix problem of having so many coordinate types
 	>> Transformable, position vector, sprite position
 	>> This fix will also aid in fixing hit boxes
+	> COMMENTS
+	> Fix ship updating things
+	> Change player's collision box to ship's when in ship
 
 - Map
 	? Write map to file and load in, or just hardcode map in code

@@ -89,6 +89,8 @@ public:
 	Updatable() { gameObjectType |= 0b001; };
 	virtual ~Updatable() {};
 	virtual void update(const sf::Time&) = 0;
+
+	int ID = 99;
 };
 
 /*                      DRAWABLE
@@ -139,4 +141,16 @@ class Entity : public Drawable, public Updatable, public Collidable
 {
 public:
 	virtual ~Entity() {};
+	void update(const sf::Time& delta);
+
+	vec::Vector2 pos, vel;
+
+	float bearing;	// in degrees
+protected:
+	float accelRate, topSpeed, rotateSpeed;
+
+	enum MOVEMENT { FORWARD = 1, REVERSE = -1, STILL = 0,
+					CLWISE = 1, COCLWISE = -1, LEFT = -1, RIGHT = 1 };
+
+	int motion, turning, strafe;
 };
