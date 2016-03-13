@@ -19,6 +19,7 @@ public:
 
 	bool loadFile(const sf::String& fileName);
 	sf::Texture* getTex(const sf::String& texName);
+	sf::Vector2i getTexPivot(const sf::String& texName);
 
 private:
 	// Small struct to hold both the texture and coordinates for the map
@@ -26,6 +27,7 @@ private:
 	{
 		sf::Texture* tex;
 		sf::IntRect texCoords;
+		sf::Vector2i pivot;
 	};
 
 	sf::String sheetName;
