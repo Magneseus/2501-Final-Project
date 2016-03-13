@@ -25,7 +25,8 @@ namespace vec
 		~Vector2();
 
 		// GETTERS
-		double getMag() const;
+		double getMag();
+		double getMagConst() const;
 		double getX() const;
 		double getY() const;
 		sf::Vector2f getSfVec() const;
@@ -52,6 +53,7 @@ namespace vec
 		void _mag();
 
 		double x, y, mag;
+		bool changedMag;
 	};
 
 	// SIMPLE GLOBAL OPERATIONS

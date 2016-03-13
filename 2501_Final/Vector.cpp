@@ -4,7 +4,8 @@ namespace vec
 {
 	Vector2::Vector2()
 		: x(0),
-		y(0)
+		y(0),
+		changedMag(true)
 	{
 		_mag();
 	}
@@ -12,21 +13,24 @@ namespace vec
 	// ANGLE CONSTRUCTOR (Radians)
 	Vector2::Vector2(int angle)
 		: x(std::cos(angle)),
-		y(std::sin(angle))
+		y(std::sin(angle)),
+		changedMag(true)
 	{
 		_mag();
 	}
 
 	Vector2::Vector2(float angle)
 		: x(std::cos(angle)),
-		y(std::sin(angle))
+		y(std::sin(angle)),
+		changedMag(true)
 	{
 		_mag();
 	}
 
 	Vector2::Vector2(double angle)
 		: x(std::cos(angle)),
-		y(std::sin(angle))
+		y(std::sin(angle)),
+		changedMag(true)
 	{
 		_mag();
 	}
@@ -34,21 +38,24 @@ namespace vec
 	// X&Y CONSTRUCTORS
 	Vector2::Vector2(int _x, int _y)
 		: x(_x),
-		y(_y)
+		y(_y),
+		changedMag(true)
 	{
 		_mag();
 	}
 
 	Vector2::Vector2(float _x, float _y)
 		: x(_x),
-		y(_y)
+		y(_y),
+		changedMag(true)
 	{
 		_mag();
 	}
 
 	Vector2::Vector2(double _x, double _y)
 		: x(_x),
-		y(_y)
+		y(_y),
+		changedMag(true)
 	{
 		_mag();
 	}
@@ -58,7 +65,17 @@ namespace vec
 
 
 	// GETTERS
-	double Vector2::getMag() const { return mag; }
+	double Vector2::getMag()
+	{
+		if (changedMag)
+		{
+			mag = getMagConst();
+			changedMag = false;
+		}
+
+		return mag;
+	}
+	double Vector2::getMagConst() const { return std::sqrt((x*x) + (y*y)); }
 	double Vector2::getX() const { return x; }
 	double Vector2::getY() const { return y; }
 	sf::Vector2f Vector2::getSfVec() const { return sf::Vector2f(x, y); }
@@ -67,7 +84,7 @@ namespace vec
 	Vector2& Vector2::setMag(double m)
 	{
 		// Check for zero mag
-		if (mag == 0)
+		if (getMag() == 0)
 		{
 			x = m;
 			y = 0;
@@ -75,7 +92,7 @@ namespace vec
 		}
 		else
 		{
-			double oldMag = mag;
+			double oldMag = getMag();
 			x /= oldMag;
 			y /= oldMag;
 
@@ -174,7 +191,7 @@ namespace vec
 
 	double Vector2::angleBetween(const Vector2& r) const
 	{
-		return std::acos( dot(r) / (getMag() * r.getMag()) );
+		return std::acos( dot(r) / (getMagConst() * r.getMagConst()) );
 	}
 
 	Vector2& Vector2::rotate(const double angle)
@@ -193,7 +210,8 @@ namespace vec
 	// PRIVATE FUNCTIONS
 	void Vector2::_mag()
 	{
-		mag = std::sqrt((x * x) + (y * y));
+		changedMag = true;
+		//mag = std::sqrt((x * x) + (y * y));
 	}
 
 
@@ -255,7 +273,7 @@ namespace vec
 
 	double angleBetween(const Vector2& l, const Vector2& r)
 	{
-		return std::acos(dot(l, r) / (l.getMag() * r.getMag()));
+		return std::acos(dot(l, r) / (l.getMagConst() * r.getMagConst()));
 	}
 
 	Vector2 rotate(const Vector2& vec, const double angle)
@@ -272,7 +290,7 @@ namespace vec
 // OTHER OPERATIONS
 std::ostream& operator<<(std::ostream& out, const vec::Vector2& vec)
 {
-	return out << "(" << vec.getX() << ", " << vec.getY() << ")[" << vec.getMag() << "]";
+	return out << "(" << vec.getX() << ", " << vec.getY() << ")[" << vec.getMagConst() << "]";
 }
 
 double toRadians(double degrees)
