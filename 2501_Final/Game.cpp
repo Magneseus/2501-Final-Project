@@ -26,6 +26,7 @@ void Game::loop()
 
 		if (renderClock.getElapsedTime() > timePerFrame)
 		{
+			view->addFPS(renderClock.getElapsedTime());
 			view->render();
 			renderClock.restart();
 		}

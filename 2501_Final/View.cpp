@@ -6,9 +6,10 @@ View::View(Model* m)
 	: model(m),
 	WINDOW_WIDTH(800),
 	WINDOW_HEIGHT(800),
-	window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Space Pirates...?")
+	window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Space Pirates...?"),
+	showFPS(true)
 {
-	window.setFramerateLimit(60);
+	//window.setFramerateLimit(60);
 
 	/*
 	temp = new AnimatedSprite();
@@ -42,6 +43,13 @@ View::View(Model* m)
 	hangar.setTextureRect(sf::IntRect(0, 0, 64 * 6, 64 * 6));
 	hangar.setOrigin(64 * 3, 64 * 3);
 	hangar.setPosition(400, 400);
+
+	// Load some fonts
+	if (!Global::niceFont.loadFromFile("fonts/FiraSans-Regular.otf"))
+	{
+		std::cout << "Nice font not loaded!\n";
+	}
+	fpsText.setFont(Global::niceFont);
 }
 
 View::~View()
@@ -73,6 +81,26 @@ void View::render()
 	}
 
 	//temp->draw(&window);
+
+	// display FPS
+	if (showFPS)
+	{
+		float total = 0;
+		for (auto it = fps.begin(); it != fps.end(); ++it)
+			total += *it;
+
+		total /= fps.size();
+		
+		int FPS = 1.0f / total;
+		std::stringstream fpsString;
+		fpsString << "FPS: " << FPS;
+
+		fpsText.setString(fpsString.str());
+		fpsText.setCharacterSize(20);
+		fpsText.setColor(sf::Color::White);
+		fpsText.setPosition(sf::Vector2f(0, 0));
+		window.draw(fpsText);
+	}
 	
 	window.display();
 }
@@ -148,4 +176,12 @@ void View::setTransform(const sf::Transform& _trans)
 sf::Transform View::getTransform()
 {
 	return globalTransform;
+}
+
+void View::addFPS(const sf::Time& timeForFrame)
+{
+	fps.push_back(timeForFrame.asSeconds());
+
+	if (fps.size() > 20)
+		fps.pop_front();
 }

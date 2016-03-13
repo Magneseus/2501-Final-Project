@@ -8,6 +8,7 @@
 
 #include <SFML\Window.hpp>
 #include <SFML\Graphics.hpp>
+#include <queue>
 
 class View
 {
@@ -23,6 +24,9 @@ public:
 	void setTransform(const sf::Transform&);
 	sf::Transform getTransform();
 
+	void addFPS(const sf::Time&);
+	void toggleFPS();
+
 	int WINDOW_WIDTH, WINDOW_HEIGHT;
 	sf::RenderWindow window;
 
@@ -36,4 +40,8 @@ private:
 	Model* model;
 	std::vector<Drawable*> drawables;
 	sf::Transform globalTransform;
+
+	std::deque<float> fps;
+	sf::Text fpsText;
+	bool showFPS;
 };

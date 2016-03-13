@@ -27,6 +27,7 @@ class Global
 {
 public:
 	static sf::Vector2i mouseWindowCoords;
+	static sf::Font niceFont;
 };
 
 /*                   	GAME OBJECT

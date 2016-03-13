@@ -22,5 +22,5 @@ private:
 	sf::Clock clock;
 	sf::Clock renderClock;
 	sf::Time timePerFrame;
-	const float frameRate = 60.0f;
+	const float frameRate = 120.0f;
 };

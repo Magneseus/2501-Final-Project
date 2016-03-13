@@ -9,6 +9,7 @@ std::vector<GameObject*> GameObject::staticGameObjectsRem;
 
 // Some more sp00ky global/static stuff
 sf::Vector2i Global::mouseWindowCoords;
+sf::Font Global::niceFont;
 
 void Entity::update(const sf::Time& delta) {
 	// TODO: Don't have it always look at mouse
