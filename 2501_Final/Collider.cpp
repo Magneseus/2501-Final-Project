@@ -48,7 +48,11 @@ bool Collider::collide(Collider& other) const
 	{
 		for (auto it2 = other.hitbox.begin(); it2 != other.hitbox.end(); ++it2)
 		{
-			if ((*it1)->collide(*it2))
+			// Check if they're even close to each other
+			float dist = (*it1)->getPos().dist((*it2)->getPos());
+			float minDist = (*it1)->getRad() + (*it2)->getRad();
+
+			if (dist < minDist && (*it1)->collide(*it2))
 			{
 				return true;
 			}
