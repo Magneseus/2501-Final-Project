@@ -28,7 +28,7 @@ namespace vec
 		double getMag() const;
 		double getX() const;
 		double getY() const;
-		sf::Vector2f getSfVec();
+		sf::Vector2f getSfVec() const;
 
 		// SETTERS
 		Vector2& setMag(double);

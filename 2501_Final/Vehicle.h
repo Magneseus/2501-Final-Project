@@ -22,6 +22,7 @@ public:
 	float getAcceleration();
 	float getTopSpeed();
 	float getRotationSpeed();
+	float getDragValue();
 
 	sf::Sprite ship;
 

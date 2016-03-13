@@ -18,6 +18,8 @@ Player::Player()
 
 	vehicleEnterTime = sf::seconds(1);
 
+	primary = new Weapon(10, 10, 50);
+
 	playerTexture.loadFromFile("img/player.png");
 	player.setTexture(playerTexture);
 	
@@ -43,9 +45,6 @@ Player::~Player()
 {
 
 }
-
-//float Player::getRotationSpeed() { return (vehicle == NULL) ? 180 : vehicle->getRotationSpeed(); }
-//float Player::getAcceleration() { return (vehicle == NULL) ? 0 : vehicle->getAcceleration(); }
 
 void Player::update(const sf::Time& delta) {
 
@@ -92,22 +91,24 @@ void Player::update(const sf::Time& delta) {
 		}
 	}
 
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z)) {
+		brakesOn = true;
+	}
+	else {
+		brakesOn = false;
+	}
+
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::F) && 
 			vehicleEnterCooldown.getElapsedTime() > vehicleEnterTime)
 	{
 		exitVehicle();
 	}
 
-	float temp = bearing;
-
 	Entity::update(delta);
-	
-	float deltaBearing = temp - bearing;
-	//if (deltaBearing) std::cout << "Bearing changed by " << deltaBearing << std::endl;
 
 	player.setPosition(pos.getX(), pos.getY());
 	col.moveTo(pos);
-	//col.rotateTo(bearing);
+	col.rotateTo(toRadians(bearing));
 
 	if (vehicle != NULL) {
 		vehicle->pos = pos;
@@ -123,6 +124,10 @@ void Player::update(const sf::Time& delta) {
 	}
 	else {
 		//shipTexture = shipStill;
+	}
+
+	if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
+		primary->shoot(toRadians(bearing), pos);
 	}
 }
 
@@ -141,6 +146,7 @@ void Player::enterVehicle(Vehicle* v) {
 	accelRate = v->getAcceleration();
 	topSpeed = v->getTopSpeed();
 	rotateSpeed = v->getRotationSpeed();
+	dragValue = v->getDragValue();
 
 	vehicleEnterCooldown.restart();
 }
@@ -157,6 +163,7 @@ void Player::exitVehicle() {
 		accelRate = onFootAccel;
 		topSpeed = onFootTopSpeed;
 		rotateSpeed = onFootRotateSpeed;
+		dragValue = 0;
 
 		vehicleEnterCooldown.restart();
 	}

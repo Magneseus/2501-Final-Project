@@ -12,6 +12,7 @@ sf::Vector2i Global::mouseWindowCoords;
 
 void Entity::update(const sf::Time& delta) {
 	// TODO: Don't have it always look at mouse
+
 	vec::Vector2 mousePos = vec::Vector2(Global::mouseWindowCoords.x, Global::mouseWindowCoords.y);
 	vec::Vector2 mDif = mousePos - vec::Vector2(400, 400);
 
@@ -41,13 +42,22 @@ void Entity::update(const sf::Time& delta) {
 	vec::Vector2 accel(toRadians(bearing));
 	accel.setMag(accelRate * motion * delta.asSeconds());
 	vel += accel;
-	//vel *= .999999; DRAG?
+
+	// Strafe acceleration
+	vec::Vector2 strafeAccel(toRadians(bearing + 90));
+	strafeAccel.setMag(accelRate * strafe * delta.asSeconds());
+	vel += strafeAccel;
+	
+	// simulate drag, lose dragValue% speed/s if not thrusting
+	// x2 dragValue% if "brakes" are on
+	// brakes on overrules thrusting
+	if (brakesOn || (motion == STILL && strafe == STILL)) {	
+		vel *= std::fmin(1, 1 - (((brakesOn*2)+1) * dragValue * delta.asSeconds()));
+
+		if (vel.getMag() < 25) vel.setMag(0);
+	}
 
 	if (vel.getMag() > topSpeed) vel.setMag(topSpeed);
-
-	vec::Vector2 strafeAccel(toRadians(bearing + 90));
-	strafeAccel.setMag(rotateSpeed * strafe * delta.asSeconds());
-	vel += strafeAccel;
 
 	// Calculate position
 	pos += vel * delta.asSeconds();

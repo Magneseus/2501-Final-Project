@@ -89,8 +89,6 @@ public:
 	Updatable() { gameObjectType |= 0b001; };
 	virtual ~Updatable() {};
 	virtual void update(const sf::Time&) = 0;
-
-	int ID = 99;
 };
 
 /*                      DRAWABLE
@@ -147,7 +145,10 @@ public:
 
 	float bearing;	// in degrees
 protected:
-	float accelRate, topSpeed, rotateSpeed;
+	float accelRate, topSpeed, rotateSpeed, dragValue;	// per second
+	bool brakesOn = false;
+
+	vec::Vector2 target;	// where the entity is trying to look
 
 	enum MOVEMENT { FORWARD = 1, REVERSE = -1, STILL = 0,
 					CLWISE = 1, COCLWISE = -1, LEFT = -1, RIGHT = 1 };

@@ -134,12 +134,14 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Model.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="Projectile.cpp" />
     <ClCompile Include="Shape.cpp" />
     <ClCompile Include="SpriteSheet.cpp" />
     <ClCompile Include="Trigger.cpp" />
     <ClCompile Include="Vector.cpp" />
     <ClCompile Include="Vehicle.cpp" />
     <ClCompile Include="View.cpp" />
+    <ClCompile Include="Weapon.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="AnimatedSprite.h" />
@@ -149,12 +151,14 @@
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Model.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="Projectile.h" />
     <ClInclude Include="Shape.h" />
     <ClInclude Include="SpriteSheet.h" />
     <ClInclude Include="Trigger.h" />
     <ClInclude Include="Vector.h" />
     <ClInclude Include="Vehicle.h" />
     <ClInclude Include="View.h" />
+    <ClInclude Include="Weapon.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

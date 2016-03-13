@@ -1,10 +1,6 @@
 TODO ~~~
 
-- To Add:
-	> Deceleration value in Entity, with accelRate
-	>> ? either slow down player with this value, or slow
-		them down with drag, and slow them down with decel
-		value only when decellerating 
+SPLIT UP GAMEOBJECT AND ENTITY
 
 - Inventory
 	> different ship types
@@ -50,6 +46,9 @@ TODO ~~~
 		turret turn towards the player, follow similar to how the 
 		Player follows the mouse
 	> Begin shooting at player, using getFireRate() (IN ENTITY!!)
+	> Add health to Entity
+	> Destroy/Delete Entity on <=0 health
+	>> call onDestroy() ?
 	> Have projectiles damage Entity on collision
 	> Create Weapon class:
 	>> fireRate, damage, icon (texture for bullet)

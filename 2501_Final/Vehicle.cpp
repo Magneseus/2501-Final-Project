@@ -7,12 +7,13 @@ void Vehicle::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 }
 
 void Vehicle::onCollide(Collidable& other) {
-
+	if (other.getTag() == "Projectile") delObjectStatic(this);
 }
 
 float Vehicle::getAcceleration()	{ return baseAccel; }
 float Vehicle::getRotationSpeed()	{ return baseRotateSpeed; }
 float Vehicle::getTopSpeed()		{ return baseTopSpeed; }
+float Vehicle::getDragValue()		{ return dragValue; }
 
 void Vehicle::update(const sf::Time& delta) {
 	ship.setPosition(pos.getX(), pos.getY());
@@ -27,6 +28,7 @@ BasicShip::BasicShip() {
 	baseAccel = 250;
 	baseRotateSpeed = 180;
 	baseTopSpeed = 1000;
+	dragValue = 0.15;
 
 	shipTexture.loadFromFile("img/medspeedster.png");
 
@@ -48,6 +50,7 @@ TransportShip::TransportShip() {
 	baseAccel = 150;
 	baseRotateSpeed = 90;
 	baseTopSpeed = 500;
+	dragValue = 0.15;
 
 	shipTexture.loadFromFile("img/ship_transport.png");
 
