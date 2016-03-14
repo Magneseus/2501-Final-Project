@@ -6,6 +6,7 @@
 #include "Vehicle.h"
 #include "Projectile.h"
 #include "Weapon.h"
+#include "Turret.h"
 
 #include <SFML\System.hpp>
 #include <SFML\Graphics.hpp>
@@ -29,13 +30,18 @@ public:
 
 	void enterVehicle(Vehicle* v);
 	void exitVehicle();
+	void spawn();
 
 private:
-	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;	// from Drawable
-	
-	Weapon* primary;
+	Loadout* currentLoadout;	// player's current loadout (from vehicle)
+	Weapon* currentWeapon;
 
+	Loadout* onFootLoadout;	// player's loadout
 	const float onFootAccel = 0;
 	const float onFootTopSpeed = 100;
 	const float onFootRotateSpeed = 180;
+
+	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;	// from Drawable
+	void switchLoadouts(Loadout* newest);
+	void switchWeapons();
 };

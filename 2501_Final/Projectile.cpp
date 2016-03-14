@@ -29,8 +29,8 @@ void Projectile::update(const sf::Time& delta) {
 }
 
 void Projectile::onCollide(Collidable& other) { 
-	if(other.getTag() != "Player" && other.getTag() != "Projectile")
-		delObjectStatic(this); 
+	//if(other.getTag() != "Player" && other.getTag() != "Projectile")
+	//	delObjectStatic(this); 
 }
 
 void Projectile::draw(sf::RenderTarget& target, sf::RenderStates states) const {
@@ -40,5 +40,4 @@ void Projectile::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 	s.setOrigin(5, 5);
 
 	target.draw(s, states);
-	target.draw(col, states);
 }

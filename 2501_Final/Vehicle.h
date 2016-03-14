@@ -1,6 +1,7 @@
 #pragma once
 
 #include "GameObject.h"
+#include "Weapon.h"
 
 /*					Vehicle
 	Entities visible on screen, can be interacted 
@@ -8,6 +9,8 @@
 	class - holds different accelerations and data
 	on movement. Also stores the textures of the 
 	ship.
+
+	TODO: Privatize vehicle, make player friend class
 */	
 
 class Vehicle : public Entity {
@@ -25,6 +28,8 @@ public:
 	float getDragValue();
 
 	sf::Sprite ship;
+
+	Loadout* weapons;
 
 protected:
 	float baseAccel, baseTopSpeed, baseRotateSpeed;

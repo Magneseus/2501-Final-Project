@@ -30,6 +30,10 @@ BasicShip::BasicShip() {
 	baseTopSpeed = 1000;
 	dragValue = 0.15;
 
+	weapons = new Loadout();
+	weapons->primary = new Weapon(5, 10, 500);
+	weapons->secondary = new Weapon(1, 50, 250);
+
 	shipTexture.loadFromFile("img/medspeedster.png");
 
 	ship.setTexture(shipTexture);
@@ -42,9 +46,7 @@ BasicShip::BasicShip() {
 	setTag(sf::String("Vehicle"));
 }
 
-BasicShip::~BasicShip() {
-
-}
+BasicShip::~BasicShip() {}
 
 TransportShip::TransportShip() {
 	baseAccel = 150;
@@ -57,7 +59,6 @@ TransportShip::TransportShip() {
 	ship.setTexture(shipTexture);
 	ship.setOrigin(42.5, 42.5);
 
-
 	Rect* r = new Rect(vec::Vector2(-30, -50), vec::Vector2(50, 50));
 	col.addShape(r);
 
@@ -65,9 +66,4 @@ TransportShip::TransportShip() {
 }
 
 TransportShip::~TransportShip() {}
-
-
-//void BasicShip::update(const sf::Time& delta) {
-
-//}
 

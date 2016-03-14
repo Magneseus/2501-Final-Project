@@ -15,3 +15,8 @@ private:
 
 	sf::Clock cooldown;
 };
+
+struct Loadout {
+	Weapon* primary;
+	Weapon* secondary;
+};

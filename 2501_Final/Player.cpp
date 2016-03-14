@@ -14,11 +14,14 @@ Player::Player()
 
 	addObjectStatic(vehicle);
 
+	Turret* turret = new Turret(vec::Vector2(500, 100), new Weapon(1, 50, 250));
+	addObjectStatic(turret);
+
 	vehicle = NULL;
 
-	vehicleEnterTime = sf::seconds(1);
+	spawn();
 
-	primary = new Weapon(10, 10, 50);
+	vehicleEnterTime = sf::seconds(1);
 
 	playerTexture.loadFromFile("img/player.png");
 	player.setTexture(playerTexture);
@@ -127,7 +130,21 @@ void Player::update(const sf::Time& delta) {
 	}
 
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
-		primary->shoot(toRadians(bearing), pos);
+		if (vehicle == NULL) {
+			// on foot shoot
+			currentWeapon->shoot(toRadians(bearing), pos);
+		}
+		else {
+			// in ship shoot
+			currentLoadout->primary->shoot(toRadians(bearing), pos);
+		}
+	} else if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Right)) {
+		if (vehicle == NULL) {
+			switchWeapons();
+		}
+		else {
+			currentLoadout->secondary->shoot(toRadians(bearing), pos);
+		}
 	}
 }
 
@@ -148,6 +165,8 @@ void Player::enterVehicle(Vehicle* v) {
 	rotateSpeed = v->getRotationSpeed();
 	dragValue = v->getDragValue();
 
+	switchLoadouts(v->weapons);
+
 	vehicleEnterCooldown.restart();
 }
 
@@ -165,8 +184,34 @@ void Player::exitVehicle() {
 		rotateSpeed = onFootRotateSpeed;
 		dragValue = 0;
 
+		switchLoadouts(onFootLoadout);
+
 		vehicleEnterCooldown.restart();
 	}
+}
+
+void Player::switchLoadouts(Loadout* newest) {
+	currentLoadout = newest;
+	currentWeapon = currentLoadout->primary;
+}
+
+void Player::switchWeapons() {
+	if (currentWeapon == currentLoadout->primary) {
+		currentWeapon = currentLoadout->secondary;
+	} else {
+		currentWeapon = currentLoadout->primary;
+	}
+}
+
+void Player::spawn() {
+	// deal with reseting player here
+	// called at the beginning of game/round?
+
+	onFootLoadout = new Loadout();
+	onFootLoadout->primary = new Weapon(1, 10, 350);
+	onFootLoadout->secondary = new Weapon(2, 10, 500);
+
+	switchLoadouts(onFootLoadout);
 }
 
 void Player::onCollide(Collidable& other)

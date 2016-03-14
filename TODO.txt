@@ -1,15 +1,6 @@
 TODO ~~~
 
-SPLIT UP GAMEOBJECT AND ENTITY
-
-- Inventory
-	> different ship types
-	> input from command line, spawn at your coords
-	> make function to spawn at specific coords
-	> add basic UI functionality
-	> have ship selection screen, spawns at specific coords
-
-- Tidy up
+- "Small" things
 	> Clean up player file
 	>> Remove unnecessary things in .h, lines in .cpp
 	> Give AnimatedSprite a sprite sheet
@@ -20,6 +11,18 @@ SPLIT UP GAMEOBJECT AND ENTITY
 	> COMMENTS
 	> Fix ship updating things
 	> Change player's collision box to ship's when in ship
+	> Give Entity (or turret) an idle spin
+	>> Maybe give Turret a range to spin in, flip bearing when beyond it
+	>> Give Entity or Turret a "Target" Entity to try to attack
+	>>> Also decides behavior - if no target, idle
+
+
+- Inventory
+	> different ship types
+	> input from command line, spawn at your coords
+	> make function to spawn at specific coords
+	> add basic UI functionality
+	> have ship selection screen, spawns at specific coords
 
 - Map
 	? Write map to file and load in, or just hardcode map in code
@@ -32,27 +35,16 @@ SPLIT UP GAMEOBJECT AND ENTITY
 	> Have basic interactions - zooming when in hangar, doors open
 
 - Combat
-	> Create projectiles
-	>> Entity, delete self on collision
-	> Have player shoot projectiles out towards mouse
-	? Hit scan vs Projectiles
-	? Different projectiles, Faster/Stronger etc
-	> Add getFireRate(), getDamage() to Vehicle and Player/Entity
-	> Create turrets/defenses class
-	> Follow same turning as player, possibly move code from Player
-		to Entity, letting all moving entities turn the same way!
+	> Add parent to Projectile. Don't let parent interfere with projectile
 	> When triggered (or Player nearby... even possibly make it
 		check if the player is seen with angleBetween method), have
 		turret turn towards the player, follow similar to how the 
 		Player follows the mouse
-	> Begin shooting at player, using getFireRate() (IN ENTITY!!)
+	> Begin shooting at player
 	> Add health to Entity
+	> Have projectiles damage Entity on collision
+	>> Projectile::onCollide deals damage in form of Entity::takeDamage(damage, parent)
+	>> pass parent in in case onDestroy needs it (points?)
 	> Destroy/Delete Entity on <=0 health
 	>> call onDestroy() ?
-	> Have projectiles damage Entity on collision
-	> Create Weapon class:
-	>> fireRate, damage, icon (texture for bullet)
-	> Add Weapon to Entity and Vehicle (Vehicle is Entity...)
-	> getFireRate(), getDamage() changed to return either the
-		Entity's value, or Vehicle's value based on veh==NULL
 	> We gots combat now yo
