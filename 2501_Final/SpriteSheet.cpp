@@ -63,6 +63,27 @@ sf::Texture* SpriteSheet::getTex(const sf::String& texName)
 }
 
 /*
+	Returns a vector representing the pivot point (origin) of the texture.
+
+	If the key doesn't exist, a vector of [-1, -1] will be returned.
+
+	Parameters:
+		- texName : Key to search for (texture file name).
+	Return:
+		- copy of pivot vector, or [-1, -1] if key is invalid
+*/
+sf::Vector2i SpriteSheet::getTexPivot(const sf::String& texName)
+{
+	// Check to see if the key exists
+	if (texMap.count(texName) <= 0)
+		return sf::Vector2i(-1, -1);
+
+	texStruct& val = texMap[texName];
+
+	return val.pivot;
+}
+
+/*
 	This function will attempt to load in an image designated by fileName, as
 	well as it's XML counterpart (must be the same filename but with a .xml suffix).
 
@@ -104,23 +125,28 @@ bool SpriteSheet::loadFile(const sf::String& fileName)
 	ss_rootNode = ss_doc.first_node("TextureAtlas");
 
 	// Parse the XML tree
-	for (auto node = ss_rootNode->first_node("SubTexture"); node; node = node->next_sibling())
+	for (auto node = ss_rootNode->first_node("sprite"); node; node = node->next_sibling())
 	{
-		std::string key = node->first_attribute("name")->value();
+		std::string key = node->first_attribute("n")->value();
 		std::string xstr = node->first_attribute("x")->value();
 		std::string ystr = node->first_attribute("y")->value();
-		std::string wstr = node->first_attribute("width")->value();
-		std::string hstr = node->first_attribute("height")->value();
+		std::string wstr = node->first_attribute("w")->value();
+		std::string hstr = node->first_attribute("h")->value();
+		std::string pxstr = node->first_attribute("pX")->value();
+		std::string pystr = node->first_attribute("pY")->value();
 
-		int x, y, w, h;
+		int x, y, w, h, px, py;
 		if (!(std::stringstream(xstr) >> x)) x = 0;
 		if (!(std::stringstream(ystr) >> y)) y = 0;
 		if (!(std::stringstream(wstr) >> w)) w = 0;
 		if (!(std::stringstream(hstr) >> h)) h = 0;
+		if (!(std::stringstream(pxstr) >> px)) px = 0;
+		if (!(std::stringstream(pystr) >> py)) py = 0;
 
 		// Store the new info
 		texStruct newTexStruct;
 		newTexStruct.texCoords = sf::IntRect(x, y, w, h);
+		newTexStruct.pivot = sf::Vector2i(px, py);
 		newTexStruct.tex = NULL;
 
 		texMap[key] = newTexStruct;
