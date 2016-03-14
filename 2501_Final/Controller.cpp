@@ -41,7 +41,7 @@ void Controller::gameController()
 {
 	// Set the view's global transform
 	sf::Transform playerPos;
-	playerPos.translate(-(p->pos).getSfVec());
+	playerPos.translate(-(p->getPosition()).getSfVec());
 	playerPos.translate(view->WINDOW_WIDTH / 2, view->WINDOW_HEIGHT / 2);
 
 	view->setTransform(playerPos);

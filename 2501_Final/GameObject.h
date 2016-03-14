@@ -33,7 +33,7 @@ public:
 /*                   	GAME OBJECT
 	The base game object. All GameObjects will have a transform.
 */
-class GameObject : public sf::Transformable
+class GameObject
 {
 	friend class Controller;
 
@@ -53,6 +53,11 @@ public:
 	// Functions for manipulating type
 	void andType(int x) { gameObjectType &= x; }
 
+	// Getter & Setters for position/rotation
+	vec::Vector2 getPosition() { return position; }
+	void setPosition(vec::Vector2 _position) { position = _position; }
+	double getRotation() { return rotation; }
+	void setRotation(double _rotation) { rotation = _rotation; }
 
 	// Functions for addingObjects on the fly
 	static void addObjectStatic(GameObject* go)
@@ -71,6 +76,9 @@ public:
 	}
 
 protected:
+	vec::Vector2 position;
+	double rotation;
+
 	bool should_remove = false;
 	int gameObjectType = 0;
 
@@ -111,13 +119,20 @@ protected:
 
 	TODO: Make a Collider
 */
-class Collidable : public virtual GameObject
+class Collidable : public Updatable
 {
 public:
 	Collidable() { gameObjectType |= 0b100; }
 	virtual ~Collidable() {};
+
 	virtual void onCollide(Collidable& other) = 0;
-	
+
+	virtual void update(const sf::Time& delta)
+	{
+		col.moveTo(getPosition());
+		col.rotateTo(toRadians(getRotation()));
+	}
+
 	// Collides two hitboxes together
 	static bool collide(Collidable& c1, Collidable& c2)
 	{
@@ -136,15 +151,14 @@ protected:
 	This object will comprise the majority of in-game objects.
 	It will have all three of the above components.
 */
-class Entity : public Drawable, public Updatable, public Collidable
+class Entity : public Drawable, public Collidable
 {
 public:
 	virtual ~Entity() {};
 	void update(const sf::Time& delta);
 
-	vec::Vector2 pos, vel;
+	vec::Vector2 vel;
 
-	float bearing;	// in degrees
 protected:
 	float accelRate, topSpeed, rotateSpeed, dragValue;	// per second
 	bool brakesOn = false;

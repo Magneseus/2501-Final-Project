@@ -36,7 +36,19 @@ void Model::update(const sf::Time& delta)
 		else
 		{
 			if (*it != NULL)
+			{
 				(*it)->update(delta);
+				
+				// Check if it's collidable and needs to be updated
+				if ((*it)->isCollidable())
+				{
+					Collidable* c = dynamic_cast<Collidable*>(*it);
+					if (c != NULL)
+					{
+						(*c).Collidable::update(delta);
+					}
+				}
+			}
 			++it;
 		}
 

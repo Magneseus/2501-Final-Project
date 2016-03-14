@@ -3,7 +3,7 @@
 
 Projectile::Projectile(vec::Vector2 p, vec::Vector2 v, float dam, float speed) {
 	vel = v;
-	pos = p;
+	position = p;
 	damage = dam;
 	topSpeed = speed;
 
@@ -24,8 +24,6 @@ void Projectile::update(const sf::Time& delta) {
 	vel.setMag(topSpeed);
 
 	Entity::update(delta);
-
-	col.moveTo(pos);
 }
 
 void Projectile::onCollide(Collidable& other) { 
@@ -35,7 +33,7 @@ void Projectile::onCollide(Collidable& other) {
 
 void Projectile::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 	sf::CircleShape s(5);
-	s.setPosition(pos.getSfVec());
+	s.setPosition(position.getSfVec());
 	s.setFillColor(sf::Color::Yellow);
 	s.setOrigin(5, 5);
 

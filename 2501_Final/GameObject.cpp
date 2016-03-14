@@ -18,7 +18,7 @@ void Entity::update(const sf::Time& delta) {
 	vec::Vector2 mDif = mousePos - vec::Vector2(400, 400);
 
 	// Get the current turning direction
-	vec::Vector2 turnVec(toRadians(bearing));
+	vec::Vector2 turnVec(toRadians(rotation));
 
 	// Set the turning direction
 	double angDif = toDegrees(mDif.angleBetween(turnVec));
@@ -31,21 +31,21 @@ void Entity::update(const sf::Time& delta) {
 	else
 		turning = COCLWISE;
 
-	bearing += delta.asSeconds() * rotateSpeed * turning;
+	rotation += delta.asSeconds() * rotateSpeed * turning;
 
-	// Bind bearing
-	if (bearing > 360)
-		bearing = std::fmod(bearing, 360.0f);
-	else if (bearing < 0)
-		bearing = 360.0f - std::fmod(std::abs(bearing), 360.0f);
+	// Bind rotation
+	if (rotation > 360)
+		rotation = std::fmod(rotation, 360.0f);
+	else if (rotation < 0)
+		rotation = 360.0f - std::fmod(std::abs(rotation), 360.0f);
 
 	// Calculate acceleration
-	vec::Vector2 accel(toRadians(bearing));
+	vec::Vector2 accel(toRadians(rotation));
 	accel.setMag(accelRate * motion * delta.asSeconds());
 	vel += accel;
 
 	// Strafe acceleration
-	vec::Vector2 strafeAccel(toRadians(bearing + 90));
+	vec::Vector2 strafeAccel(toRadians(rotation + 90));
 	strafeAccel.setMag(accelRate * strafe * delta.asSeconds());
 	vel += strafeAccel;
 	
@@ -61,5 +61,5 @@ void Entity::update(const sf::Time& delta) {
 	if (vel.getMag() > topSpeed) vel.setMag(topSpeed);
 
 	// Calculate position
-	pos += vel * delta.asSeconds();
+	position += vel * delta.asSeconds();
 }

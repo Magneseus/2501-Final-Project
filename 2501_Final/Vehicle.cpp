@@ -16,12 +16,9 @@ float Vehicle::getTopSpeed()		{ return baseTopSpeed; }
 float Vehicle::getDragValue()		{ return dragValue; }
 
 void Vehicle::update(const sf::Time& delta) {
-	ship.setPosition(pos.getX(), pos.getY());
-	setPosition(pos.getX(), pos.getY());
-	ship.setRotation(bearing);
-
-	col.moveTo(vec::Vector2(getPosition().x, getPosition().y));
-	col.rotateTo(toRadians(bearing));
+	ship.setPosition(position.getX(), position.getY());
+	setPosition(position);
+	ship.setRotation(rotation);
 }
 
 BasicShip::BasicShip() {

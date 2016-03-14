@@ -9,7 +9,7 @@ Player::Player()
 	addObjectStatic(vehicle);
 
 	vehicle = new BasicShip();
-	vehicle->pos = vec::Vector2(200, 250);
+	vehicle->setPosition(vec::Vector2(200, 250));
 	vehicle->vel = vec::Vector2(10, 10);
 
 	addObjectStatic(vehicle);
@@ -28,9 +28,8 @@ Player::Player()
 	
 	player.setOrigin(25, 25);
 
-	pos = vec::Vector2(300, 300);
-
-	bearing = 0;
+	position = vec::Vector2(300, 300);
+	rotation = 0;
 
 	accelRate = onFootAccel;
 	topSpeed = onFootTopSpeed;
@@ -109,17 +108,15 @@ void Player::update(const sf::Time& delta) {
 
 	Entity::update(delta);
 
-	player.setPosition(pos.getX(), pos.getY());
-	col.moveTo(pos);
-	col.rotateTo(toRadians(bearing));
+	player.setPosition(position.getX(), position.getY());
 
 	if (vehicle != NULL) {
-		vehicle->pos = pos;
-		vehicle->bearing = bearing;
+		vehicle->setPosition(position);
+		vehicle->setRotation(rotation);
 		vehicle->update(delta);
 	}
 
-	player.setRotation(bearing);
+	player.setRotation(rotation);
 
 	// Set the textures
 	if (motion == FORWARD) {
@@ -132,18 +129,18 @@ void Player::update(const sf::Time& delta) {
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
 		if (vehicle == NULL) {
 			// on foot shoot
-			currentWeapon->shoot(toRadians(bearing), pos);
+			currentWeapon->shoot(toRadians(rotation), position);
 		}
 		else {
 			// in ship shoot
-			currentLoadout->primary->shoot(toRadians(bearing), pos);
+			currentLoadout->primary->shoot(toRadians(rotation), position);
 		}
 	} else if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Right)) {
 		if (vehicle == NULL) {
 			switchWeapons();
 		}
 		else {
-			currentLoadout->secondary->shoot(toRadians(bearing), pos);
+			currentLoadout->secondary->shoot(toRadians(rotation), position);
 		}
 	}
 }
@@ -156,9 +153,8 @@ void Player::enterVehicle(Vehicle* v) {
 
 	vehicle = v;
 
-	bearing = v->ship.getRotation();
-	pos.setX(v->getPosition().x);
-	pos.setY(v->getPosition().y);
+	rotation = v->ship.getRotation();
+	position = v->getPosition();
 
 	accelRate = v->getAcceleration();
 	topSpeed = v->getTopSpeed();

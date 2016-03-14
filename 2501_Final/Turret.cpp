@@ -2,22 +2,22 @@
 #include "Turret.h"
 
 Turret::Turret(vec::Vector2 p, Weapon* w, float min, float max) {
-	pos = p;
+	position = p;
 	main = w;
 
 	minRotation = min;
 	maxRotation = max;
 
-	bearing = minRotation + std::rand() % maxRotation;
+	rotation = minRotation + std::rand() % maxRotation;
 
 	i.loadFromFile("img/smallturret.png");
 	s.setOrigin(16, 16);
-	s.setPosition(pos.getSfVec());
+	s.setPosition(position.getSfVec());
 	s.setTexture(i);
 
 	Rect* r = new Rect(vec::Vector2(-15, -15), vec::Vector2(25, 15));
 	col.addShape(r);
-	col.moveTo(pos);
+	col.moveTo(position);
 
 	state = IDLE;
 
@@ -35,10 +35,10 @@ void Turret::update(const sf::Time& delta) {
 		rotateSpeed = activeRotateSpeed;
 	}
 
-	if (bearing > maxRotation) {
+	if (rotation > maxRotation) {
 		sign = -1;
 	}
-	else if (bearing < minRotation) {
+	else if (rotation < minRotation) {
 		sign = 1;
 	}
 
@@ -47,12 +47,12 @@ void Turret::update(const sf::Time& delta) {
 		frenzyTimer.restart();
 	}*/
 
-	bearing += delta.asSeconds() * rotateSpeed * sign;
+	rotation += delta.asSeconds() * rotateSpeed * sign;
 
-	s.setRotation(bearing);
-	col.rotateTo(toRadians(bearing));
+	s.setRotation(rotation);
+	col.rotateTo(toRadians(rotation));
 
-	main->shoot(toRadians(bearing), pos);
+	main->shoot(toRadians(rotation), position);
 }
 
 void Turret::onCollide(Collidable& other) {
