@@ -54,6 +54,10 @@ TransportShip::TransportShip() {
 	baseTopSpeed = 500;
 	dragValue = 0.15;
 
+	weapons = new Loadout();
+	weapons->primary = new Weapon(1, 10, 500);
+	weapons->secondary = new Weapon(0.5, 50, 1000);
+
 	shipTexture.loadFromFile("img/ship_transport.png");
 
 	ship.setTexture(shipTexture);

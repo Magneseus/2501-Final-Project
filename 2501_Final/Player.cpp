@@ -14,7 +14,7 @@ Player::Player()
 
 	addObjectStatic(vehicle);
 
-	Turret* turret = new Turret(vec::Vector2(500, 100), new Weapon(1, 50, 250));
+	Turret* turret = new Turret(vec::Vector2(500, 100), new Weapon(0, 50, 250), 180, 360);
 	addObjectStatic(turret);
 
 	vehicle = NULL;

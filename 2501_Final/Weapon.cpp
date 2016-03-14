@@ -11,7 +11,7 @@ Weapon::~Weapon() {}
 
 // takes angle as radians
 void Weapon::shoot(float angle, vec::Vector2 origin) {
-	if (cooldown.getElapsedTime().asSeconds() > 1/fireRate) {
+	if (fireRate && cooldown.getElapsedTime().asSeconds() > 1/fireRate) {
 		vec::Vector2 targ(angle);
 		
 		GameObject* p = new Projectile(origin, targ, damage, speed);

@@ -15,6 +15,12 @@ TODO ~~~
 	>> Maybe give Turret a range to spin in, flip bearing when beyond it
 	>> Give Entity or Turret a "Target" Entity to try to attack
 	>>> Also decides behavior - if no target, idle
+	> Make projectiles/collisions less resource intensive
+	> Add booleans for important key presses
+	>> If event contains an important key/button, save it's state, reset 
+		at end of the loop
+	>> So that button presses are recognized even if you're not holding 
+		it during the update (most prevalent when trying to enter ships)
 
 
 - Inventory
