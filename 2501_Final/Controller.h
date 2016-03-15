@@ -4,6 +4,7 @@
 #include "View.h"
 #include "GameObject.h"
 #include "Player.h"
+#include "StaticSolids.h"
 
 #include <SFML\Window.hpp>
 

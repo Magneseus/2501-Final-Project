@@ -104,6 +104,11 @@ void Controller::initObjects()
 {
 	p = new Player();
 	addObject(p);
+
+	Wall* w1 = new Wall(vec::Vector2(-64 * 1, -64 * 3),
+		vec::Vector2(64 * 1, 64 * 3),
+		new sf::Texture());
+	addObject(w1);
 }
 
 

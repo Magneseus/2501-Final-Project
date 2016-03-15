@@ -137,6 +137,7 @@
     <ClCompile Include="Projectile.cpp" />
     <ClCompile Include="Shape.cpp" />
     <ClCompile Include="SpriteSheet.cpp" />
+    <ClCompile Include="StaticSolids.cpp" />
     <ClCompile Include="Trigger.cpp" />
     <ClCompile Include="Turret.cpp" />
     <ClCompile Include="Vector.cpp" />
@@ -160,6 +161,7 @@
     <ClInclude Include="Vector.h" />
     <ClInclude Include="Vehicle.h" />
     <ClInclude Include="View.h" />
+    <ClInclude Include="StaticSolids.h" />
     <ClInclude Include="Weapon.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

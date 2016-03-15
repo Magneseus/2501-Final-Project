@@ -80,8 +80,6 @@ void View::render()
 
 	}
 
-	//temp->draw(&window);
-
 	// display FPS
 	if (showFPS)
 	{
