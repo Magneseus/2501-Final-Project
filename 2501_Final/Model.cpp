@@ -63,6 +63,25 @@ void Model::update(const sf::Time& delta)
 			// If they are determined to be colliding, call the callback function for both
 			if (Collidable::collide(**colA, **colB))
 			{
+				// Move objects if required
+				if ((*colA)->isSolid() && (*colB)->isSolid())
+				{
+					vec::Vector2 normal = (*colA)->getPosition() - (*colB)->getPosition();
+					normal.setMag(1);
+
+					if (!(*colA)->isStatic())
+					{
+						(*colA)->setPosition((*colA)->getPosition() + normal);
+					}
+
+					if (!(*colB)->isStatic())
+					{
+						normal *= -1;
+
+						(*colB)->setPosition((*colB)->getPosition() + normal);
+					}
+				}
+
 				(*colA)->onCollide(**colB);
 				(*colB)->onCollide(**colA);
 			}

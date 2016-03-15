@@ -141,10 +141,19 @@ public:
 
 	const sf::String getTag() const { return tag; }
 	void setTag(sf::String& newTag) { tag = newTag; }
+	
+	bool isSolid() { return solid; }
+	bool isStatic() { return staticObject; }
+	void setSolid(bool _solid) { solid = _solid; }
+	void setStatic(bool _static) { staticObject = _static; }
 
 protected:
 	sf::String tag;
 	Collider col;
+
+private:
+	bool solid;
+	bool staticObject;
 };
 
 /*						ENTITY

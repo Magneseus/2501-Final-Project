@@ -105,7 +105,11 @@ void Controller::initObjects()
 	p = new Player();
 	addObject(p);
 
-
+	TransportShip* t = new TransportShip();
+	t->setSolid(true);
+	t->setStatic(false);
+	t->setPosition(vec::Vector2(800, 800));
+	addObject(t);
 }
 
 

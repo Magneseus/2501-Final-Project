@@ -38,6 +38,7 @@ Player::Player()
 	// Add a collison box for player
 	Rect* r = new Rect(vec::Vector2(-20, -20), vec::Vector2(20, 20));
 	col.addShape(r);
+	setSolid(true);
 
 	// Set collision box tag
 	setTag(sf::String("Player"));
@@ -234,5 +235,5 @@ void Player::draw(sf::RenderTarget& target, sf::RenderStates states) const
 		target.draw(player, states);
 	}
 	// Draw collision box
-	// target.draw(col, states);
+	target.draw(col, states);
 }
