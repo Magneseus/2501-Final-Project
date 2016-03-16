@@ -22,6 +22,7 @@ TODO ~~~
 	>> So that button presses are recognized even if you're not holding 
 		it during the update (most prevalent when trying to enter ships)
 
+- UI
 
 - Inventory
 	> different ship types
@@ -29,6 +30,7 @@ TODO ~~~
 	> make function to spawn at specific coords
 	> add basic UI functionality
 	> have ship selection screen, spawns at specific coords
+	> select loadout at spawn
 
 - Map
 	? Write map to file and load in, or just hardcode map in code

@@ -9,17 +9,37 @@ Turret::Turret(vec::Vector2 p, Weapon* w, float min, float max) {
 	maxRotation = max;
 
 	rotation = minRotation + std::rand() % maxRotation;
+	
+	SpriteSheet* temp = new SpriteSheet(sf::String("img/test.png"));
+	s = new AnimatedSprite(temp, 10);
+	s->setPosition(position);
 
-	i.loadFromFile("img/smallturret.png");
+	std::vector<sf::String> names;
+
+	names.push_back("smallturret_idle.png");
+	s->addState(names);
+	names.clear();
+
+	names.push_back("smallturret_active.png");
+	s->addState(names);
+	names.clear();
+
+	names.push_back("smallturret_off.png");
+	names.push_back("smallturret_active.png");
+	s->addState(names);
+	names.clear();
+
+	/*i.loadFromFile("img/smallturret_idle.png");
+	a.loadFromFile("img/smallturret_active.png");
 	s.setOrigin(16, 16);
 	s.setPosition(position.getSfVec());
 	s.setTexture(i);
-
+	*/
 	Rect* r = new Rect(vec::Vector2(-15, -15), vec::Vector2(25, 15));
 	col.addShape(r);
 	col.moveTo(position);
 
-	state = IDLE;
+	changeState(IDLE);
 
 	rotateSpeed = 360;
 }
@@ -42,24 +62,35 @@ void Turret::update(const sf::Time& delta) {
 		sign = 1;
 	}
 
-	/*if (frenzyTimer.getElapsedTime().asSeconds() > 1) {
+	if (state == FRENZIED && frenzyTimer.getElapsedTime().asSeconds() > 1) {
 		if (std::rand() % 100 > 50) sign = (sign == -1) ? 1 : -1;
 		frenzyTimer.restart();
-	}*/
+	}
 
 	rotation += delta.asSeconds() * rotateSpeed * sign;
 
-	s.setRotation(rotation);
-	col.rotateTo(toRadians(rotation));
+	s->update(delta);
+
+	s->setRotation(rotation);
 
 	main->shoot(toRadians(rotation), position);
 }
 
+void Turret::changeState(int newState) {
+	s->changeState(newState);
+}
+
 void Turret::onCollide(Collidable& other) {
-	state = ACTIVE;
+	if(sf::Keyboard::isKeyPressed(sf::Keyboard::B)) {
+		
+	}
+	else {
+		changeState(FRENZIED);
+	}
+	//changeState(ACTIVE);
 }
 
 void Turret::draw(sf::RenderTarget& target, sf::RenderStates states) const {
-	target.draw(s, states);
+	target.draw(*s, states);
 	target.draw(col, states);
 }

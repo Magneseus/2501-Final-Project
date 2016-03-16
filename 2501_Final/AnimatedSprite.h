@@ -1,38 +1,43 @@
 #pragma once
 
 #include "SFML\Graphics.hpp"
+#include "GameObject.h"
+#include "SpriteSheet.h"
 
 /*					AnimatedSprite
 	Created as a class to be used in place of Sprites,
-	when the intention is to have it changing. Store 
-	an instance of the class, and call draw(window) to
-	draw it to the window, which updates the frame too.
-
-	Has an internal clock that is used so it does not
-	need to be updated in updatables.
+	when the intention is to have it changing.
 */
 
-class AnimatedSprite : public sf::Sprite {
+struct SpriteState {
+	int start;
+	int numFrames;
+};
+
+class AnimatedSprite : public Drawable, public Updatable {
 public:
-	AnimatedSprite();
+	AnimatedSprite(SpriteSheet* s, int _frameRate);
 	~AnimatedSprite();
 
-	bool create(std::vector<sf::Texture*> inFrames, int inFrameRate);
-	void update();
+	void addState(std::vector<sf::String> newNames);
 
-	const sf::Texture* getTexture();	// overriding Sprite method
-	void draw(sf::RenderWindow*);
+	void changeState(int newState);
+
+	void update(const sf::Time&);	// from updatable
 
 private:
-	// change this to a single texture, draw from it
-	std::vector<sf::Texture*> frames;
+	std::vector<sf::String> fileNames;
+	std::vector<SpriteState> states;
 
-	// have multiple states
+	SpriteSheet* sheet;
 
 	int frameRate;
-	int frameIndex;
+	int frameIndex;	// in the current sequence
+	int stateIndex;
 	float elapsedTime;
 	const int maxFrameSkip = 3;
 
-	sf::Clock timer;
+	sf::Sprite sprite;
+
+	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;	// from Drawable
 };

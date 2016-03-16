@@ -135,7 +135,8 @@ bool SpriteSheet::loadFile(const sf::String& fileName)
 		std::string pxstr = node->first_attribute("pX")->value();
 		std::string pystr = node->first_attribute("pY")->value();
 
-		int x, y, w, h, px, py;
+		int x, y, w, h;
+		float px, py;
 		if (!(std::stringstream(xstr) >> x)) x = 0;
 		if (!(std::stringstream(ystr) >> y)) y = 0;
 		if (!(std::stringstream(wstr) >> w)) w = 0;
@@ -146,7 +147,7 @@ bool SpriteSheet::loadFile(const sf::String& fileName)
 		// Store the new info
 		texStruct newTexStruct;
 		newTexStruct.texCoords = sf::IntRect(x, y, w, h);
-		newTexStruct.pivot = sf::Vector2i(px, py);
+		newTexStruct.pivot = sf::Vector2i(px*w, py*h);
 		newTexStruct.tex = NULL;
 
 		texMap[key] = newTexStruct;

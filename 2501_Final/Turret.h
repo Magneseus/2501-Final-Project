@@ -2,6 +2,7 @@
 
 #include "GameObject.h"
 #include "Weapon.h"
+#include "AnimatedSprite.h"
 
 class Turret : public Entity {
 public:
@@ -9,13 +10,15 @@ public:
 	~Turret();
 
 	virtual void onCollide(Collidable& other);
-	virtual void update(const sf::Time& delta);
+	virtual void update(const sf::Time& delta);	
+
 
 private:
-	sf::Sprite s;
-	sf::Texture i;
+	AnimatedSprite* s;
 
-	enum STATES {IDLE, ACTIVE};
+	void changeState(int newState);
+
+	enum STATES {IDLE, ACTIVE, FRENZIED};
 	int state;
 	const float idleRotateSpeed = 45;
 	const float activeRotateSpeed = 90;
