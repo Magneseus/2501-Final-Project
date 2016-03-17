@@ -95,6 +95,7 @@ void Model::update(const sf::Time& delta)
 						}
 					}
 
+					/*
 					if (!(*colB)->isStatic())
 					{
 						vec::Vector2 normal = (*colB)->getPosition() - (*colB)->prevPos;
@@ -114,10 +115,11 @@ void Model::update(const sf::Time& delta)
 							}
 						}
 					}
+					*/
 				}
 
 				(*colA)->onCollide(**colB);
-				(*colB)->onCollide(**colA);
+				//(*colB)->onCollide(**colA);
 			}
 		}
 	}
