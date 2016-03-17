@@ -12,6 +12,12 @@
 #include <SFML\Graphics.hpp>
 #include <iostream>
 
+struct InputStorage {
+	bool F;
+	bool RClick;
+	bool LClick;
+};
+
 class Player : public Entity
 {
 public:
@@ -22,8 +28,8 @@ public:
 	sf::Sprite player;
 
 	Vehicle* vehicle;
-	sf::Clock vehicleEnterCooldown;
-	sf::Time vehicleEnterTime;
+
+	InputStorage inputs;
 
 	virtual void update(const sf::Time&);		// from Updatable
 	virtual void onCollide(Collidable& other);	// from Collidable

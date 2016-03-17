@@ -21,8 +21,6 @@ Player::Player()
 
 	spawn();
 
-	vehicleEnterTime = sf::seconds(1);
-
 	playerTexture.loadFromFile("img/player.png");
 	player.setTexture(playerTexture);
 	
@@ -58,19 +56,22 @@ void Player::update(const sf::Time& delta) {
 	if (vehicle == NULL) {
 		vel.setX(0);
 		vel.setY(0);
+	} else {
+		vehicle->ship->changeState(0);
 	}
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
 		if (vehicle == NULL) {
-			vel.setY(-100);
+			vel.setY(-topSpeed);
 		}
 		else {
 			motion = FORWARD;
+			vehicle->ship->changeState(1);
 		}
 	}
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
 		if (vehicle == NULL) {
-			vel.setY(100);
+			vel.setY(topSpeed);
 		}
 		else {
 			motion = REVERSE;
@@ -79,7 +80,7 @@ void Player::update(const sf::Time& delta) {
 
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
 		if (vehicle == NULL) {
-			vel.setX(100);
+			vel.setX(topSpeed);
 		}
 		else {
 			strafe = RIGHT;
@@ -87,7 +88,7 @@ void Player::update(const sf::Time& delta) {
 	}
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
 		if (vehicle == NULL) {
-			vel.setX(-100);
+			vel.setX(-topSpeed);
 		}
 		else {
 			strafe = LEFT;
@@ -101,9 +102,8 @@ void Player::update(const sf::Time& delta) {
 		brakesOn = false;
 	}
 
-	if (sf::Keyboard::isKeyPressed(sf::Keyboard::F) && 
-			vehicleEnterCooldown.getElapsedTime() > vehicleEnterTime)
-	{
+	if (vehicle && inputs.F) {
+		inputs.F = false;
 		exitVehicle();
 	}
 
@@ -136,11 +136,14 @@ void Player::update(const sf::Time& delta) {
 			// in ship shoot
 			currentLoadout->primary->shoot(toRadians(rotation), position);
 		}
-	} else if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Right)) {
-		if (vehicle == NULL) {
+	}
+
+	if (vehicle == NULL) {
+		if (inputs.RClick) {
 			switchWeapons();
 		}
-		else {
+	} else {
+		if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Right)) {
 			currentLoadout->secondary->shoot(toRadians(rotation), position);
 		}
 	}
@@ -154,7 +157,7 @@ void Player::enterVehicle(Vehicle* v) {
 
 	vehicle = v;
 
-	rotation = v->ship.getRotation();
+	rotation = v->ship->getRotation();
 	position = v->getPosition();
 
 	accelRate = v->getAcceleration();
@@ -163,8 +166,6 @@ void Player::enterVehicle(Vehicle* v) {
 	dragValue = v->getDragValue();
 
 	switchLoadouts(v->weapons);
-
-	vehicleEnterCooldown.restart();
 }
 
 void Player::exitVehicle() {
@@ -182,8 +183,6 @@ void Player::exitVehicle() {
 		dragValue = 0;
 
 		switchLoadouts(onFootLoadout);
-
-		vehicleEnterCooldown.restart();
 	}
 }
 
@@ -206,7 +205,7 @@ void Player::spawn() {
 
 	onFootLoadout = new Loadout();
 	onFootLoadout->primary = new Weapon(1, 10, 350);
-	onFootLoadout->secondary = new Weapon(2, 10, 500);
+	onFootLoadout->secondary = new Weapon(20, 10, 500);
 
 	switchLoadouts(onFootLoadout);
 }
@@ -214,14 +213,10 @@ void Player::spawn() {
 void Player::onCollide(Collidable& other)
 {
 	std::cout << "COLLIDE!: " << other.getTag().toAnsiString() << std::endl;
-	if (other.getTag() == "Vehicle" && 
-			vehicle == NULL && 
-			vehicleEnterCooldown.getElapsedTime() > vehicleEnterTime)
+	if (other.getTag() == "Vehicle" && vehicle == NULL && inputs.F)
 	{
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::F))
-		{
-			enterVehicle(dynamic_cast<Vehicle*>(&other));
-		}
+		inputs.F = false;
+		enterVehicle(dynamic_cast<Vehicle*>(&other));
 	}
 }
 

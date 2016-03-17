@@ -2,6 +2,7 @@
 
 #include "GameObject.h"
 #include "Weapon.h"
+#include "AnimatedSprite.h"
 
 /*					Vehicle
 	Entities visible on screen, can be interacted 
@@ -27,14 +28,13 @@ public:
 	float getRotationSpeed();
 	float getDragValue();
 
-	sf::Sprite ship;
+	AnimatedSprite* ship;
 
 	Loadout* weapons;
 
 protected:
 	float baseAccel, baseTopSpeed, baseRotateSpeed;
-	sf::Texture shipTexture;
-
+	
 private:
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;	// from Drawable
 };

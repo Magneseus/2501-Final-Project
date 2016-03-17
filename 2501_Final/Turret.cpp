@@ -40,8 +40,6 @@ Turret::Turret(vec::Vector2 p, Weapon* w, float min, float max) {
 	col.moveTo(position);
 
 	changeState(IDLE);
-
-	rotateSpeed = 360;
 }
 
 Turret::~Turret() {}
@@ -49,45 +47,43 @@ Turret::~Turret() {}
 void Turret::update(const sf::Time& delta) {
 	//Entity::update(delta);
 
-	if (state == IDLE) {
-		rotateSpeed = idleRotateSpeed;
-	} else if (state == ACTIVE) {
-		rotateSpeed = activeRotateSpeed;
-	}
-
-	if (rotation > maxRotation) {
-		sign = -1;
-	}
-	else if (rotation < minRotation) {
-		sign = 1;
-	}
-
-	if (state == FRENZIED && frenzyTimer.getElapsedTime().asSeconds() > 1) {
-		if (std::rand() % 100 > 50) sign = (sign == -1) ? 1 : -1;
-		frenzyTimer.restart();
+	if (state == FRENZIED) {
+		if (frenzyTimer.getElapsedTime().asSeconds() > 0.5) {
+			if (std::rand() % 100 > 50) sign = (sign == -1) ? 1 : -1;
+			frenzyTimer.restart();
+		}
+	} else {
+		if (rotation > maxRotation) {
+			sign = -1;
+		}
+		else if (rotation < minRotation) {
+			sign = 1;
+		}
 	}
 
 	rotation += delta.asSeconds() * rotateSpeed * sign;
 
 	s->update(delta);
-
 	s->setRotation(rotation);
 
 	main->shoot(toRadians(rotation), position);
 }
 
 void Turret::changeState(int newState) {
+	state = newState;
 	s->changeState(newState);
+	if (state == ACTIVE) {
+		rotateSpeed = activeRotateSpeed;
+	}
+	else if (state == IDLE) {
+		rotateSpeed = idleRotateSpeed;
+	}
+	else if (state == FRENZIED) {
+		rotateSpeed = activeRotateSpeed*2;
+	}
 }
 
 void Turret::onCollide(Collidable& other) {
-	if(sf::Keyboard::isKeyPressed(sf::Keyboard::B)) {
-		
-	}
-	else {
-		changeState(FRENZIED);
-	}
-	//changeState(ACTIVE);
 }
 
 void Turret::draw(sf::RenderTarget& target, sf::RenderStates states) const {

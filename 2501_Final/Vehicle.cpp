@@ -2,7 +2,7 @@
 #include "Vehicle.h"
 
 void Vehicle::draw(sf::RenderTarget& target, sf::RenderStates states) const {
-	target.draw(ship, states);
+	target.draw(*ship, states);
 	target.draw(col, states);
 }
 
@@ -16,9 +16,11 @@ float Vehicle::getTopSpeed()		{ return baseTopSpeed; }
 float Vehicle::getDragValue()		{ return dragValue; }
 
 void Vehicle::update(const sf::Time& delta) {
-	ship.setPosition(position.getX(), position.getY());
+	ship->update(delta);
+	ship->setPosition(position);
 	setPosition(position);
-	ship.setRotation(rotation);
+	ship->setRotation(rotation);
+	setRotation(rotation);
 }
 
 BasicShip::BasicShip() {
@@ -31,13 +33,24 @@ BasicShip::BasicShip() {
 	weapons->primary = new Weapon(5, 10, 500);
 	weapons->secondary = new Weapon(1, 50, 250);
 
-	shipTexture.loadFromFile("img/medspeedster.png");
+	ship = new AnimatedSprite(new SpriteSheet(sf::String("img/basic_ship_packed.png")), 10);
 
-	ship.setTexture(shipTexture);
-	ship.setOrigin(30, 42.5);
+	std::vector<sf::String> names;
+	names.push_back("basic_ship.png");
+	ship->addState(names);
+
+	names.clear();
+	names.push_back("basic_thrust.png");
+	ship->addState(names);
+
+	ship->setPosition(position);
+	ship->setRotation(rotation);
+
+	//ship.setTexture(shipTexture);
+	//ship.setOrigin(30, 42.5);
 
 	// Set collision box
-	Rect* r = new Rect(vec::Vector2(-30, -50), vec::Vector2(50, 50));
+	Rect* r = new Rect(vec::Vector2(-30, -50), vec::Vector2(55, 50));
 	col.addShape(r);
 
 	setTag(sf::String("Vehicle"));
@@ -55,10 +68,20 @@ TransportShip::TransportShip() {
 	weapons->primary = new Weapon(1, 10, 500);
 	weapons->secondary = new Weapon(0.5, 50, 1000);
 
-	shipTexture.loadFromFile("img/ship_transport.png");
+	ship = new AnimatedSprite(new SpriteSheet(sf::String("img/transport_ship_packed.png")), 10);
 
-	ship.setTexture(shipTexture);
-	ship.setOrigin(42.5, 42.5);
+	std::vector<sf::String> names;
+	names.push_back("transport_ship.png");
+	ship->addState(names);
+	names.clear();
+
+	names.push_back("transport_thrust.png");
+	ship->addState(names);
+	names.clear();
+
+	ship->setPosition(position);
+	ship->setRotation(rotation);
+	//ship.setOrigin(42.5, 42.5);
 
 	Rect* r = new Rect(vec::Vector2(-30, -50), vec::Vector2(50, 50));
 	col.addShape(r);

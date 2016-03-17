@@ -15,6 +15,11 @@ Controller::~Controller()
 
 void Controller::input()
 {
+	// reset player's important key presses
+	p->inputs.F = false;
+	p->inputs.RClick = false;
+
+
 	// EVENT-BASED INPUT
 	sf::Event e;
 	while (view->window.pollEvent(e))
@@ -27,6 +32,12 @@ void Controller::input()
 			break;
 		case sf::Event::Closed:
 			view->window.close();
+			break;
+		case sf::Event::KeyPressed:
+			if (e.key.code == sf::Keyboard::F) p->inputs.F = true;
+			break;
+		case sf::Event::MouseButtonPressed:
+			if (e.mouseButton.button == sf::Mouse::Right) p->inputs.RClick = true;
 			break;
 		}
 	}

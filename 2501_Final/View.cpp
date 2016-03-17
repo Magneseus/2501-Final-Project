@@ -50,6 +50,8 @@ View::View(Model* m)
 		std::cout << "Nice font not loaded!\n";
 	}
 	fpsText.setFont(Global::niceFont);
+
+	window.setKeyRepeatEnabled(false);	// prevent player from spamming keys accidentally
 }
 
 View::~View()
