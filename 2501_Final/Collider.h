@@ -18,6 +18,7 @@ public:
 	void rotateTo(float);
 
 	void addShape(Shape*);
+	sf::FloatRect getAABB() const;
 
 private:
 	void draw(sf::RenderTarget& target, sf::RenderStates states) const;

@@ -1,6 +1,7 @@
 #pragma once
 
 #include "GameObject.h"
+#include "QuadTree.h"
 #include <SFML\System.hpp>
 
 class Model
@@ -21,5 +22,7 @@ public:
 private:
 	std::vector<Updatable*> updatables;
 	std::vector<Collidable*> collidables;
+
+	QuadTree* collisionTree;
 	
 };

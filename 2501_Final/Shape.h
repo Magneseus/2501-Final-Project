@@ -19,6 +19,7 @@ public:
 	virtual void setPos(const vec::Vector2&) = 0;
 	virtual vec::Vector2 getPos() const = 0;
 	virtual float getRad() const = 0;
+	virtual sf::FloatRect getAABB() const = 0;
 	
 	int getType() const { return static_cast<int>(_type); }
 	SHAPETYPE getTypeEnum() const { return _type; }
@@ -41,6 +42,7 @@ public:
 	virtual void setPos(const vec::Vector2&);
 	virtual vec::Vector2 getPos() const;
 	virtual float getRad() const;
+	virtual sf::FloatRect getAABB() const;
 
 	virtual void move(const vec::Vector2&);
 	void rotate(float);
@@ -54,6 +56,9 @@ private:
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 	float areaOf(const vec::Vector2&, const vec::Vector2&, const vec::Vector2&) const;
 	void calcRad();
+
+	float minVal(float a, float b, float c, float d) const;
+	float maxVal(float a, float b, float c, float d) const;
 
 	vec::Vector2 center;
 	float radius, angle;
@@ -72,9 +77,11 @@ public:
 	virtual void setPos(const vec::Vector2&);
 	virtual vec::Vector2 getPos() const;
 	virtual float getRad() const;
+	virtual sf::FloatRect getAABB() const;
 
 private:
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
+	
 	vec::Vector2 pos;
 	float radius;
 

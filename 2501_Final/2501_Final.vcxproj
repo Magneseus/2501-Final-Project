@@ -135,6 +135,7 @@
     <ClCompile Include="Model.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="Projectile.cpp" />
+    <ClCompile Include="QuadTree.cpp" />
     <ClCompile Include="Shape.cpp" />
     <ClCompile Include="SpriteSheet.cpp" />
     <ClCompile Include="StaticSolids.cpp" />
@@ -154,6 +155,7 @@
     <ClInclude Include="Model.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="Projectile.h" />
+    <ClInclude Include="QuadTree.h" />
     <ClInclude Include="Shape.h" />
     <ClInclude Include="SpriteSheet.h" />
     <ClInclude Include="Trigger.h" />

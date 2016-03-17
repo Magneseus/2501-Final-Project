@@ -2,12 +2,12 @@
 
 Model::Model()
 {
-
+	collisionTree = new QuadTree(0, sf::FloatRect(-2000, -2000, 2000, 2000));
 }
 
 Model::~Model()
 {
-	
+	delete collisionTree;
 }
 
 void Model::update(const sf::Time& delta)
@@ -55,14 +55,23 @@ void Model::update(const sf::Time& delta)
 
 	}
 
-	// Collide all objects
+	// Add objects to the quadtree
+	collisionTree->clear();
+	for (auto it = collidables.begin(); it != collidables.end(); ++it)
+		collisionTree->add(*it);
+
+
+	// Iterate through objects
+	std::vector<Collidable*> possibleCollisions;
 	for (auto colA = collidables.begin(); colA != collidables.end(); ++colA)
 	{
-		// Otherwise, collide with all other objects
-		for (auto colB = colA + 1; colB != collidables.end(); ++colB)
+		possibleCollisions.clear();
+		collisionTree->getList(possibleCollisions, *colA);
+
+		for (auto colB = possibleCollisions.begin(); colB != possibleCollisions.end(); ++colB)
 		{
 			// If they are determined to be colliding, call the callback function for both
-			if (Collidable::collide(**colA, **colB))
+			if (*colA != *colB && Collidable::collide(**colA, **colB))
 			{
 				// Move objects if required
 				if ((*colA)->isSolid() && (*colB)->isSolid())
@@ -112,6 +121,19 @@ void Model::update(const sf::Time& delta)
 			}
 		}
 	}
+
+
+	/*
+	// Collide all objects
+	for (auto colA = collidables.begin(); colA != collidables.end(); ++colA)
+	{
+		// Otherwise, collide with all other objects
+		for (auto colB = colA + 1; colB != collidables.end(); ++colB)
+		{
+			
+		}
+	}
+	*/
 }
 
 

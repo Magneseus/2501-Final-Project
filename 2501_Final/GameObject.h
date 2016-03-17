@@ -147,6 +147,9 @@ public:
 	void setSolid(bool _solid) { solid = _solid; }
 	void setStatic(bool _static) { staticObject = _static; }
 
+	// Returns the hitbox of it's collider
+	sf::FloatRect getAABB() const { return col.getAABB(); }
+
 	vec::Vector2 prevPos;
 
 protected:

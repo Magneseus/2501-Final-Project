@@ -48,11 +48,7 @@ bool Collider::collide(Collider& other) const
 	{
 		for (auto it2 = other.hitbox.begin(); it2 != other.hitbox.end(); ++it2)
 		{
-			// Check if they're even close to each other
-			float dist = (*it1)->getPos().dist((*it2)->getPos());
-			float minDist = (*it1)->getRad() + (*it2)->getRad();
-
-			if (dist < minDist && (*it1)->collide(*it2))
+			if ((*it1)->collide(*it2))
 			{
 				return true;
 			}
@@ -60,6 +56,38 @@ bool Collider::collide(Collider& other) const
 	}
 
 	return false;
+}
+
+/*
+	This function generates and returns the AABB of
+	the hitbox of this collider.
+*/
+sf::FloatRect Collider::getAABB() const
+{
+	sf::FloatRect aabb;
+
+	if (hitbox.size() > 0)
+	{
+		aabb = hitbox.at(0)->getAABB();
+	}
+
+	for (auto it = hitbox.begin(); it != hitbox.end(); ++it)
+	{
+		sf::FloatRect aabb2 = (*it)->getAABB();
+
+		if (aabb2.left < aabb.left) aabb.left = aabb2.left;
+		if (aabb2.top < aabb.top) aabb.top = aabb2.top;
+
+		float right = aabb.left + aabb.width;
+		float right2 = aabb2.left + aabb2.width;
+		if (right2 > right) aabb.width = right2 - aabb.left;
+
+		float bottom = aabb.top + aabb.height;
+		float bottom2 = aabb2.top + aabb2.height;
+		if (bottom2 > bottom) aabb.height = bottom2 - aabb.top;
+	}
+
+	return aabb;
 }
 
 void Collider::addShape(Shape* shp)
@@ -205,4 +233,14 @@ void Collider::draw(sf::RenderTarget& target, sf::RenderStates states) const
 	{
 		target.draw(**it, states);
 	}
+
+	sf::RectangleShape aabbShape;
+	aabbShape.setFillColor(sf::Color::Transparent);
+	aabbShape.setOutlineThickness(1);
+	aabbShape.setOutlineColor(sf::Color::Red);
+
+	sf::FloatRect aabb = getAABB();
+	aabbShape.setPosition(aabb.left, aabb.top);
+	aabbShape.setSize(sf::Vector2f(aabb.width, aabb.height));
+	target.draw(aabbShape, states);
 }

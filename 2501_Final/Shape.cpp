@@ -185,6 +185,39 @@ void Rect::setPos(const vec::Vector2& _pos)
 	br += diff;
 }
 
+sf::FloatRect Rect::getAABB() const
+{
+	sf::FloatRect aabb;
+
+	aabb.left = minVal(tl.getX(), tr.getX(), bl.getX(), br.getX());
+	aabb.top = minVal(tl.getY(), tr.getY(), bl.getY(), br.getY());
+
+	aabb.width = maxVal(tl.getX(), tr.getX(), bl.getX(), br.getX()) - aabb.left;
+	aabb.height = maxVal(tl.getY(), tr.getY(), bl.getY(), br.getY()) - aabb.top;
+
+	return aabb;
+}
+
+float Rect::minVal(float a, float b, float c, float d) const
+{
+	float min = a;
+	min = min < b ? min : b;
+	min = min < c ? min : c;
+	min = min < d ? min : d;
+
+	return min;
+}
+
+float Rect::maxVal(float a, float b, float c, float d) const
+{
+	float max = a;
+	max = max > b ? max : b;
+	max = max > c ? max : c;
+	max = max > d ? max : d;
+
+	return max;
+}
+
 vec::Vector2 Rect::getPos() const
 {
 	return center;
@@ -338,6 +371,12 @@ vec::Vector2 Circ::getPos() const
 float Circ::getRad() const
 {
 	return radius;
+}
+
+sf::FloatRect Circ::getAABB() const
+{
+	return sf::FloatRect(getPos().getX() - radius, getPos().getY() - radius,
+		radius * 2, radius * 2);
 }
 
 
