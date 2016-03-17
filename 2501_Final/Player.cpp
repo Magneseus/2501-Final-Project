@@ -130,11 +130,11 @@ void Player::update(const sf::Time& delta) {
 	if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
 		if (vehicle == NULL) {
 			// on foot shoot
-			currentWeapon->shoot(toRadians(rotation), position);
+			currentWeapon->shoot(toRadians(rotation), position, this);
 		}
 		else {
 			// in ship shoot
-			currentLoadout->primary->shoot(toRadians(rotation), position);
+			currentLoadout->primary->shoot(toRadians(rotation), position, this);
 		}
 	}
 
@@ -144,7 +144,7 @@ void Player::update(const sf::Time& delta) {
 		}
 	} else {
 		if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Right)) {
-			currentLoadout->secondary->shoot(toRadians(rotation), position);
+			currentLoadout->secondary->shoot(toRadians(rotation), position, this);
 		}
 	}
 }
@@ -204,15 +204,19 @@ void Player::spawn() {
 	// called at the beginning of game/round?
 
 	onFootLoadout = new Loadout();
-	onFootLoadout->primary = new Weapon(1, 10, 350);
-	onFootLoadout->secondary = new Weapon(20, 10, 500);
+	onFootLoadout->primary = new Weapon(1, 50, 350);
+	onFootLoadout->secondary = new Weapon(20, 20, 500);
 
 	switchLoadouts(onFootLoadout);
 }
 
+void Player::onDeath(Entity* killer) {
+	std::cout << "Player died from " << killer->getTag().toAnsiString() << "." << std::endl;
+}
+
 void Player::onCollide(Collidable& other)
 {
-	std::cout << "COLLIDE!: " << other.getTag().toAnsiString() << std::endl;
+	//std::cout << "COLLIDE!: " << other.getTag().toAnsiString() << std::endl;
 	if (other.getTag() == "Vehicle" && vehicle == NULL && inputs.F)
 	{
 		inputs.F = false;

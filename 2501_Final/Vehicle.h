@@ -36,6 +36,8 @@ protected:
 	float baseAccel, baseTopSpeed, baseRotateSpeed;
 	
 private:
+	void onDeath(Entity*);
+
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;	// from Drawable
 };
 

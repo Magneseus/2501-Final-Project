@@ -25,6 +25,9 @@ private:
 
 	sf::Clock frenzyTimer;
 
+	virtual void takeDamage(float amount, Entity* source);
+	virtual void onDeath(Entity*);
+
 	int maxRotation, minRotation;	// in degrees
 	int sign = 1;	// 1 clockwise, -1 counterclockwise
 

@@ -63,3 +63,16 @@ void Entity::update(const sf::Time& delta) {
 	// Calculate position
 	position += vel * delta.asSeconds();
 }
+
+void Entity::takeDamage(float amount, Entity* source) {
+	std::cout << getTag().toAnsiString() << " HP[" << curHealth << "/" << maxHealth <<
+		"] is taking " << amount << " damage from " << 
+		source->getTag().toAnsiString() << "." << std::endl;
+
+	curHealth -= amount;
+	if (curHealth <= 0) {
+		std::cout << source->getTag().toAnsiString() << " destroyed " <<
+			this->getTag().toAnsiString() << "." << std::endl;
+		onDeath(source);
+	}
+}

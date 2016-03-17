@@ -4,7 +4,7 @@
 
 class Projectile : public Entity {
 public:
-	Projectile(vec::Vector2 v, vec::Vector2 p, float dam, float speed);
+	Projectile(Entity* shooter, vec::Vector2 v, vec::Vector2 p, float dam, float speed);
     ~Projectile();
 
 	int getDamage();
@@ -13,7 +13,11 @@ public:
 	virtual void onCollide(Collidable& other);
 
 private:
+	Entity* parent;
 	float damage;
 	sf::Sprite sprite;
+
+	virtual void onDeath(Entity*);
+
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 };

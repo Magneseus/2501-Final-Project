@@ -29,6 +29,8 @@ Turret::Turret(vec::Vector2 p, Weapon* w, float min, float max) {
 	s->addState(names);
 	names.clear();
 
+	changeState(IDLE);
+
 	/*i.loadFromFile("img/smallturret_idle.png");
 	a.loadFromFile("img/smallturret_active.png");
 	s.setOrigin(16, 16);
@@ -39,7 +41,7 @@ Turret::Turret(vec::Vector2 p, Weapon* w, float min, float max) {
 	col.addShape(r);
 	col.moveTo(position);
 
-	changeState(IDLE);
+	setTag(sf::String("Turret"));
 }
 
 Turret::~Turret() {}
@@ -51,6 +53,7 @@ void Turret::update(const sf::Time& delta) {
 		if (frenzyTimer.getElapsedTime().asSeconds() > 0.5) {
 			if (std::rand() % 100 > 50) sign = (sign == -1) ? 1 : -1;
 			frenzyTimer.restart();
+			if (std::rand() % 100 < 5) delObjectStatic(this);
 		}
 	} else {
 		if (rotation > maxRotation) {
@@ -66,7 +69,7 @@ void Turret::update(const sf::Time& delta) {
 	s->update(delta);
 	s->setRotation(rotation);
 
-	main->shoot(toRadians(rotation), position);
+	main->shoot(toRadians(rotation), position, this);
 }
 
 void Turret::changeState(int newState) {
@@ -83,8 +86,17 @@ void Turret::changeState(int newState) {
 	}
 }
 
-void Turret::onCollide(Collidable& other) {
+void Turret::takeDamage(float damage, Entity* source) {
+	changeState(ACTIVE);
+
+	Entity::takeDamage(damage, source);
 }
+
+void Turret::onDeath(Entity* killer) {
+	changeState(FRENZIED);
+}
+
+void Turret::onCollide(Collidable& other) {}
 
 void Turret::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 	target.draw(*s, states);

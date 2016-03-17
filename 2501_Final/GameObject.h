@@ -171,6 +171,8 @@ public:
 	virtual ~Entity() {};
 	void update(const sf::Time& delta);
 
+	virtual void takeDamage(float amount, Entity* source);
+
 	vec::Vector2 vel;
 
 protected:
@@ -178,6 +180,11 @@ protected:
 	bool brakesOn = false;
 
 	vec::Vector2 target;	// where the entity is trying to look
+
+	float maxHealth = 100;
+	float curHealth = 100;
+
+	virtual void onDeath(Entity* source) = 0;
 
 	enum MOVEMENT { FORWARD = 1, REVERSE = -1, STILL = 0,
 					CLWISE = 1, COCLWISE = -1, LEFT = -1, RIGHT = 1 };

@@ -42,10 +42,12 @@ private:
 	Loadout* currentLoadout;	// player's current loadout (from vehicle)
 	Weapon* currentWeapon;
 
-	Loadout* onFootLoadout;	// player's loadout
+	Loadout* onFootLoadout;		// player's loadout
 	const float onFootAccel = 0;
 	const float onFootTopSpeed = 100;
 	const float onFootRotateSpeed = 180;
+
+	virtual void onDeath(Entity*);
 
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;	// from Drawable
 	void switchLoadouts(Loadout* newest);

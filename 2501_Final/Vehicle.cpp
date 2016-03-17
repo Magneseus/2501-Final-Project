@@ -7,7 +7,6 @@ void Vehicle::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 }
 
 void Vehicle::onCollide(Collidable& other) {
-	if (other.getTag() == "Projectile") delObjectStatic(this);
 }
 
 float Vehicle::getAcceleration()	{ return baseAccel; }
@@ -21,6 +20,10 @@ void Vehicle::update(const sf::Time& delta) {
 	setPosition(position);
 	ship->setRotation(rotation);
 	setRotation(rotation);
+}
+
+void Vehicle::onDeath(Entity* killer) {
+	delObjectStatic(this);
 }
 
 BasicShip::BasicShip() {

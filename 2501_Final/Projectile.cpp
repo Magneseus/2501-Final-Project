@@ -1,14 +1,16 @@
 
 #include "Projectile.h"
 
-Projectile::Projectile(vec::Vector2 p, vec::Vector2 v, float dam, float speed) {
+Projectile::Projectile(Entity* shooter, vec::Vector2 p, vec::Vector2 v, float dam, float speed) {
+	parent = shooter;
+
 	vel = v;
 	position = p;
 	damage = dam;
 	topSpeed = speed;
 
 	accelRate = 0;
-	rotateSpeed = 0;
+	rotateSpeed = 0;	
 
 	Circ* c = new Circ(vec::Vector2(0, 0), 5);
 	col.addShape(c);
@@ -26,9 +28,17 @@ void Projectile::update(const sf::Time& delta) {
 	Entity::update(delta);
 }
 
-void Projectile::onCollide(Collidable& other) { 
-	//if(other.getTag() != "Player" && other.getTag() != "Projectile")
-	//	delObjectStatic(this); 
+void Projectile::onDeath(Entity* killer) { delObjectStatic(this); }
+
+void Projectile::onCollide(Collidable& other) {
+	if (other.getTag() == "Projectile") return;
+
+	Entity* temp = dynamic_cast<Entity*>(&other);
+
+	if (temp != parent) {
+		if(temp) temp->takeDamage(damage, parent);
+		delObjectStatic(this);
+	}
 }
 
 void Projectile::draw(sf::RenderTarget& target, sf::RenderStates states) const {

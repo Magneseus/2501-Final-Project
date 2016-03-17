@@ -3,8 +3,6 @@ TODO ~~~
 - "Small" things
 	> Clean up player file
 	>> Remove unnecessary things in .h, lines in .cpp
-	> Give Vehicle an AnimatedSprite
-	> Fix problem of having so many coordinate types
 	>> Transformable, position vector, sprite position
 	>> This fix will also aid in fixing hit boxes
 	> COMMENTS
@@ -34,16 +32,9 @@ TODO ~~~
 	> Have basic interactions - zooming when in hangar, doors open
 
 - Combat
-	> Add parent to Projectile. Don't let parent interfere with projectile
 	> When triggered (or Player nearby... even possibly make it
 		check if the player is seen with angleBetween method), have
 		turret turn towards the player, follow similar to how the 
 		Player follows the mouse
 	> Begin shooting at player
-	> Add health to Entity
-	> Have projectiles damage Entity on collision
-	>> Projectile::onCollide deals damage in form of Entity::takeDamage(damage, parent)
-	>> pass parent in in case onDestroy needs it (points?)
-	> Destroy/Delete Entity on <=0 health
-	>> call onDestroy() ?
 	> We gots combat now yo
