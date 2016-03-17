@@ -147,6 +147,8 @@ public:
 	void setSolid(bool _solid) { solid = _solid; }
 	void setStatic(bool _static) { staticObject = _static; }
 
+	vec::Vector2 prevPos;
+
 protected:
 	sf::String tag;
 	Collider col;

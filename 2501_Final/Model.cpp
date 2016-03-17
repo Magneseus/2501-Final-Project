@@ -37,17 +37,18 @@ void Model::update(const sf::Time& delta)
 		{
 			if (*it != NULL)
 			{
-				(*it)->update(delta);
-				
 				// Check if it's collidable and needs to be updated
+				Collidable* c = NULL;
 				if ((*it)->isCollidable())
-				{
-					Collidable* c = dynamic_cast<Collidable*>(*it);
-					if (c != NULL)
-					{
-						(*c).Collidable::update(delta);
-					}
-				}
+					c = dynamic_cast<Collidable*>(*it);
+
+				if (c != NULL)
+					c->prevPos = c->getPosition();
+
+				(*it)->update(delta);
+
+				if (c != NULL)
+					(*c).Collidable::update(delta);
 			}
 			++it;
 		}
@@ -66,19 +67,43 @@ void Model::update(const sf::Time& delta)
 				// Move objects if required
 				if ((*colA)->isSolid() && (*colB)->isSolid())
 				{
-					vec::Vector2 normal = (*colA)->getPosition() - (*colB)->getPosition();
-					normal.setMag(1);
-
 					if (!(*colA)->isStatic())
 					{
+						vec::Vector2 normal = (*colA)->getPosition() - (*colA)->prevPos;
+						normal.setMag(1);
+						normal *= -1;
+
+						(*colA)->setPosition((*colA)->prevPos);
 						(*colA)->setPosition((*colA)->getPosition() + normal);
+
+						if ((*colA)->isUpdatable())
+						{
+							Entity* entA = dynamic_cast<Entity*>(*colA);
+							if (entA != NULL)
+							{
+								entA->vel *= 0;
+							}
+						}
 					}
 
 					if (!(*colB)->isStatic())
 					{
+						vec::Vector2 normal = (*colB)->getPosition() - (*colB)->prevPos;
+						normal.setMag(1);
 						normal *= -1;
 
+						(*colB)->setPosition((*colB)->prevPos);
 						(*colB)->setPosition((*colB)->getPosition() + normal);
+
+
+						if ((*colB)->isUpdatable())
+						{
+							Entity* entB = dynamic_cast<Entity*>(*colB);
+							if (entB != NULL)
+							{
+								entB->vel *= 0;
+							}
+						}
 					}
 				}
 
