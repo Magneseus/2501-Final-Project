@@ -43,7 +43,9 @@ void Model::update(const sf::Time& delta)
 					c = dynamic_cast<Collidable*>(*it);
 
 				if (c != NULL)
+				{
 					c->prevPos = c->getPosition();
+				}
 
 				(*it)->update(delta);
 
@@ -78,64 +80,28 @@ void Model::update(const sf::Time& delta)
 				{
 					if (!(*colA)->isStatic())
 					{
-						vec::Vector2 normal = (*colA)->getPosition() - (*colA)->prevPos;
-						normal.setMag(1);
-						normal *= -1;
+						vec::Vector2 push = (*colA)->getPosition() - (*colA)->prevPos;
+						push.setMag(1);
+						push *= -1;
 
 						(*colA)->setPosition((*colA)->prevPos);
-						(*colA)->setPosition((*colA)->getPosition() + normal);
+						(*colA)->setPosition((*colA)->getPosition() + push);
 
 						if ((*colA)->isUpdatable())
 						{
 							Entity* entA = dynamic_cast<Entity*>(*colA);
 							if (entA != NULL)
 							{
-								entA->vel *= 0;
+								entA->vel.setMag(0);
 							}
 						}
 					}
-
-					/*
-					if (!(*colB)->isStatic())
-					{
-						vec::Vector2 normal = (*colB)->getPosition() - (*colB)->prevPos;
-						normal.setMag(1);
-						normal *= -1;
-
-						(*colB)->setPosition((*colB)->prevPos);
-						(*colB)->setPosition((*colB)->getPosition() + normal);
-
-
-						if ((*colB)->isUpdatable())
-						{
-							Entity* entB = dynamic_cast<Entity*>(*colB);
-							if (entB != NULL)
-							{
-								entB->vel *= 0;
-							}
-						}
-					}
-					*/
 				}
 
 				(*colA)->onCollide(**colB);
-				//(*colB)->onCollide(**colA);
 			}
 		}
 	}
-
-
-	/*
-	// Collide all objects
-	for (auto colA = collidables.begin(); colA != collidables.end(); ++colA)
-	{
-		// Otherwise, collide with all other objects
-		for (auto colB = colA + 1; colB != collidables.end(); ++colB)
-		{
-			
-		}
-	}
-	*/
 }
 
 

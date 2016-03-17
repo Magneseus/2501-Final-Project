@@ -86,9 +86,9 @@ namespace vec
 		// Check for zero mag
 		if (getMag() == 0)
 		{
-			x = m;
+			x = 0;
 			y = 0;
-			mag = m;
+			mag = 0;
 		}
 		else
 		{
