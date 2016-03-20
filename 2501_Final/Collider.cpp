@@ -43,12 +43,22 @@ Collider::~Collider()
 */
 bool Collider::collide(Collider& other) const
 {
+	return collide(other, vec::Vector2());
+}
+
+/*
+	Checks for a collision with another hitbox and sets the normal vector.
+
+	O(n^2) worst case
+*/
+bool Collider::collide(Collider& other, vec::Vector2& normal) const
+{
 	// Loop through all shapes in each hitbox
 	for (auto it1 = hitbox.begin(); it1 != hitbox.end(); ++it1)
 	{
 		for (auto it2 = other.hitbox.begin(); it2 != other.hitbox.end(); ++it2)
 		{
-			if ((*it1)->collide(*it2))
+			if ((*it1)->collide(*it2, normal))
 			{
 				return true;
 			}

@@ -68,7 +68,7 @@ Rect::~Rect() {}
 
 
 
-bool Rect::collide(const Shape* shape) const
+bool Rect::collide(const Shape* shape, vec::Vector2& normal) const
 {
 	// Check for a null-pointer
 	if (shape == NULL)
@@ -88,12 +88,12 @@ bool Rect::collide(const Shape* shape) const
 		if (r->getPos().dist(this->getPos()) < getRad() + r->getRad())
 		{
 			//Check if any point lies inside the other rect
-			if (pointInRect(r->tl) || pointInRect(r->tr) ||
-				pointInRect(r->br) || pointInRect(r->bl))
+			if (pointInRect(r->tl, normal) || pointInRect(r->tr, normal) ||
+				pointInRect(r->br, normal) || pointInRect(r->bl, normal))
 				isColliding = true;
 
-			if (r->pointInRect(tl) || r->pointInRect(tr) ||
-				r->pointInRect(br) || r->pointInRect(bl))
+			if (r->pointInRect(tl, normal) || r->pointInRect(tr, normal) ||
+				r->pointInRect(br, normal) || r->pointInRect(bl, normal))
 				isColliding = true;
 		}
 	}
@@ -105,7 +105,7 @@ bool Rect::collide(const Shape* shape) const
 		if (c == NULL)
 			return false;
 
-		isColliding = collideRC(*this, *c);
+		isColliding = collideRC(*this, *c, normal);
 	}
 
 	return isColliding;
@@ -170,6 +170,58 @@ bool Rect::pointInRect(const vec::Vector2& point) const
 		colliding = false;
 
 	return colliding;
+}
+
+bool Rect::pointInRect(const vec::Vector2& point, vec::Vector2& normal) const
+{
+	//float rSum = tl.dist(tr) * tl.dist(bl);
+	float rSum = areaOf(tl, tr, bl) + areaOf(tr, br, bl);
+
+	float a1 = areaOf(tl, point, bl);
+	float a2 = areaOf(bl, point, br);
+	float a3 = areaOf(br, point, tr);
+	float a4 = areaOf(point, tr, tl);
+
+	float pSum = a1 + a2 + a3 + a4;
+
+	if (pSum - rSum > 2)
+		return false;
+
+	// Figure out which line is being intersected with
+	vec::Vector2 p1, p2;
+
+	float minArea = minVal(a1, a2, a3, a4);
+	if (minArea == a1)
+	{
+		p1 = tl;
+		p2 = bl;
+	}
+	else if (minArea == a2)
+	{
+		p1 = bl;
+		p2 = br;
+	}
+	else if (minArea == a3)
+	{
+		p1 = br;
+		p2 = tr;
+	}
+	else if (minArea == a4)
+	{
+		p1 = tr;
+		p2 = tl;
+	}
+
+	// Calculate the normal of this line
+	normal = (p1 - p2).rotate(PI / 2).setMag(1);
+	normal *= -1;
+
+	// Make sure the normal is pointing outwards
+	vec::Vector2 difC = point - this->getPos();
+	if (normal.angleBetween(difC) > 90)
+		normal *= -1;
+	
+	return true;
 }
 
 
@@ -315,7 +367,7 @@ Circ::Circ(const vec::Vector2& _pos, float _radius)
 Circ::~Circ() {}
 
 
-bool Circ::collide(const Shape* shape) const
+bool Circ::collide(const Shape* shape, vec::Vector2& normal) const
 {
 	// Check for a null-pointer
 	if (shape == NULL)
@@ -331,7 +383,7 @@ bool Circ::collide(const Shape* shape) const
 		if (r == NULL)
 			return false;
 
-		isColliding = collideRC(*r, *this);
+		isColliding = collideRC(*r, *this, normal);
 	}
 	// If circ-circ collision
 	else if (shape->getTypeEnum() == CIRC)
@@ -343,7 +395,10 @@ bool Circ::collide(const Shape* shape) const
 
 		//I f the distance is less than the sum of the radii, colliding
 		if (c->getPos().dist(this->getPos()) < (this->getRad() + c->getRad()))
+		{
 			isColliding = true;
+			normal = (this->getPos() - c->getPos()).setMag(1);
+		}
 	}
 
 	return isColliding;
@@ -399,7 +454,7 @@ void Circ::draw(sf::RenderTarget& target, sf::RenderStates states) const
 //          GLOBAL FUNCTIONS           //
 /////////////////////////////////////////
 
-bool lineIntCirc(const vec::Vector2& p1, const vec::Vector2& p2, const Circ& c)
+bool lineIntCirc(const vec::Vector2& p1, const vec::Vector2& p2, const Circ& c, vec::Vector2& normal)
 {
 	bool isInt = false;
 
@@ -435,24 +490,33 @@ bool lineIntCirc(const vec::Vector2& p1, const vec::Vector2& p2, const Circ& c)
 			isInt = true;
 	}
 
+	// Generate normal if colliding
+	if (isInt)
+	{
+		// Calculate the normal of this line
+		normal = (p1 - p2).rotate(PI / 2).setMag(1);
+	}
+
 	return isInt;
 }
 
-bool collideRC(const Rect& r, const Circ& c)
+bool collideRC(const Rect& r, const Circ& c, vec::Vector2& normal)
 {
 	// Check if they're near each other
 	if (r.getPos().dist(c.getPos()) > r.getRad() + c.getRad())
 		return false;
 
-	// If they are, check all lines for intersection
-	if (lineIntCirc(r.tl, r.tr, c))
-		return true;
-	if (lineIntCirc(r.tr, r.br, c))
-		return true;
-	if (lineIntCirc(r.br, r.bl, c))
-		return true;
-	if (lineIntCirc(r.bl, r.tl, c))
-		return true;
+	bool colliding = false;
 
-	return false;
+	// If they are, check all lines for intersection
+	if (lineIntCirc(r.tl, r.tr, c, normal))
+		colliding = true;
+	if (lineIntCirc(r.tr, r.br, c, normal))
+		colliding = true;
+	if (lineIntCirc(r.br, r.bl, c, normal))
+		colliding = true;
+	if (lineIntCirc(r.bl, r.tl, c, normal))
+		colliding = true;
+
+	return colliding;
 }

@@ -13,7 +13,7 @@ class Shape : public sf::Drawable
 public:
 	virtual ~Shape() {};
 
-	virtual bool collide(const Shape*) const = 0;
+	virtual bool collide(const Shape*, vec::Vector2& normal) const = 0;
 	
 	virtual void move(const vec::Vector2&) = 0;
 	virtual void setPos(const vec::Vector2&) = 0;
@@ -37,7 +37,7 @@ public:
 	Rect(const vec::Vector2&, const vec::Vector2&, const vec::Vector2&, const vec::Vector2&);
 	~Rect();
 
-	virtual bool collide(const Shape*) const;
+	virtual bool collide(const Shape*, vec::Vector2& normal) const;
 
 	virtual void setPos(const vec::Vector2&);
 	virtual vec::Vector2 getPos() const;
@@ -49,6 +49,7 @@ public:
 	void rotateTo(float);
 
 	bool pointInRect(const vec::Vector2&) const;
+	bool pointInRect(const vec::Vector2& point, vec::Vector2& normal) const;
 
 	vec::Vector2  tl, tr, bl, br;
 
@@ -71,7 +72,7 @@ public:
 	Circ(const vec::Vector2&, float);
 	~Circ();
 
-	virtual bool collide(const Shape*) const;
+	virtual bool collide(const Shape*, vec::Vector2& normal) const;
 
 	virtual void move(const vec::Vector2&);
 	virtual void setPos(const vec::Vector2&);
@@ -88,5 +89,5 @@ private:
 };
 
 // Some global functions
-bool collideRC(const Rect&, const Circ&);
-bool lineIntCirc(const vec::Vector2&, const vec::Vector2&, const Circ&);
+bool collideRC(const Rect&, const Circ&, vec::Vector2&);
+bool lineIntCirc(const vec::Vector2&, const vec::Vector2&, const Circ&, vec::Vector2&);

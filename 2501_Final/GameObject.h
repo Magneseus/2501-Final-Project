@@ -134,9 +134,9 @@ public:
 	}
 
 	// Collides two hitboxes together
-	static bool collide(Collidable& c1, Collidable& c2)
+	static bool collide(Collidable& c1, Collidable& c2, vec::Vector2& normal = vec::Vector2())
 	{
-		return c1.col.collide(c2.col);
+		return c1.col.collide(c2.col, normal);
 	}
 
 	const sf::String getTag() const { return tag; }

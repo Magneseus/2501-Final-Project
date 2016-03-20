@@ -11,6 +11,7 @@ public:
 	~Collider();
 
 	bool collide(Collider&) const;
+	bool collide(Collider&, vec::Vector2&) const;
 
 	void move(const vec::Vector2&);
 	void moveTo(const vec::Vector2&);

@@ -36,6 +36,8 @@ Player::Player()
 	// Add a collison box for player
 	Rect* r = new Rect(vec::Vector2(-20, -20), vec::Vector2(20, 20));
 	col.addShape(r);
+	//Circ* c = new Circ(vec::Vector2(0, 0), 20);
+	//col.addShape(c);
 	setSolid(true);
 
 	// Set collision box tag

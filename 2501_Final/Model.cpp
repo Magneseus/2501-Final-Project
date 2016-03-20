@@ -72,20 +72,34 @@ void Model::update(const sf::Time& delta)
 
 		for (auto colB = possibleCollisions.begin(); colB != possibleCollisions.end(); ++colB)
 		{
+			// Normal vector of collision
+			vec::Vector2 colNormal;
+
 			// If they are determined to be colliding, call the callback function for both
-			if (*colA != *colB && Collidable::collide(**colA, **colB))
+			if (*colA != *colB && Collidable::collide(**colA, **colB, colNormal))
 			{
 				// Move objects if required
 				if ((*colA)->isSolid() && (*colB)->isSolid())
 				{
 					if (!(*colA)->isStatic())
 					{
+						/*
 						vec::Vector2 push = (*colA)->getPosition() - (*colA)->prevPos;
 						push.setMag(1);
 						push *= -1;
 
-						(*colA)->setPosition((*colA)->prevPos);
+						vec::Vector2 normal = (*colA)->getPosition() - (*colB)->getPosition();
+
+						// Check if the push vector is in the opposite direction from the center
+						if (push.angleBetween(normal) > 90)
+							push *= -1;
+						else
+							(*colA)->setPosition((*colA)->prevPos);
+
 						(*colA)->setPosition((*colA)->getPosition() + push);
+						*/
+
+						(*colA)->setPosition((*colA)->getPosition() + colNormal);
 
 						if ((*colA)->isUpdatable())
 						{
