@@ -12,6 +12,8 @@ namespace vec
 	{
 	public:
 		Vector2();
+		Vector2(const sf::Vector2f&);
+		Vector2(const sf::Vector2i&);
 
 		// Amgle Ctr
 		Vector2(int);

@@ -10,6 +10,23 @@ namespace vec
 		_mag();
 	}
 
+	// SFML Constructors
+	Vector2::Vector2(const sf::Vector2f& _vec)
+		: x(_vec.x),
+		y(_vec.y),
+		changedMag(true)
+	{
+		_mag();
+	}
+	
+	Vector2::Vector2(const sf::Vector2i& _vec)
+		: x(_vec.x),
+		y(_vec.y),
+		changedMag(true)
+	{
+		_mag();
+	}
+
 	// ANGLE CONSTRUCTOR (Radians)
 	Vector2::Vector2(int angle)
 		: x(std::cos(angle)),

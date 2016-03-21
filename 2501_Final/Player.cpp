@@ -11,7 +11,6 @@ Player::Player()
 	vehicle = new BasicShip();
 	vehicle->setPosition(vec::Vector2(200, 250));
 	vehicle->vel = vec::Vector2(10, 10);
-	vehicle->setSolid(true);
 
 	addObjectStatic(vehicle);
 
@@ -37,10 +36,10 @@ Player::Player()
 	rotateSpeed = onFootRotateSpeed;
 
 	// Add a collison box for player
-	Rect* r = new Rect(vec::Vector2(-20, -20), vec::Vector2(20, 20));
-	col.addShape(r);
-	//Circ* c = new Circ(vec::Vector2(0, 0), 20);
-	//col.addShape(c);
+	//Rect* r = new Rect(vec::Vector2(-20, -20), vec::Vector2(20, 20));
+	//col.addShape(r);
+	Circ* c = new Circ(vec::Vector2(0, 0), 20);
+	col.addShape(c);
 	setSolid(true);
 
 	// Set collision box tag

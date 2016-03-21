@@ -76,7 +76,14 @@ void View::render()
 		else
 		{
 			if (*it != NULL)
-				window.draw(**it, globalTransform);
+			{
+				vec::Vector2 rPos = (*it)->getPosition();
+				vec::Vector2 gPos = vec::Vector2(globalTransform.transformPoint(sf::Vector2f(0, 0)));
+				gPos *= -1;
+
+				if (gPos.dist(rPos) < WINDOW_WIDTH * 2)
+					window.draw(**it, globalTransform);
+			}
 			++it;
 		}
 
