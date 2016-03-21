@@ -1,7 +1,8 @@
 
 #include "Turret.h"
 
-Turret::Turret(vec::Vector2 p, Weapon* w, float min, float max) {
+Turret::Turret(vec::Vector2 p, Weapon* w, float min, float max, Entity* play) {
+	enemy = play;
 	position = p;
 	main = w;
 
@@ -47,13 +48,22 @@ Turret::Turret(vec::Vector2 p, Weapon* w, float min, float max) {
 Turret::~Turret() {}
 
 void Turret::update(const sf::Time& delta) {
-	//Entity::update(delta);
+	target = enemy->getPosition();
 
 	if (state == FRENZIED) {
 		if (frenzyTimer.getElapsedTime().asSeconds() > 0.5) {
 			if (std::rand() % 100 > 50) sign = (sign == -1) ? 1 : -1;
 			frenzyTimer.restart();
 			if (std::rand() % 100 < 5) delObjectStatic(this);
+		}
+
+		rotation += delta.asSeconds() * rotateSpeed * sign;
+	} else if (state == ACTIVE) {
+		float prevRotation = rotation;
+		Entity::update(delta);
+
+		if (rotation > maxRotation || rotation < minRotation) {
+			rotation = prevRotation;
 		}
 	} else {
 		if (rotation > maxRotation) {
@@ -62,9 +72,9 @@ void Turret::update(const sf::Time& delta) {
 		else if (rotation < minRotation) {
 			sign = 1;
 		}
-	}
 
-	rotation += delta.asSeconds() * rotateSpeed * sign;
+		rotation += delta.asSeconds() * rotateSpeed * sign;
+	}
 
 	s->update(delta);
 	s->setRotation(rotation);
@@ -101,4 +111,20 @@ void Turret::onCollide(Collidable& other) {}
 void Turret::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 	target.draw(*s, states);
 	target.draw(col, states);
+
+	if (enemy != NULL) {
+		sf::VertexArray l;
+		l.setPrimitiveType(sf::Lines);
+		l.resize(2);
+
+		l[0].position.x = position.getX();
+		l[0].position.y = position.getY();
+		l[0].color = sf::Color::Green;
+
+		l[1].position.x = enemy->getPosition().getX();
+		l[1].position.y = enemy->getPosition().getY();
+		l[1].color = sf::Color::Green;
+		
+		target.draw(l, states);
+	}
 }

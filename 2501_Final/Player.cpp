@@ -4,9 +4,9 @@ Player::Player()
 {
 	vel = vec::Vector2(0,0);
 
-	vehicle = new TransportShip();
+	//vehicle = new TransportShip();
 
-	addObjectStatic(vehicle);
+	//addObjectStatic(vehicle);
 
 	vehicle = new BasicShip();
 	vehicle->setPosition(vec::Vector2(200, 250));
@@ -15,12 +15,14 @@ Player::Player()
 
 	addObjectStatic(vehicle);
 
-	Turret* turret = new Turret(vec::Vector2(500, 100), new Weapon(0, 50, 250), 180, 360);
+	Turret* turret = new Turret(vec::Vector2(500, 100), new Weapon(3, 50, 250), 90, 180, this);
 	addObjectStatic(turret);
 
 	vehicle = NULL;
 
 	spawn();
+
+	enemy = NULL;
 
 	playerTexture.loadFromFile("img/player.png");
 	player.setTexture(playerTexture);
@@ -109,6 +111,8 @@ void Player::update(const sf::Time& delta) {
 		inputs.F = false;
 		exitVehicle();
 	}
+
+	target = vec::Vector2(Global::mouseWindowCoords.x-400+position.getX(), Global::mouseWindowCoords.y-400+position.getY());
 
 	Entity::update(delta);
 

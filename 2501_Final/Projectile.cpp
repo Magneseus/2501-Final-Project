@@ -36,8 +36,8 @@ void Projectile::onCollide(Collidable& other) {
 	Entity* temp = dynamic_cast<Entity*>(&other);
 
 	if (temp != parent) {
-		if(temp) temp->takeDamage(damage, parent);
-		delObjectStatic(this);
+		if (temp) temp->takeDamage(damage, parent);
+		onDeath(temp);
 	}
 }
 

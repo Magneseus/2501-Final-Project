@@ -179,7 +179,8 @@ protected:
 	float accelRate, topSpeed, rotateSpeed, dragValue;	// per second
 	bool brakesOn = false;
 
-	vec::Vector2 target;	// where the entity is trying to look
+	Entity* enemy;	// entity's enemy, who's it trying to shoot at
+	vec::Vector2 target; // where the entity wants to be looking
 
 	float maxHealth = 100;
 	float curHealth = 100;

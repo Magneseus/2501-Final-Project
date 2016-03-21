@@ -14,8 +14,8 @@ sf::Font Global::niceFont;
 void Entity::update(const sf::Time& delta) {
 	// TODO: Don't have it always look at mouse
 	// TODO: Clean this up to optimize, maybe a "turnable" boolean?
-	vec::Vector2 mousePos = vec::Vector2(Global::mouseWindowCoords.x, Global::mouseWindowCoords.y);
-	vec::Vector2 mDif = mousePos - vec::Vector2(400, 400);
+	//vec::Vector2 mousePos = vec::Vector2(Global::mouseWindowCoords.x, Global::mouseWindowCoords.y);
+	vec::Vector2 mDif = target - position;//vec::Vector2(400, 400);
 
 	// Get the current turning direction
 	vec::Vector2 turnVec(toRadians(rotation));

@@ -6,7 +6,7 @@
 
 class Turret : public Entity {
 public:
-	Turret(vec::Vector2 p, Weapon* w, float min, float max);
+	Turret(vec::Vector2 p, Weapon* w, float min, float max, Entity* player);
 	~Turret();
 
 	virtual void onCollide(Collidable& other);
