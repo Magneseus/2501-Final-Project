@@ -11,6 +11,7 @@ Player::Player()
 	vehicle = new BasicShip();
 	vehicle->setPosition(vec::Vector2(200, 250));
 	vehicle->vel = vec::Vector2(10, 10);
+	vehicle->setSolid(true);
 
 	addObjectStatic(vehicle);
 
