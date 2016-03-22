@@ -26,20 +26,30 @@ void Controller::input()
 	{
 		switch (e.type)
 		{
+		case sf::Event::Closed:
+			view->window.close();
+			break;
+		case sf::Event::Resized:
+			view->WINDOW_WIDTH = e.size.width;
+			view->WINDOW_HEIGHT = e.size.height;
+			Global::middleWindowCoords = sf::Vector2i(e.size.width / 2, e.size.height / 2);
+			break;
+
+		case sf::Event::KeyPressed:
+			if (e.key.code == sf::Keyboard::F) p->inputs.F = true;
+			break;
 		case sf::Event::KeyReleased:
 			if (e.key.code == sf::Keyboard::Escape)
 				view->window.close();
 			break;
-		case sf::Event::Closed:
-			view->window.close();
-			break;
-		case sf::Event::KeyPressed:
-			if (e.key.code == sf::Keyboard::F) p->inputs.F = true;
-			break;
+		
 		case sf::Event::MouseButtonPressed:
 			if (e.mouseButton.button == sf::Mouse::Right) p->inputs.RClick = true;
 			break;
 		}
+
+		if (!view->window.isOpen())
+			break;
 	}
 
 	// REAL-TIME INPUT

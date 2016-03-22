@@ -4,8 +4,8 @@
 
 View::View(Model* m)
 	: model(m),
-	WINDOW_WIDTH(1920),
-	WINDOW_HEIGHT(1080),
+	WINDOW_WIDTH(800),
+	WINDOW_HEIGHT(800),
 	window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Space Pirates...?"),
 	showFPS(true)
 {
