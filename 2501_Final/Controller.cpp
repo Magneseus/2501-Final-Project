@@ -120,6 +120,22 @@ void Controller::initObjects()
 		vec::Vector2(64 * 1, 64 * 3),
 		new sf::Texture());
 	addObject(w1);
+
+	Vehicle* vehicle = new TransportShip();
+
+	//addObjectStatic(vehicle);
+
+	vehicle = new BasicShip();
+	vehicle->setPosition(vec::Vector2(200, 250));
+	vehicle->vel = vec::Vector2(10, 10);
+
+	addObject(vehicle);
+
+	Turret* turret = new Turret(vec::Vector2(500, 100), new Weapon(3, 50, 250), 90, 180);
+	addObject(turret);
+
+	vehicle = NULL;
+
 }
 
 

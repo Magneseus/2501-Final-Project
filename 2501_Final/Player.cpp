@@ -4,21 +4,7 @@ Player::Player()
 {
 	vel = vec::Vector2(0,0);
 
-	//vehicle = new TransportShip();
-
-	//addObjectStatic(vehicle);
-
-	vehicle = new BasicShip();
-	vehicle->setPosition(vec::Vector2(200, 250));
-	vehicle->vel = vec::Vector2(10, 10);
-
-	addObjectStatic(vehicle);
-
-	Turret* turret = new Turret(vec::Vector2(500, 100), new Weapon(3, 50, 250), 90, 180, this);
-	addObjectStatic(turret);
-
-	vehicle = NULL;
-
+	
 	spawn();
 
 	enemy = NULL;
