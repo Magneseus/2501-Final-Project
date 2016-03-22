@@ -31,7 +31,7 @@ void Projectile::update(const sf::Time& delta) {
 		vec::Vector2 toParent(position);
 		toParent -= parent->getPosition();
 
-		if (toParent.getMag() > 500) {
+		if (toParent.getMag() > 3000) {
 
 			std::cout << "projectile expired" << std::endl;
 

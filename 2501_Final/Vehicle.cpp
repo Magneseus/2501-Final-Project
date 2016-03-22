@@ -3,7 +3,6 @@
 
 void Vehicle::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 	target.draw(*ship, states);
-	target.draw(col, states);
 }
 
 void Vehicle::onCollide(Collidable& other) {

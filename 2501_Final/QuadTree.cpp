@@ -119,22 +119,25 @@ void QuadTree::split()
 	nodes[2] = new QuadTree(depth + 1, sf::FloatRect(x, y + h, w, h));
 	nodes[3] = new QuadTree(depth + 1, sf::FloatRect(x + w, y + h, w, h));
 
-	sf::RectangleShape* r = new sf::RectangleShape(sf::Vector2f(w*2, h*2)); r->setFillColor(sf::Color::Transparent); r->setOutlineThickness(1); r->setOutlineColor(sf::Color::Green);
-	r->setPosition(x, y);
+	if (Global::DEBUG)
+	{
+		sf::RectangleShape* r = new sf::RectangleShape(sf::Vector2f(w * 2, h * 2)); r->setFillColor(sf::Color::Transparent); r->setOutlineThickness(1); r->setOutlineColor(sf::Color::Green);
+		r->setPosition(x, y);
 
-	sf::RectangleShape* r1 = new sf::RectangleShape(sf::Vector2f(w, h)); r1->setFillColor(sf::Color::Transparent); r1->setOutlineThickness(1); r1->setOutlineColor(sf::Color::Green);
-	r1->setPosition((x + w), y);
-	sf::RectangleShape* r2 = new sf::RectangleShape(sf::Vector2f(w, h)); r2->setFillColor(sf::Color::Transparent); r2->setOutlineThickness(1); r2->setOutlineColor(sf::Color::Green);
-	r2->setPosition(x, y);
-	sf::RectangleShape* r3 = new sf::RectangleShape(sf::Vector2f(w, h)); r3->setFillColor(sf::Color::Transparent); r3->setOutlineThickness(1); r3->setOutlineColor(sf::Color::Green);
-	r3->setPosition(x, (y + h));
-	sf::RectangleShape* r4 = new sf::RectangleShape(sf::Vector2f(w, h)); r4->setFillColor(sf::Color::Transparent); r4->setOutlineThickness(1); r4->setOutlineColor(sf::Color::Green);
-	r4->setPosition((x + w), (y + h));
+		sf::RectangleShape* r1 = new sf::RectangleShape(sf::Vector2f(w, h)); r1->setFillColor(sf::Color::Transparent); r1->setOutlineThickness(1); r1->setOutlineColor(sf::Color::Green);
+		r1->setPosition((x + w), y);
+		sf::RectangleShape* r2 = new sf::RectangleShape(sf::Vector2f(w, h)); r2->setFillColor(sf::Color::Transparent); r2->setOutlineThickness(1); r2->setOutlineColor(sf::Color::Green);
+		r2->setPosition(x, y);
+		sf::RectangleShape* r3 = new sf::RectangleShape(sf::Vector2f(w, h)); r3->setFillColor(sf::Color::Transparent); r3->setOutlineThickness(1); r3->setOutlineColor(sf::Color::Green);
+		r3->setPosition(x, (y + h));
+		sf::RectangleShape* r4 = new sf::RectangleShape(sf::Vector2f(w, h)); r4->setFillColor(sf::Color::Transparent); r4->setOutlineThickness(1); r4->setOutlineColor(sf::Color::Green);
+		r4->setPosition((x + w), (y + h));
 
-	Debug::draw(r1);
-	Debug::draw(r2);
-	Debug::draw(r3);
-	Debug::draw(r4);
+		Debug::draw(r1);
+		Debug::draw(r2);
+		Debug::draw(r3);
+		Debug::draw(r4);
+	}
 }
 
 void QuadTree::clear()

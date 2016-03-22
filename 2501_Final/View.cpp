@@ -9,31 +9,8 @@ View::View(Model* m)
 	window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Space Pirates...?"),
 	showFPS(true)
 {
-	//window.setFramerateLimit(60);
-
-	/*
-	temp = new AnimatedSprite();
-
-	std::vector<sf::Texture*> files;
-
-	a = new sf::Texture();
-	b = new sf::Texture();
-	c = new sf::Texture();
-	d = new sf::Texture();
-	a->loadFromFile("img/test_1.png");
-	b->loadFromFile("img/test_2.png");
-	c->loadFromFile("img/test_3.png");
-	d->loadFromFile("img/test_4.png");
-
-	files.push_back(a);
-	files.push_back(b);
-	files.push_back(c);
-	files.push_back(d);
-
-	temp->create(files, 10);
-
-	temp->setPosition(100, 100);
-	*/
+	// Set the middle of the screen
+	Global::middleWindowCoords = sf::Vector2i(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2);
 
 	// Random hangar tiles
 	hangar_tile.loadFromFile("img/tile_64.png");
@@ -82,41 +59,46 @@ void View::render()
 				gPos *= -1;
 
 				if (gPos.dist(rPos) < WINDOW_WIDTH * 2)
+				{
+					(*it)->debugDraw(window, globalTransform);
 					window.draw(**it, globalTransform);
+				}
 			}
 			++it;
 		}
 
 	}
 
-	// DEBUG
-	for (auto it = Debug::debugDrawables.begin(); it != Debug::debugDrawables.end(); ++it)
+	if (Global::DEBUG)
 	{
-		window.draw(**it, globalTransform);
-		delete *it;
+		// DEBUG
+		for (auto it = Debug::debugDrawables.begin(); it != Debug::debugDrawables.end(); ++it)
+		{
+			window.draw(**it, globalTransform);
+			delete *it;
+		}
+		Debug::debugDrawables.clear();
+
+		// display FPS
+		if (showFPS)
+		{
+			float total = 0;
+			for (auto it = fps.begin(); it != fps.end(); ++it)
+				total += *it;
+
+			total /= fps.size();
+
+			int FPS = 1.0f / total;
+			std::stringstream fpsString;
+			fpsString << "FPS: " << FPS;
+
+			fpsText.setString(fpsString.str());
+			fpsText.setCharacterSize(20);
+			fpsText.setColor(sf::Color::White);
+			fpsText.setPosition(sf::Vector2f(0, 0));
+			window.draw(fpsText);
+		}
 	}
-	Debug::debugDrawables.clear();
-
-	// display FPS
-	if (showFPS)
-	{
-		float total = 0;
-		for (auto it = fps.begin(); it != fps.end(); ++it)
-			total += *it;
-
-		total /= fps.size();
-		
-		int FPS = 1.0f / total;
-		std::stringstream fpsString;
-		fpsString << "FPS: " << FPS;
-
-		fpsText.setString(fpsString.str());
-		fpsText.setCharacterSize(20);
-		fpsText.setColor(sf::Color::White);
-		fpsText.setPosition(sf::Vector2f(0, 0));
-		window.draw(fpsText);
-	}
-	
 	window.display();
 }
 

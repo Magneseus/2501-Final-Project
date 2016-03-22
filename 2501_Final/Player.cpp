@@ -97,7 +97,8 @@ void Player::update(const sf::Time& delta) {
 		exitVehicle();
 	}
 
-	target = vec::Vector2(Global::mouseWindowCoords.x-400+position.getX(), Global::mouseWindowCoords.y-400+position.getY());
+	target = vec::Vector2(Global::mouseWindowCoords.x-Global::middleWindowCoords.x+position.getX(), 
+		Global::mouseWindowCoords.y-Global::middleWindowCoords.y+position.getY());
 
 	Entity::update(delta);
 
@@ -225,6 +226,4 @@ void Player::draw(sf::RenderTarget& target, sf::RenderStates states) const
 	} else {
 		target.draw(player, states);
 	}
-	// Draw collision box
-	target.draw(col, states);
 }

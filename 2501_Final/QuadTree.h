@@ -19,7 +19,7 @@ private:
 	int getInd(Collidable* col);
 
 	const int MAX_COL = 5;
-	const int MAX_DEPTH = 5;
+	const int MAX_DEPTH = 20;
 
 	int depth;
 	std::vector<Collidable*> cols;
