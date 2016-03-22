@@ -26,6 +26,18 @@ void Projectile::update(const sf::Time& delta) {
 	vel.setMag(topSpeed);
 
 	Entity::update(delta);
+
+	if (std::rand() % 100 == 1) {
+		vec::Vector2 toParent(position);
+		toParent -= parent->getPosition();
+
+		if (toParent.getMag() > 500) {
+
+			std::cout << "projectile expired" << std::endl;
+
+			onDeath(NULL);
+		}
+	}
 }
 
 void Projectile::onDeath(Entity* killer) { delObjectStatic(this); }

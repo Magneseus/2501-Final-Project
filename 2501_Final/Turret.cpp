@@ -1,8 +1,7 @@
 
 #include "Turret.h"
 
-Turret::Turret(vec::Vector2 p, Weapon* w, float min, float max, Entity* play) {
-	enemy = play;
+Turret::Turret(vec::Vector2 p, Weapon* w, float min, float max) {
 	position = p;
 	main = w;
 
@@ -48,8 +47,6 @@ Turret::Turret(vec::Vector2 p, Weapon* w, float min, float max, Entity* play) {
 Turret::~Turret() {}
 
 void Turret::update(const sf::Time& delta) {
-	target = enemy->getPosition();
-
 	if (state == FRENZIED) {
 		if (frenzyTimer.getElapsedTime().asSeconds() > 0.5) {
 			if (std::rand() % 100 > 50) sign = (sign == -1) ? 1 : -1;
@@ -58,13 +55,20 @@ void Turret::update(const sf::Time& delta) {
 		}
 
 		rotation += delta.asSeconds() * rotateSpeed * sign;
+
+		main->shoot(toRadians(rotation), position, this);
 	} else if (state == ACTIVE) {
+		target = enemy->getPosition();
+
 		float prevRotation = rotation;
 		Entity::update(delta);
 
 		if (rotation > maxRotation || rotation < minRotation) {
 			rotation = prevRotation;
 		}
+
+
+		main->shoot(toRadians(rotation), position, this);
 	} else {
 		if (rotation > maxRotation) {
 			sign = -1;
@@ -78,8 +82,6 @@ void Turret::update(const sf::Time& delta) {
 
 	s->update(delta);
 	s->setRotation(rotation);
-
-	main->shoot(toRadians(rotation), position, this);
 }
 
 void Turret::changeState(int newState) {
@@ -98,6 +100,8 @@ void Turret::changeState(int newState) {
 
 void Turret::takeDamage(float damage, Entity* source) {
 	changeState(ACTIVE);
+
+	enemy = source;
 
 	Entity::takeDamage(damage, source);
 }

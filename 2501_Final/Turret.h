@@ -6,12 +6,11 @@
 
 class Turret : public Entity {
 public:
-	Turret(vec::Vector2 p, Weapon* w, float min, float max, Entity* player);
+	Turret(vec::Vector2 p, Weapon* w, float min, float max);
 	~Turret();
 
 	virtual void onCollide(Collidable& other);
 	virtual void update(const sf::Time& delta);	
-
 
 private:
 	AnimatedSprite* s;
