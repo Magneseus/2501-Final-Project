@@ -4,8 +4,8 @@
 
 View::View(Model* m)
 	: model(m),
-	WINDOW_WIDTH(800),
-	WINDOW_HEIGHT(800),
+	WINDOW_WIDTH(1920),
+	WINDOW_HEIGHT(1080),
 	window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Space Pirates...?"),
 	showFPS(true)
 {
@@ -88,6 +88,14 @@ void View::render()
 		}
 
 	}
+
+	// DEBUG
+	for (auto it = Debug::debugDrawables.begin(); it != Debug::debugDrawables.end(); ++it)
+	{
+		window.draw(**it, globalTransform);
+		delete *it;
+	}
+	Debug::debugDrawables.clear();
 
 	// display FPS
 	if (showFPS)

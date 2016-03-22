@@ -21,6 +21,7 @@
 
 #include "Vector.h"
 #include "Collider.h"
+#include "Debug.h"
 
 // Some weird name-space stuff for static access to mouse co-ordinates
 class Global
