@@ -3,7 +3,6 @@
 Player::Player()
 {
 	vel = vec::Vector2(0,0);
-
 	
 	spawn();
 
@@ -243,5 +242,8 @@ void Player::draw(sf::RenderTarget& target, sf::RenderStates states) const
 		target.draw(*vehicle, states);
 	} else {
 		target.draw(player, states);
+
+		drawHealthBar(target, states);
 	}
+
 }

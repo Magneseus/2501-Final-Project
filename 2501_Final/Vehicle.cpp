@@ -3,6 +3,8 @@
 
 void Vehicle::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 	target.draw(*ship, states);
+
+	drawHealthBar(target, states);
 }
 
 void Vehicle::onCollide(Collidable& other) {

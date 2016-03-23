@@ -114,6 +114,8 @@ void Turret::onCollide(Collidable& other) {}
 void Turret::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 	target.draw(*s, states);
 
+	drawHealthBar(target, states);
+	
 	if (Global::DEBUG)
 	{
 		if (enemy != NULL) {

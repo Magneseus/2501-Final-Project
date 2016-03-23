@@ -220,6 +220,10 @@ protected:
 	float maxHealth = 100;
 	float curHealth = 100;
 
+	void drawHealthBar(sf::RenderTarget& w, sf::RenderStates s) const;
+
+	sf::Clock healthBarTimer;
+
 	virtual void onDeath(Entity* source) = 0;
 
 	enum MOVEMENT { FORWARD = 1, REVERSE = -1, STILL = 0,

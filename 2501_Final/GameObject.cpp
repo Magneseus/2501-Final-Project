@@ -78,14 +78,43 @@ void Entity::update(const sf::Time& delta) {
 }
 
 void Entity::takeDamage(float amount, Entity* source) {
-	std::cout << getTag().toAnsiString() << " HP[" << curHealth << "/" << maxHealth <<
-		"] is taking " << amount << " damage from " << 
-		source->getTag().toAnsiString() << "." << std::endl;
+	if (Global::DEBUG) {
+		std::cout << getTag().toAnsiString() << " HP[" << curHealth << "/" << maxHealth <<
+			"] is taking " << amount << " damage from " <<
+			source->getTag().toAnsiString() << "." << std::endl;
+	}
 
-	curHealth -= amount;
+	healthBarTimer.restart();
+
+	curHealth = std::fmax(curHealth - amount, 0);
 	if (curHealth <= 0) {
-		std::cout << source->getTag().toAnsiString() << " destroyed " <<
-			this->getTag().toAnsiString() << "." << std::endl;
+		if (Global::DEBUG) {
+			std::cout << source->getTag().toAnsiString() << " destroyed " <<
+				this->getTag().toAnsiString() << "." << std::endl;
+		}
 		onDeath(source);
+	}
+}
+
+void Entity::drawHealthBar(sf::RenderTarget& w, sf::RenderStates s) const {
+	if (curHealth != maxHealth && healthBarTimer.getElapsedTime().asSeconds() < 5) {
+		sf::RectangleShape barOut;
+		barOut.setSize(sf::Vector2f(50, 5));
+		barOut.setPosition(position.getX() - barOut.getSize().x / 2, position.getY() - 30);
+		barOut.setOutlineColor(sf::Color::Black);
+		barOut.setOutlineThickness(2);
+		sf::Color grey = sf::Color::Black;
+		grey.r += 100;
+		grey.g += 100;
+		grey.b += 100;
+		barOut.setFillColor(grey);
+
+		sf::RectangleShape barIn(barOut);
+		barIn.setSize(sf::Vector2f(barOut.getSize().x * (curHealth / maxHealth), barOut.getSize().y));
+		barIn.setFillColor(sf::Color::Red);
+		barIn.setOutlineThickness(0);
+
+		w.draw(barOut, s);
+		w.draw(barIn, s);
 	}
 }
