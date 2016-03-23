@@ -11,30 +11,6 @@ View::View(Model* m)
 {
 	//window.setFramerateLimit(60);
 
-	/*
-	temp = new AnimatedSprite();
-
-	std::vector<sf::Texture*> files;
-
-	a = new sf::Texture();
-	b = new sf::Texture();
-	c = new sf::Texture();
-	d = new sf::Texture();
-	a->loadFromFile("img/test_1.png");
-	b->loadFromFile("img/test_2.png");
-	c->loadFromFile("img/test_3.png");
-	d->loadFromFile("img/test_4.png");
-
-	files.push_back(a);
-	files.push_back(b);
-	files.push_back(c);
-	files.push_back(d);
-
-	temp->create(files, 10);
-
-	temp->setPosition(100, 100);
-	*/
-
 	// Random hangar tiles
 	hangar_tile.loadFromFile("img/tile_64.png");
 	hangar_tile.setRepeated(true);
@@ -50,6 +26,8 @@ View::View(Model* m)
 		std::cout << "Nice font not loaded!\n";
 	}
 	fpsText.setFont(Global::niceFont);
+
+	menu = new UI();
 
 	window.setKeyRepeatEnabled(false);	// prevent player from spamming keys accidentally
 }
@@ -109,6 +87,8 @@ void View::render()
 		window.draw(fpsText);
 	}
 	
+	window.draw(*menu);
+
 	window.display();
 }
 

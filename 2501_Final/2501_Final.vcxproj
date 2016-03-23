@@ -141,6 +141,7 @@
     <ClCompile Include="StaticSolids.cpp" />
     <ClCompile Include="Trigger.cpp" />
     <ClCompile Include="Turret.cpp" />
+    <ClCompile Include="UI.cpp" />
     <ClCompile Include="Vector.cpp" />
     <ClCompile Include="Vehicle.cpp" />
     <ClCompile Include="View.cpp" />
@@ -160,6 +161,7 @@
     <ClInclude Include="SpriteSheet.h" />
     <ClInclude Include="Trigger.h" />
     <ClInclude Include="Turret.h" />
+    <ClInclude Include="UI.h" />
     <ClInclude Include="Vector.h" />
     <ClInclude Include="Vehicle.h" />
     <ClInclude Include="View.h" />

@@ -1,5 +1,7 @@
 #include "Controller.h"
 
+#include "UI.h"
+
 Controller::Controller(Model* m, View* v)
 	: model(m),
 	view(v),
@@ -26,17 +28,21 @@ void Controller::input()
 	{
 		switch (e.type)
 		{
+		case sf::Event::Closed:
+			view->window.close();
+			break;
+
 		case sf::Event::KeyReleased:
 			if (e.key.code == sf::Keyboard::Escape)
 				view->window.close();
 			break;
-		case sf::Event::Closed:
-			view->window.close();
-			break;
+		
 		case sf::Event::KeyPressed:
 			if (e.key.code == sf::Keyboard::F) p->inputs.F = true;
 			break;
+
 		case sf::Event::MouseButtonPressed:
+			if (view->menu->processClick(e.mouseButton.x, e.mouseButton.y)) break;
 			if (e.mouseButton.button == sf::Mouse::Right) p->inputs.RClick = true;
 			break;
 		}

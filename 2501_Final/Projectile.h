@@ -17,6 +17,8 @@ private:
 	float damage;
 	sf::Sprite sprite;
 
+	sf::Clock lifeTime;
+
 	virtual void onDeath(Entity*);
 
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;

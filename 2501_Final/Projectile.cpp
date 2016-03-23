@@ -27,16 +27,10 @@ void Projectile::update(const sf::Time& delta) {
 
 	Entity::update(delta);
 
-	if (std::rand() % 100 == 1) {
-		vec::Vector2 toParent(position);
-		toParent -= parent->getPosition();
+	if (lifeTime.getElapsedTime().asSeconds() >= 5) {
+		std::cout << "A projectile has expired." << std::endl;
 
-		if (toParent.getMag() > 500) {
-
-			std::cout << "projectile expired" << std::endl;
-
-			onDeath(NULL);
-		}
+		onDeath(NULL);
 	}
 }
 
