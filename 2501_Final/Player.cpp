@@ -9,12 +9,15 @@ Player::Player()
 
 	enemy = NULL;
 
-	playerTexture.loadFromFile("img/player.png");
-	player.setTexture(playerTexture);
+	playerTexture = Global::globalSpriteSheet->getTex("player.png");
+	player.setTexture(*playerTexture);
+
+	sf::Vector2i originV = Global::globalSpriteSheet->getTexPivot("player.png");
+	player.setOrigin(originV.x, originV.y);
 	
 	player.setOrigin(25, 25);
 
-	position = vec::Vector2(300, 300);
+	position = vec::Vector2(0, 0);
 	rotation = 0;
 
 	accelRate = onFootAccel;

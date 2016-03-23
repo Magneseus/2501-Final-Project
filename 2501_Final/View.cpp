@@ -17,9 +17,9 @@ View::View(Model* m)
 	hangar_tile.setRepeated(true);
 
 	hangar.setTexture(hangar_tile);
-	hangar.setTextureRect(sf::IntRect(0, 0, 64 * 6, 64 * 6));
-	hangar.setOrigin(64 * 3, 64 * 3);
-	hangar.setPosition(400, 400);
+	hangar.setTextureRect(sf::IntRect(0, 0, 64 * 10, 64 * 10));
+	hangar.setOrigin(64 * 5, 64 * 5);
+	hangar.setPosition(0, 0);
 
 	// Load some fonts
 	if (!Global::niceFont.loadFromFile("fonts/FiraSans-Regular.otf"))

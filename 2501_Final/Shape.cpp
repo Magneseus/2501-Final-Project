@@ -518,5 +518,8 @@ bool collideRC(const Rect& r, const Circ& c, vec::Vector2& normal)
 	if (lineIntCirc(r.bl, r.tl, c, normal))
 		colliding = true;
 
+	if (r.pointInRect(c.getPos(), normal))
+		colliding = true;
+
 	return colliding;
 }

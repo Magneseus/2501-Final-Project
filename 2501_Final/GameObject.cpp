@@ -11,7 +11,9 @@ std::vector<GameObject*> GameObject::staticGameObjectsRem;
 sf::Vector2i Global::mouseWindowCoords;
 sf::Vector2i Global::middleWindowCoords;
 sf::Font Global::niceFont;
-bool Global::DEBUG = true;
+bool Global::DEBUG = false;
+
+SpriteSheet* Global::globalSpriteSheet;
 
 void Entity::debugDraw(sf::RenderTarget& target, sf::RenderStates states) const
 {

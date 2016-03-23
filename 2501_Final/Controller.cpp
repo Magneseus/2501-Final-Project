@@ -7,6 +7,8 @@ Controller::Controller(Model* m, View* v)
 	view(v),
 	GSTATE(GSTATES::GAME)
 {
+	Global::globalSpriteSheet = new SpriteSheet(sf::String("img/masterSheet.png"));
+
 	initObjects();
 }
 
@@ -71,6 +73,9 @@ void Controller::gameController()
 	playerPos.translate(view->WINDOW_WIDTH / 2, view->WINDOW_HEIGHT / 2);
 
 	view->setTransform(playerPos);
+
+	// Set the global DEBUG state
+	Debug::debugging = Global::DEBUG;
 
 	// Check the static list for objects to add
 	for (auto it = GameObject::staticGameObjects.begin(); it != GameObject::staticGameObjects.end(); ++it)

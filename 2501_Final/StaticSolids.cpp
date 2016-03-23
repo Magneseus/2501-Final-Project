@@ -7,7 +7,7 @@ Wall::Wall(vec::Vector2 _topleft, vec::Vector2 _bottomright, sf::Texture* _tex)
 	Rect* r = new Rect(_topleft, _bottomright);
 	col.addShape(r);
 
-	setPosition(_topleft);
+	setPosition(_topleft + ((_bottomright - _topleft)/2.0f));
 	
 	setSolid(true);
 	setStatic(true);

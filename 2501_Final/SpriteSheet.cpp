@@ -1,13 +1,16 @@
 #include "SpriteSheet.h"
+#include <iostream>
 
 SpriteSheet::SpriteSheet()
-	: sheetName("")
+	: sheetName(""),
+	sheetImage(NULL)
 {
 
 }
 
 SpriteSheet::SpriteSheet(const sf::String& fileName)
-	: sheetName(fileName)
+	: sheetName(fileName),
+	sheetImage(NULL)
 {
 	loadFile(fileName);
 }
@@ -26,7 +29,8 @@ SpriteSheet::~SpriteSheet()
 	texMap.clear();
 
 	// Delete the master texture
-	delete sheetImage;
+	if (sheetImage != NULL)
+		delete sheetImage;
 }
 
 
@@ -92,11 +96,10 @@ sf::Vector2i SpriteSheet::getTexPivot(const sf::String& texName)
 bool SpriteSheet::loadFile(const sf::String& fileName)
 {
 	// Try to load and mask the image
-
 	sheetImage = new sf::Image();
 	if ( !(sheetImage->loadFromFile(fileName)) )
 	{
-		sf::err() << "Failed to load spritesheet file: " << fileName.toAnsiString() << std::endl;
+		std::cout << "Failed to load spritesheet file: " << fileName.toAnsiString() << std::endl;
 		delete sheetImage;
 		sheetImage = NULL;
 
@@ -104,7 +107,7 @@ bool SpriteSheet::loadFile(const sf::String& fileName)
 	}
 	else
 	{
-		sheetImage->createMaskFromColor(sf::Color::White);
+		//sheetImage->createMaskFromColor(sf::Color::White);
 	}
 
 	// Get the XML name
@@ -120,6 +123,8 @@ bool SpriteSheet::loadFile(const sf::String& fileName)
 	std::ifstream ssDoc(sheetNameXML.toAnsiString());
 	std::vector<char> buf((std::istreambuf_iterator<char>(ssDoc)), std::istreambuf_iterator<char>());
 	buf.push_back('\0');
+
+	
 
 	ss_doc.parse<0>(&buf[0]);
 	ss_rootNode = ss_doc.first_node("TextureAtlas");

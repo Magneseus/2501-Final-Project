@@ -24,7 +24,7 @@ public:
 	Player();
 	~Player();
 
-	sf::Texture playerTexture;
+	sf::Texture* playerTexture;
 	sf::Sprite player;
 
 	Vehicle* vehicle;

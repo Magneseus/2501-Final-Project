@@ -22,6 +22,7 @@
 #include "Vector.h"
 #include "Collider.h"
 #include "Debug.h"
+#include "SpriteSheet.h"
 
 // Some weird name-space stuff for static access to mouse co-ordinates
 class Global
@@ -30,6 +31,8 @@ public:
 	static sf::Vector2i mouseWindowCoords;
 	static sf::Vector2i middleWindowCoords;
 	static sf::Font niceFont;
+
+	static SpriteSheet* globalSpriteSheet;
 
 	static bool DEBUG;
 };
