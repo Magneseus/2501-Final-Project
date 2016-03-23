@@ -16,6 +16,8 @@
 
 class Vehicle : public Entity {
 public:
+	friend class Player;
+
 	virtual ~Vehicle() {}
 
 	// update is written by each ship
