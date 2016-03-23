@@ -159,10 +159,25 @@ void Player::enterVehicle(Vehicle* v) {
 	dragValue = v->getDragValue();
 
 	switchLoadouts(v->weapons);
+
+	// Store the old collider
+	onFootCollider = col;
+
+	// Get the new vehicle collider
+	col = v->col;
+	setTag(sf::String("Vehicle"));
 }
 
 void Player::exitVehicle() {
 	if (vel.getMag() < 50) {
+
+		// Update the vehicle's collider
+		vehicle->col = this->col;
+
+		// Reset our own collider
+		col = onFootCollider;
+		col.moveTo(this->getPosition());
+		setTag(sf::String("Player"));
 
 		addObjectStatic(vehicle);
 
