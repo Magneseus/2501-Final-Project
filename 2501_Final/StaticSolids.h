@@ -14,9 +14,20 @@ public:
 	~Wall();
 
 	virtual void onCollide(Collidable& other);
+	void setPosition(vec::Vector2 newPos);
+	void setRotation(double _rotation);
 
 private:
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 
 	sf::Sprite wallSprite;
+};
+
+class PlayerShield : public Wall
+{
+public:
+	PlayerShield(vec::Vector2 _topleft, vec::Vector2 _bottomright, sf::Texture* _tex);
+	~PlayerShield();
+
+	virtual void onCollide(Collidable& other);
 };

@@ -22,6 +22,7 @@
 #include "Vector.h"
 #include "Collider.h"
 #include "Debug.h"
+#include "SpriteSheet.h"
 
 // Some weird name-space stuff for static access to mouse co-ordinates
 class Global
@@ -30,6 +31,8 @@ public:
 	static sf::Vector2i mouseWindowCoords;
 	static sf::Vector2i middleWindowCoords;
 	static sf::Font niceFont;
+
+	static SpriteSheet* globalSpriteSheet;
 
 	static bool DEBUG;
 };
@@ -143,6 +146,31 @@ public:
 	static bool collide(Collidable& c1, Collidable& c2, vec::Vector2& normal = vec::Vector2())
 	{
 		return c1.col.collide(c2.col, normal);
+	}
+
+	// Pushes a hitbox by a normal
+	static void collideBody(Collidable& c, vec::Vector2& normal)
+	{
+		if (!c.isStatic())
+		{
+			/*
+			vec::Vector2 push = (*colA)->getPosition() - (*colA)->prevPos;
+			push.setMag(1);
+			push *= -1;
+
+			vec::Vector2 normal = (*colA)->getPosition() - (*colB)->getPosition();
+
+			// Check if the push vector is in the opposite direction from the center
+			if (push.angleBetween(normal) > 90)
+			push *= -1;
+			else
+			(*colA)->setPosition((*colA)->prevPos);
+
+			(*colA)->setPosition((*colA)->getPosition() + push);
+			*/
+
+			c.setPosition(c.getPosition() + normal);
+		}
 	}
 
 	const sf::String getTag() const { return tag; }

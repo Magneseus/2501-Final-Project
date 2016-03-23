@@ -35,7 +35,7 @@ BasicShip::BasicShip() {
 	weapons->primary = new Weapon(5, 10, 500);
 	weapons->secondary = new Weapon(1, 50, 250);
 
-	ship = new AnimatedSprite(new SpriteSheet(sf::String("img/basic_ship_packed.png")), 10);
+	ship = new AnimatedSprite(Global::globalSpriteSheet, 10);
 
 	std::vector<sf::String> names;
 	names.push_back("basic_ship.png");
@@ -52,7 +52,11 @@ BasicShip::BasicShip() {
 	//ship.setOrigin(30, 42.5);
 
 	// Set collision box
-	Rect* r = new Rect(vec::Vector2(-30, -50), vec::Vector2(55, 50));
+	Rect* r = new Rect(
+		vec::Vector2(5, -40), 
+		vec::Vector2(-25, 0),
+		vec::Vector2(5, 40),
+		vec::Vector2(50, 0));
 	col.addShape(r);
 
 	setTag(sf::String("Vehicle"));
@@ -70,7 +74,7 @@ TransportShip::TransportShip() {
 	weapons->primary = new Weapon(1, 10, 500);
 	weapons->secondary = new Weapon(0.5, 50, 1000);
 
-	ship = new AnimatedSprite(new SpriteSheet(sf::String("img/transport_ship_packed.png")), 10);
+	ship = new AnimatedSprite(Global::globalSpriteSheet , 10);
 
 	std::vector<sf::String> names;
 	names.push_back("transport_ship.png");
@@ -85,7 +89,11 @@ TransportShip::TransportShip() {
 	ship->setRotation(rotation);
 	//ship.setOrigin(42.5, 42.5);
 
-	Rect* r = new Rect(vec::Vector2(-30, -50), vec::Vector2(50, 50));
+	Rect* r = new Rect(
+		vec::Vector2(-30, -20),
+		vec::Vector2(30, -10),
+		vec::Vector2(30, 10),
+		vec::Vector2(-30, 20));
 	col.addShape(r);
 
 	setTag(sf::String("Vehicle"));

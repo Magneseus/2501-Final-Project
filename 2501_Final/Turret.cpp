@@ -10,8 +10,7 @@ Turret::Turret(vec::Vector2 p, Weapon* w, float min, float max) {
 
 	rotation = minRotation + std::rand() % maxRotation;
 	
-	SpriteSheet* temp = new SpriteSheet(sf::String("img/test.png"));
-	s = new AnimatedSprite(temp, 10);
+	s = new AnimatedSprite(Global::globalSpriteSheet, 10);
 	s->setPosition(position);
 
 	std::vector<sf::String> names;

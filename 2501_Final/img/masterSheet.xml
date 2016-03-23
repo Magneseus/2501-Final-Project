@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
+<!-- $TexturePacker:SmartUpdate:7292016175518399a1e85a3730cd8d6b:bcc235250ca0779844191a66be1e4dbd:24921e5b48017f27cae2b1aaaf32a594$ -->
+<!--Format:
+n  => name of the sprite
+x  => sprite x pos in texture
+y  => sprite y pos in texture
+w  => sprite width (may be trimmed)
+h  => sprite height (may be trimmed)
+pX => x pos of the pivot point (relative to sprite width)
+pY => y pos of the pivot point (relative to sprite height)
+oX => sprite's x-corner offset (only available if trimmed)
+oY => sprite's y-corner offset (only available if trimmed)
+oW => sprite's original width (only available if trimmed)
+oH => sprite's original height (only available if trimmed)
+r => 'y' only set if sprite is rotated
+with polygon mode enabled:
+vertices   => points in sprite coordinate system (x0,y0,x1,y1,x2,y2, ...)
+verticesUV => points in sheet coordinate system (x0,y0,x1,y1,x2,y2, ...)
+triangles  => sprite triangulation, 3 vertex indices per triangle
+-->
+<TextureAtlas imagePath="masterSheet.png" width="480" height="121">
+    <sprite n="basic_ship.png" x="1" y="1" w="85" h="85" pX="0.352941" pY="0.494118"/>
+    <sprite n="basic_thrust.png" x="88" y="1" w="85" h="85" pX="0.352941" pY="0.494118"/>
+    <sprite n="player.png" x="349" y="67" w="50" h="50" pX="0.5" pY="0.5"/>
+    <sprite n="smallturret_active.png" x="1" y="88" w="39" h="32" pX="0.410256" pY="0.5"/>
+    <sprite n="smallturret_idle.png" x="42" y="88" w="39" h="32" pX="0.410256" pY="0.5"/>
+    <sprite n="smallturret_off.png" x="83" y="88" w="39" h="32" pX="0.410256" pY="0.5"/>
+    <sprite n="tile_64.png" x="349" y="1" w="64" h="64" pX="0.5" pY="0.5"/>
+    <sprite n="transport_ship.png" x="175" y="1" w="85" h="85" pX="0.5" pY="0.5"/>
+    <sprite n="transport_thrust.png" x="262" y="1" w="85" h="85" pX="0.5" pY="0.5"/>
+    <sprite n="wall_64.png" x="415" y="1" w="64" h="64" pX="0.5" pY="0.5"/>
+</TextureAtlas>

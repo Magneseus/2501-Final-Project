@@ -24,7 +24,7 @@ public:
 	Player();
 	~Player();
 
-	sf::Texture playerTexture;
+	sf::Texture* playerTexture;
 	sf::Sprite player;
 
 	Vehicle* vehicle;
@@ -43,6 +43,8 @@ private:
 	Weapon* currentWeapon;
 
 	Loadout* onFootLoadout;		// player's loadout
+	Collider onFootCollider;   // Player's collision box for on foot
+
 	const float onFootAccel = 0;
 	const float onFootTopSpeed = 100;
 	const float onFootRotateSpeed = 180;

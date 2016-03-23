@@ -9,12 +9,15 @@ Player::Player()
 
 	enemy = NULL;
 
-	playerTexture.loadFromFile("img/player.png");
-	player.setTexture(playerTexture);
+	playerTexture = Global::globalSpriteSheet->getTex("player.png");
+	player.setTexture(*playerTexture);
+
+	sf::Vector2i originV = Global::globalSpriteSheet->getTexPivot("player.png");
+	player.setOrigin(originV.x, originV.y);
 	
 	player.setOrigin(25, 25);
 
-	position = vec::Vector2(300, 300);
+	position = vec::Vector2(0, 0);
 	rotation = 0;
 
 	accelRate = onFootAccel;
@@ -159,10 +162,25 @@ void Player::enterVehicle(Vehicle* v) {
 	dragValue = v->getDragValue();
 
 	switchLoadouts(v->weapons);
+
+	// Store the old collider
+	onFootCollider = col;
+
+	// Get the new vehicle collider
+	col = v->col;
+	setTag(sf::String("Vehicle"));
 }
 
 void Player::exitVehicle() {
 	if (vel.getMag() < 50) {
+
+		// Update the vehicle's collider
+		vehicle->col = this->col;
+
+		// Reset our own collider
+		col = onFootCollider;
+		col.moveTo(this->getPosition());
+		setTag(sf::String("Player"));
 
 		addObjectStatic(vehicle);
 

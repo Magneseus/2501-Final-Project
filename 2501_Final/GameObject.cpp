@@ -13,6 +13,8 @@ sf::Vector2i Global::middleWindowCoords;
 sf::Font Global::niceFont;
 bool Global::DEBUG = true;
 
+SpriteSheet* Global::globalSpriteSheet;
+
 void Entity::debugDraw(sf::RenderTarget& target, sf::RenderStates states) const
 {
 	if (Global::DEBUG)
