@@ -11,7 +11,7 @@ std::vector<GameObject*> GameObject::staticGameObjectsRem;
 sf::Vector2i Global::mouseWindowCoords;
 sf::Vector2i Global::middleWindowCoords;
 sf::Font Global::niceFont;
-bool Global::DEBUG = false;
+bool Global::DEBUG = true;
 
 SpriteSheet* Global::globalSpriteSheet;
 

@@ -14,6 +14,8 @@ public:
 	~Wall();
 
 	virtual void onCollide(Collidable& other);
+	void setPosition(vec::Vector2 newPos);
+	void setRotation(double _rotation);
 
 private:
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;

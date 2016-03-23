@@ -136,17 +136,42 @@ void Controller::initObjects()
 	p = new Player();
 	addObject(p);
 
-	Wall* w1 = new Wall(vec::Vector2(-64 * 1, -64 * 3),
-		vec::Vector2(64 * 1, 64 * 3),
-		new sf::Texture());
+
+
+	// Walls
+	
+	sf::Texture* wallTex = Global::globalSpriteSheet->getTex(sf::String("wall_64.png"));
+	wallTex->setRepeated(true);
+	
+	Wall* w1 = new Wall(vec::Vector2(-32, -64 * 5),
+		vec::Vector2(32, 64 * 5),
+		wallTex);
+	w1->setPosition(vec::Vector2(-64*5, 0));
 	addObject(w1);
 
-	Vehicle* vehicle = new TransportShip();
+	Wall* w2 = new Wall(vec::Vector2(-32.f, -64 * 5.5f),
+		vec::Vector2(32.f, 64 * 5.5f),
+		wallTex);
+	w2->setPosition(vec::Vector2(0, -64 * 5));
+	w2->setRotation(90);
+	addObject(w2);
 
-	//addObjectStatic(vehicle);
+	Wall* w3 = new Wall(vec::Vector2(-32.f, -64 * 5.5f),
+		vec::Vector2(32.f, 64 * 5.5f),
+		wallTex);
+	w3->setPosition(vec::Vector2(0, 64 * 5));
+	w3->setRotation(90);
+	addObject(w3);
+
+	
+
+	Vehicle* vehicle = new TransportShip();
+	vehicle->setPosition(vec::Vector2(200, -200));
+	vehicle->vel = vec::Vector2(10, 10);
+	addObject(vehicle);
 
 	vehicle = new BasicShip();
-	vehicle->setPosition(vec::Vector2(200, 250));
+	vehicle->setPosition(vec::Vector2(200, 200));
 	vehicle->vel = vec::Vector2(10, 10);
 
 	addObject(vehicle);

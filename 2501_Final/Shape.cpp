@@ -5,23 +5,8 @@
 //////////////////////////////////////
 
 // Axis-aligned Rectangle
-Rect::Rect(const vec::Vector2& _tl, const vec::Vector2& _br)
-	: tl(_tl),
-	br(_br),
-	tr(_br.getX(), _tl.getY()),
-	bl(_tl.getX(), _br.getY()),
-
-	angle(0.0f)
+Rect::Rect(const vec::Vector2& _tl, const vec::Vector2& _br) : Rect(_tl, vec::Vector2(_br.getX(), _tl.getY()), _br, vec::Vector2(_tl.getX(), _br.getY()))
 {
-	// Set the type
-	_type = RECT;
-
-	// Get the max width of the rectangle
-	vec::Vector2 r = br - tl;
-	radius = r.getMag();
-
-	// Set the center of the rectangle
-	center = tl + (r / 2);
 }
 
 // Non-axis aligned Rectangle

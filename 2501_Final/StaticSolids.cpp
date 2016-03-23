@@ -4,6 +4,14 @@ Wall::Wall(vec::Vector2 _topleft, vec::Vector2 _bottomright, sf::Texture* _tex)
 {
 	wallSprite.setTexture(*_tex);
 
+	sf::IntRect texRect;
+	texRect.left = 0;
+	texRect.top = 0;
+	texRect.width = _bottomright.getX() - _topleft.getX();
+	texRect.height = _bottomright.getY() - _topleft.getY();
+	wallSprite.setTextureRect(texRect);
+	wallSprite.setOrigin(((_bottomright - _topleft) / 2.0f).getSfVec());
+
 	Rect* r = new Rect(_topleft, _bottomright);
 	col.addShape(r);
 
@@ -15,6 +23,18 @@ Wall::Wall(vec::Vector2 _topleft, vec::Vector2 _bottomright, sf::Texture* _tex)
 
 Wall::~Wall() {}
 
+void Wall::setPosition(vec::Vector2 newPos)
+{
+	GameObject::setPosition(newPos);
+	wallSprite.setPosition(newPos.getSfVec());
+}
+
+void Wall::setRotation(double _rotation)
+{
+	GameObject::setRotation(_rotation);
+	wallSprite.setRotation(_rotation);
+}
+
 void Wall::onCollide(Collidable& other)
 {
 
@@ -24,5 +44,6 @@ void Wall::onCollide(Collidable& other)
 void Wall::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
 	target.draw(wallSprite, states);
-	target.draw(col, states);
+	if (Global::DEBUG)
+		target.draw(col, states);
 }

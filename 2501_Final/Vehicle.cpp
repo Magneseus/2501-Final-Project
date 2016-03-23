@@ -89,7 +89,11 @@ TransportShip::TransportShip() {
 	ship->setRotation(rotation);
 	//ship.setOrigin(42.5, 42.5);
 
-	Rect* r = new Rect(vec::Vector2(-30, -50), vec::Vector2(50, 50));
+	Rect* r = new Rect(
+		vec::Vector2(-30, -20),
+		vec::Vector2(30, -10),
+		vec::Vector2(30, 10),
+		vec::Vector2(-30, 20));
 	col.addShape(r);
 
 	setTag(sf::String("Vehicle"));
