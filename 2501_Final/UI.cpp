@@ -2,18 +2,17 @@
 #include "UI.h"
 
 UI::UI() {
-	addButton(100, 100, 100, 50, "Click Me", &print);
 }
 
 UI::~UI() {}
 
-UI::Button::Button(float x, float y, float w, float h, sf::String text, void(*func)()) {
+UI::Button::Button(float x, float y, float w, float h, sf::String text, std::function<void()> callback) {
 	// TODO: Make button auto size to text size? 
 	
 	position = vec::Vector2(x, y);
 	size = vec::Vector2(w, h);
 
-	function = func;
+	function = callback;
 
 	body.setPosition(x, y);
 	body.setSize(sf::Vector2f(w, h));
@@ -34,8 +33,8 @@ UI::Button::Button(float x, float y, float w, float h, sf::String text, void(*fu
 
 UI::Button::~Button() {}
 
-void UI::addButton(float x, float y, float w, float h, sf::String _text, void(*call)()) {
-	Button* b = new Button(x, y, w, h, _text, call);
+void UI::addButton(float x, float y, float w, float h, sf::String _text, std::function<void()> callback) {
+	Button* b = new Button(x, y, w, h, _text, callback);
 	buttons.push_back(b);
 }
 

@@ -7,7 +7,8 @@ Controller::Controller(Model* m, View* v)
 	view(v),
 	GSTATE(GSTATES::GAME)
 {
-	initObjects();
+
+	view->menu->addButton(100, 100, 300, 100, "Press me bitch", std::bind(&Controller::initObjects, this));
 }
 
 Controller::~Controller()
@@ -18,11 +19,11 @@ Controller::~Controller()
 void Controller::input()
 {
 	// reset player's important key presses
-	p->inputs.F = false;
-	p->inputs.RClick = false;
-
-
-	// EVENT-BASED INPUT
+	if (p) {
+		p->inputs.F = false;
+		p->inputs.RClick = false;
+	}
+		// EVENT-BASED INPUT
 	sf::Event e;
 	while (view->window.pollEvent(e))
 	{
@@ -36,9 +37,9 @@ void Controller::input()
 			if (e.key.code == sf::Keyboard::Escape)
 				view->window.close();
 			break;
-		
+
 		case sf::Event::KeyPressed:
-			if (e.key.code == sf::Keyboard::F) p->inputs.F = true;
+			if (p && e.key.code == sf::Keyboard::F) p->inputs.F = true;
 			break;
 
 		case sf::Event::Resized:
@@ -49,7 +50,7 @@ void Controller::input()
 
 		case sf::Event::MouseButtonPressed:
 			if (view->menu->processClick(e.mouseButton.x, e.mouseButton.y)) break;
-			if (e.mouseButton.button == sf::Mouse::Right) p->inputs.RClick = true;
+			if (p && e.mouseButton.button == sf::Mouse::Right) p->inputs.RClick = true;
 			break;
 		}
 
@@ -57,8 +58,7 @@ void Controller::input()
 			break;
 	}
 
-	// REAL-TIME INPUT
-
+		// REAL-TIME INPUT
 	// Set the static mouse coordinates
 	Global::mouseWindowCoords = sf::Mouse::getPosition(view->window);
 }
@@ -128,6 +128,7 @@ void Controller::gameController()
 */
 void Controller::initObjects()
 {
+
 	p = new Player();
 	addObject(p);
 
@@ -150,6 +151,8 @@ void Controller::initObjects()
 	addObject(turret);
 
 	vehicle = NULL;
+
+	view->menu->addButton(100, 100, 100, 50, "Click Me", std::bind(&UI::print, view->menu));
 
 }
 

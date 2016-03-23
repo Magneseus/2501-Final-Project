@@ -7,6 +7,7 @@ Game::Game()
 	controller = new Controller(model, view);
 
 	timePerFrame = sf::seconds(1.0f / frameRate);
+
 }
 
 Game::~Game()
@@ -21,7 +22,7 @@ void Game::loop()
 	while (view->window.isOpen())
 	{
 		controller->input();
-		controller->gameController();
+		if(controller->p) controller->gameController();
 		model->update(clock.restart());
 
 		if (renderClock.getElapsedTime() > timePerFrame)

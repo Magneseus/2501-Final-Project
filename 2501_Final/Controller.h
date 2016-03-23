@@ -13,6 +13,8 @@
 class Controller
 {
 public:
+	friend class Game;
+
 	Controller(Model*, View*);
 	~Controller();
 	

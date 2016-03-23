@@ -1,5 +1,7 @@
 #pragma once
 
+#include <functional>
+
 #include "SFML\Graphics.hpp"
 #include "GameObject.h"
 
@@ -10,10 +12,10 @@ public:
 
 	class Button {
 	public:
-		Button(float x, float y, float w, float h, sf::String text, void(*)());
+		Button(float x, float y, float w, float h, sf::String text, std::function<void()> callback);
 		~Button();
 
-		void(*function)();
+		std::function<void()> function;
 		vec::Vector2 position;
 		vec::Vector2 size;
 
@@ -26,11 +28,12 @@ public:
 
 	std::vector<Button*> buttons;
 
-	void addButton(float x, float y, float w, float h, sf::String _text, void(*call)());
+	void addButton(float x, float y, float w, float h, sf::String _text, std::function<void()> callback);
 
 	bool processClick(float clickX, float clickY);
 
-	static void print();
+	void print();
+	//static UI* mainMenu();
 
 private:
 	virtual void draw(sf::RenderTarget&, sf::RenderStates) const;
