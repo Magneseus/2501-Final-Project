@@ -4,6 +4,8 @@
 #include "View.h"
 #include "Controller.h"
 
+#include <sstream>
+
 #include <SFML\System\Clock.hpp>
 
 class Game
@@ -18,6 +20,9 @@ private:
 	Model* model;
 	View* view;
 	Controller* controller;
+
+	void createMainMenu();
+	void createCredits();
 
 	sf::Clock clock;
 	sf::Clock renderClock;

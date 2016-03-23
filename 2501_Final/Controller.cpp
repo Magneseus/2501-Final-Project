@@ -10,7 +10,6 @@ Controller::Controller(Model* m, View* v)
 	// Load the master spritesheet
 	Global::globalSpriteSheet = new SpriteSheet(sf::String("img/masterSheet.png"));
 
-	view->menu->addButton(100, 100, 300, 100, "Press me bitch", std::bind(&Controller::initObjects, this));
 }
 
 Controller::~Controller()
@@ -137,8 +136,6 @@ void Controller::initObjects()
 	p = new Player();
 	addObject(p);
 
-
-
 	// Walls
 	
 	sf::Texture* wallTex = Global::globalSpriteSheet->getTex(sf::String("wall_64.png"));
@@ -189,8 +186,8 @@ void Controller::initObjects()
 
 	vehicle = NULL;
 
+	view->menu->clear();
 	view->menu->addButton(100, 100, 100, 50, "Click Me", std::bind(&UI::print, view->menu));
-
 }
 
 

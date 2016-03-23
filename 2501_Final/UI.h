@@ -26,14 +26,27 @@ public:
 		void execute();
 	};
 
+	class TextBox {
+	public:
+		TextBox(float x, float y, float w, float h, sf::String _text, int fontSize);
+		~TextBox();
+
+		vec::Vector2 position;
+		vec::Vector2 size;
+
+		sf::Text text;
+	};
+
 	std::vector<Button*> buttons;
+	std::vector<TextBox*> textboxes;
 
 	void addButton(float x, float y, float w, float h, sf::String _text, std::function<void()> callback);
+	void addTextBox(float x, float y, float w, float h, sf::String _text, int fontSize);
 
 	bool processClick(float clickX, float clickY);
-
+	
+	void clear();
 	void print();
-	//static UI* mainMenu();
 
 private:
 	virtual void draw(sf::RenderTarget&, sf::RenderStates) const;
