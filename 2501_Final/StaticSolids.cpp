@@ -47,3 +47,30 @@ void Wall::draw(sf::RenderTarget& target, sf::RenderStates states) const
 	if (Global::DEBUG)
 		target.draw(col, states);
 }
+
+
+
+//    PLAYER SHIELD (Basically just a wall)    //
+
+PlayerShield::PlayerShield(vec::Vector2 _topleft, vec::Vector2 _bottomright, sf::Texture* _tex) 
+	: Wall(_topleft, _bottomright, _tex)
+{
+	setStatic(false);
+	setSolid(false);
+}
+
+PlayerShield::~PlayerShield() {}
+
+
+void PlayerShield::onCollide(Collidable& other)
+{
+	// If a player is trying to pass through, block them
+	if (other.getTag() == sf::String("Player"))
+	{
+		// Get the normal
+		vec::Vector2 normal;
+
+		Collidable::collide(other, *this, normal);
+		Collidable::collideBody(other, normal);
+	}
+}

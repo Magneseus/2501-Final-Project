@@ -81,35 +81,18 @@ void Model::update(const sf::Time& delta)
 				// Move objects if required
 				if ((*colA)->isSolid() && (*colB)->isSolid())
 				{
-					if (!(*colA)->isStatic())
+					Collidable::collideBody(**colA, colNormal);
+					
+					// If we can update the object, set its velocity to 0
+					if ((*colA)->isUpdatable())
 					{
-						/*
-						vec::Vector2 push = (*colA)->getPosition() - (*colA)->prevPos;
-						push.setMag(1);
-						push *= -1;
-
-						vec::Vector2 normal = (*colA)->getPosition() - (*colB)->getPosition();
-
-						// Check if the push vector is in the opposite direction from the center
-						if (push.angleBetween(normal) > 90)
-							push *= -1;
-						else
-							(*colA)->setPosition((*colA)->prevPos);
-
-						(*colA)->setPosition((*colA)->getPosition() + push);
-						*/
-
-						(*colA)->setPosition((*colA)->getPosition() + colNormal);
-
-						if ((*colA)->isUpdatable())
+						Entity* entA = dynamic_cast<Entity*>(*colA);
+						if (entA != NULL)
 						{
-							Entity* entA = dynamic_cast<Entity*>(*colA);
-							if (entA != NULL)
-							{
-								entA->vel.setMag(0);
-							}
+							entA->vel.setMag(0);
 						}
 					}
+					
 				}
 
 				(*colA)->onCollide(**colB);

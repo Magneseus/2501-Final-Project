@@ -22,3 +22,12 @@ private:
 
 	sf::Sprite wallSprite;
 };
+
+class PlayerShield : public Wall
+{
+public:
+	PlayerShield(vec::Vector2 _topleft, vec::Vector2 _bottomright, sf::Texture* _tex);
+	~PlayerShield();
+
+	virtual void onCollide(Collidable& other);
+};
