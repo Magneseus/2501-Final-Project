@@ -2,7 +2,7 @@
 
 Model::Model()
 {
-	collisionTree = new QuadTree(0, sf::FloatRect(-2000, -2000, 2000, 2000));
+	collisionTree = new QuadTree(0, sf::FloatRect(-1000, -1000, 2000, 2000));
 }
 
 Model::~Model()

@@ -29,7 +29,6 @@ void Projectile::update(const sf::Time& delta) {
 
 	if (lifeTime.getElapsedTime().asSeconds() >= 5) {
 		std::cout << "A projectile has expired." << std::endl;
-
 		onDeath(NULL);
 	}
 }

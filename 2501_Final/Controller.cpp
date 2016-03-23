@@ -41,11 +41,20 @@ void Controller::input()
 			if (e.key.code == sf::Keyboard::F) p->inputs.F = true;
 			break;
 
+		case sf::Event::Resized:
+			view->WINDOW_WIDTH = e.size.width;
+			view->WINDOW_HEIGHT = e.size.height;
+			Global::middleWindowCoords = sf::Vector2i(e.size.width / 2, e.size.height / 2);
+			break;
+
 		case sf::Event::MouseButtonPressed:
 			if (view->menu->processClick(e.mouseButton.x, e.mouseButton.y)) break;
 			if (e.mouseButton.button == sf::Mouse::Right) p->inputs.RClick = true;
 			break;
 		}
+
+		if (!view->window.isOpen())
+			break;
 	}
 
 	// REAL-TIME INPUT

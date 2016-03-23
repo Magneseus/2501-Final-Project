@@ -114,21 +114,23 @@ void Turret::onCollide(Collidable& other) {}
 
 void Turret::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 	target.draw(*s, states);
-	target.draw(col, states);
 
-	if (enemy != NULL) {
-		sf::VertexArray l;
-		l.setPrimitiveType(sf::Lines);
-		l.resize(2);
+	if (Global::DEBUG)
+	{
+		if (enemy != NULL) {
+			sf::VertexArray l;
+			l.setPrimitiveType(sf::Lines);
+			l.resize(2);
 
-		l[0].position.x = position.getX();
-		l[0].position.y = position.getY();
-		l[0].color = sf::Color::Green;
+			l[0].position.x = position.getX();
+			l[0].position.y = position.getY();
+			l[0].color = sf::Color::Green;
 
-		l[1].position.x = enemy->getPosition().getX();
-		l[1].position.y = enemy->getPosition().getY();
-		l[1].color = sf::Color::Green;
-		
-		target.draw(l, states);
+			l[1].position.x = enemy->getPosition().getX();
+			l[1].position.y = enemy->getPosition().getY();
+			l[1].color = sf::Color::Green;
+
+			target.draw(l, states);
+		}
 	}
 }

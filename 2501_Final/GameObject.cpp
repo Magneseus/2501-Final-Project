@@ -9,7 +9,18 @@ std::vector<GameObject*> GameObject::staticGameObjectsRem;
 
 // Some more sp00ky global/static stuff
 sf::Vector2i Global::mouseWindowCoords;
+sf::Vector2i Global::middleWindowCoords;
 sf::Font Global::niceFont;
+bool Global::DEBUG = true;
+
+void Entity::debugDraw(sf::RenderTarget& target, sf::RenderStates states) const
+{
+	if (Global::DEBUG)
+	{
+		// Draw collision box
+		target.draw(col, states);
+	}
+}
 
 void Entity::update(const sf::Time& delta) {
 	// TODO: Don't have it always look at mouse

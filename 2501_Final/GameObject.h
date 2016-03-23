@@ -21,13 +21,17 @@
 
 #include "Vector.h"
 #include "Collider.h"
+#include "Debug.h"
 
 // Some weird name-space stuff for static access to mouse co-ordinates
 class Global
 {
 public:
 	static sf::Vector2i mouseWindowCoords;
+	static sf::Vector2i middleWindowCoords;
 	static sf::Font niceFont;
+
+	static bool DEBUG;
 };
 
 /*                   	GAME OBJECT
@@ -109,6 +113,8 @@ public:
 	Drawable() { gameObjectType |= 0b010; };
 	virtual ~Drawable() {};
 
+	virtual void debugDraw(sf::RenderTarget& target, sf::RenderStates states) const {};
+
 protected:
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const = 0;
 };
@@ -172,6 +178,7 @@ public:
 	void update(const sf::Time& delta);
 
 	virtual void takeDamage(float amount, Entity* source);
+	virtual void debugDraw(sf::RenderTarget& target, sf::RenderStates states) const;
 
 	vec::Vector2 vel;
 

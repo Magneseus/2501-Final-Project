@@ -2,7 +2,7 @@
 #include "UI.h"
 
 UI::UI() {
-	addButton(100, 100, 100, 50, "Hey Srahakhfjdfshxj", &print);
+	addButton(100, 100, 100, 50, "Click Me", &print);
 }
 
 UI::~UI() {}

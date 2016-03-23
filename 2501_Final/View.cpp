@@ -9,7 +9,8 @@ View::View(Model* m)
 	window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Space Pirates...?"),
 	showFPS(true)
 {
-	//window.setFramerateLimit(60);
+	// Set the middle of the screen
+	Global::middleWindowCoords = sf::Vector2i(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2);
 
 	// Random hangar tiles
 	hangar_tile.loadFromFile("img/tile_64.png");
@@ -60,31 +61,45 @@ void View::render()
 				gPos *= -1;
 
 				if (gPos.dist(rPos) < WINDOW_WIDTH * 2)
+				{
+					(*it)->debugDraw(window, globalTransform);
 					window.draw(**it, globalTransform);
+				}
 			}
 			++it;
 		}
 
 	}
 
-	// display FPS
-	if (showFPS)
+	if (Global::DEBUG)
 	{
-		float total = 0;
-		for (auto it = fps.begin(); it != fps.end(); ++it)
-			total += *it;
+		// DEBUG
+		for (auto it = Debug::debugDrawables.begin(); it != Debug::debugDrawables.end(); ++it)
+		{
+			window.draw(**it, globalTransform);
+			delete *it;
+		}
+		Debug::debugDrawables.clear();
 
-		total /= fps.size();
-		
-		int FPS = 1.0f / total;
-		std::stringstream fpsString;
-		fpsString << "FPS: " << FPS;
+		// display FPS
+		if (showFPS)
+		{
+			float total = 0;
+			for (auto it = fps.begin(); it != fps.end(); ++it)
+				total += *it;
 
-		fpsText.setString(fpsString.str());
-		fpsText.setCharacterSize(20);
-		fpsText.setColor(sf::Color::White);
-		fpsText.setPosition(sf::Vector2f(0, 0));
-		window.draw(fpsText);
+			total /= fps.size();
+
+			int FPS = 1.0f / total;
+			std::stringstream fpsString;
+			fpsString << "FPS: " << FPS;
+
+			fpsText.setString(fpsString.str());
+			fpsText.setCharacterSize(20);
+			fpsText.setColor(sf::Color::White);
+			fpsText.setPosition(sf::Vector2f(0, 0));
+			window.draw(fpsText);
+		}
 	}
 	
 	window.draw(*menu);
