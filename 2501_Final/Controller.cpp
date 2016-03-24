@@ -136,6 +136,8 @@ void Controller::initObjects()
 	p = new Player();
 	addObject(p);
 
+	Global::player = p;
+
 	// Hangar Walls
 	
 	sf::Texture* wallTex = Global::globalSpriteSheet->getTex(sf::String("wall_64.png"));
@@ -161,15 +163,12 @@ void Controller::initObjects()
 	w3->setRotation(90);
 	addObject(w3);
 
-	
 	// Hangar shield
 	PlayerShield* w4 = new PlayerShield(vec::Vector2(-32, -64 * 5),
 		vec::Vector2(32, 64 * 5),
 		wallTex);
 	w4->setPosition(vec::Vector2(64 * 5, 0));
 	addObject(w4);
-
-
 
 	// Vehicles
 	Vehicle* vehicle = new TransportShip();
@@ -193,7 +192,6 @@ void Controller::initObjects()
 
 	// UI
 	view->menu->clear();
-	view->menu->addButton(100, 100, 100, 50, "Click Me", std::bind(&UI::print, view->menu));
 }
 
 

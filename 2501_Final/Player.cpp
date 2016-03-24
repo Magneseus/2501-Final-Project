@@ -236,14 +236,14 @@ void Player::onCollide(Collidable& other)
 
 void Player::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
-	//states.transform.rotate(bearing, pos.getX(), pos.getY());
 
 	if (vehicle != NULL) {
 		target.draw(*vehicle, states);
 	} else {
 		target.draw(player, states);
-
-		drawHealthBar(target, states);
 	}
+
+
+	drawHealthBar(target, states);
 
 }

@@ -24,6 +24,8 @@
 #include "Debug.h"
 #include "SpriteSheet.h"
 
+class Entity;
+
 // Some weird name-space stuff for static access to mouse co-ordinates
 class Global
 {
@@ -33,6 +35,8 @@ public:
 	static sf::Font niceFont;
 
 	static SpriteSheet* globalSpriteSheet;
+
+	static Entity* player;
 
 	static bool DEBUG;
 };

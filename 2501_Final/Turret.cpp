@@ -69,6 +69,7 @@ void Turret::update(const sf::Time& delta) {
 
 		main->shoot(toRadians(rotation), position, this);
 	} else {
+		// do we keep turning?
 		if (rotation > maxRotation) {
 			sign = -1;
 		}
@@ -76,7 +77,21 @@ void Turret::update(const sf::Time& delta) {
 			sign = 1;
 		}
 
+		// turn
 		rotation += delta.asSeconds() * rotateSpeed * sign;
+
+		// do we see the player?
+		// do you see what I see
+		vec::Vector2 toPlayer(Global::player->getPosition().getX(), Global::player->getPosition().getY());
+		toPlayer -= this->getPosition();
+
+		if (toPlayer.getMag() < 300) {
+			vec::Vector2 sightCone(toRadians(rotation));
+			if (vec::angleBetween(sightCone, toPlayer) < toRadians(20)) {
+				changeState(ACTIVE);
+				enemy = Global::player;
+			}
+		}
 	}
 
 	s->update(delta);

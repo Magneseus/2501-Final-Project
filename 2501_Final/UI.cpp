@@ -45,7 +45,7 @@ UI::TextBox::TextBox(float x, float y, float w, float h, sf::String _text, int f
 	text.setString(_text);
 	text.setFont(Global::niceFont);
 	text.setCharacterSize(fontSize);
-	text.setColor(sf::Color::Blue);
+	text.setColor(sf::Color::White);
 
 	sf::FloatRect rect = text.getLocalBounds();
 
