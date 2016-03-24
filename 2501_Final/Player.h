@@ -38,6 +38,10 @@ public:
 	void exitVehicle();
 	void spawn();
 
+	void getLoadoutOne();
+	void getLoadoutTwo();
+	void getLoadoutThree();
+
 private:
 	Loadout* currentLoadout;	// player's current loadout (from vehicle)
 	Weapon* currentWeapon;

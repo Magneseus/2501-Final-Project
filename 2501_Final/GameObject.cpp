@@ -12,6 +12,8 @@ sf::Vector2i Global::mouseWindowCoords;
 sf::Vector2i Global::middleWindowCoords;
 sf::Font Global::niceFont;
 Entity* Global::player = NULL;
+bool Global::SPAWNING = false;
+bool Global::FINISHEDSPAWN = false;
 bool Global::DEBUG = true;
 
 SpriteSheet* Global::globalSpriteSheet;

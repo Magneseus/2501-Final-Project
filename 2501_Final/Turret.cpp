@@ -66,7 +66,6 @@ void Turret::update(const sf::Time& delta) {
 			rotation = prevRotation;
 		}
 
-
 		main->shoot(toRadians(rotation), position, this);
 	} else {
 		// do we keep turning?

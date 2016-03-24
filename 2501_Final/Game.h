@@ -23,6 +23,8 @@ private:
 
 	void createMainMenu();
 	void createCredits();
+	void createGameOver();
+	void createSpawnMenu();
 
 	sf::Clock clock;
 	sf::Clock renderClock;

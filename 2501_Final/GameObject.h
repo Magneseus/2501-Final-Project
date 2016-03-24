@@ -38,6 +38,9 @@ public:
 
 	static Entity* player;
 
+	static bool SPAWNING;
+	static bool FINISHEDSPAWN;
+
 	static bool DEBUG;
 };
 

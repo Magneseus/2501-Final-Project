@@ -17,11 +17,13 @@ Controller::~Controller()
 
 void Controller::input()
 {
+
 	// reset player's important key presses
 	if (p) {
 		p->inputs.F = false;
 		p->inputs.RClick = false;
 	}
+
 		// EVENT-BASED INPUT
 	sf::Event e;
 	while (view->window.pollEvent(e))
@@ -169,13 +171,6 @@ void Controller::initObjects()
 	w3->setPosition(vec::Vector2(0, 64 * 5));
 	w3->setRotation(90);
 	addObject(w3);
-
-	// Hangar shield
-	PlayerShield* w4 = new PlayerShield(vec::Vector2(-32, -64 * 5),
-		vec::Vector2(32, 64 * 5),
-		wallTex);
-	w4->setPosition(vec::Vector2(64 * 5, 0));
-	addObject(w4);
 	
 	// Hangar roof
 
@@ -193,7 +188,7 @@ void Controller::initObjects()
 	vehicle = NULL;
 
 	// Enemies
-	Turret* turret = new Turret(vec::Vector2(500, 100), new Weapon(3, 50, 250), 90, 180);
+	Turret* turret = new Turret(vec::Vector2(500, 100), new Weapon(3, 10, 250), 90, 180);
 	addObject(turret);
 
 	// General visual stuff
