@@ -36,6 +36,8 @@ void View::render()
 
 	if (renderablesSpawned)
 	{
+		window.draw(background, globalTransform);
+
 		window.draw(hangar, globalTransform);
 	}
 
@@ -193,6 +195,15 @@ void View::spawnRenderables()
 	hangar.setTextureRect(sf::IntRect(0, 0, 64 * 10, 64 * 10));
 	hangar.setOrigin(64 * 5, 64 * 5);
 	hangar.setPosition(0, 0);
+
+
+	// Background img
+	backgroundTex.loadFromFile("img/space.jpg");
+
+	background.setTexture(backgroundTex);
+	background.setOrigin(sf::Vector2f(backgroundTex.getSize().x/2, backgroundTex.getSize().y/2));
+	background.setScale(1.5, 1.5);
+	background.setPosition(0, 0);
 
 
 	renderablesSpawned = true;

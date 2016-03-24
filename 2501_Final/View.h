@@ -38,6 +38,9 @@ public:
 	sf::Texture hangar_tile;
 	sf::Sprite hangar;
 
+	sf::Texture backgroundTex;
+	sf::Sprite background;
+
 private:
 	Model* model;
 	std::vector<Drawable*> drawables;
