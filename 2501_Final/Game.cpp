@@ -34,6 +34,8 @@ void Game::loop()
 			Global::FINISHEDSPAWN = false;
 		}
 
+		if (Global::WIN) createWinScreen();
+
 		controller->input();
 		if(controller->p) controller->gameController();
 		model->update(clock.restart());
@@ -123,4 +125,21 @@ void Game::createSpawnMenu() {
 		100, 50,
 		"Heavy",
 		std::bind(&Player::getLoadoutThree, controller->p));
+}
+
+void Game::createWinScreen() {
+	UI* ui = view->menu;
+
+	ui->clear();
+
+	std::stringstream end;
+
+	end << "You did it!" << std::endl;
+	end << "You stopped the AI from terrorizing the galaxy." << std::endl;
+	end << "Return to base, you did well." << std::endl;
+
+	ui->addTextBox(Global::middleWindowCoords.x, Global::middleWindowCoords.y*0.5,
+		0, 0,
+		end.str(), 30);
+
 }

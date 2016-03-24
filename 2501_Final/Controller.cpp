@@ -164,6 +164,23 @@ void Controller::enemyHangar()
 	w3->setPosition(vec::Vector2(0, 64 * 5) + offset);
 	w3->setRotation(90);
 	addObject(w3);
+
+	Turret* t1 = new Turret(vec::Vector2(-350, -350) + offset, new Weapon(2, 10, 250), 90, 360);
+	addObject(t1);
+
+	Turret* t2 = new Turret(vec::Vector2(-350, 350) + offset, new Weapon(2, 10, 250), 0, 270);
+	addObject(t2);
+
+	Turret* t3 = new Turret(vec::Vector2(50, 50) + offset, new Weapon(1, 1, 100), 90, 270);
+	addObject(t3);
+
+	Turret* t4 = new Turret(vec::Vector2(50, -50) + offset, new Weapon(1, 1, 100), 90, 270);
+	addObject(t4);
+
+	Mainframe* m = new Mainframe();
+
+	m->setPosition(vec::Vector2(offset.getX() + 200, offset.getY()));
+	addObject(m);
 }
 
 
@@ -230,8 +247,6 @@ void Controller::initObjects()
 	vehicle = NULL;
 
 	// Enemies
-	Turret* turret = new Turret(vec::Vector2(500, 100), new Weapon(3, 10, 250), 90, 180);
-	addObject(turret);
 
 	// General visual stuff
 	view->spawnRenderables();

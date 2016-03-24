@@ -25,6 +25,7 @@ private:
 	void createCredits();
 	void createGameOver();
 	void createSpawnMenu();
+	void createWinScreen();
 
 	sf::Clock clock;
 	sf::Clock renderClock;

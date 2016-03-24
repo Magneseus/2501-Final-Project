@@ -50,7 +50,7 @@ void Turret::update(const sf::Time& delta) {
 		if (frenzyTimer.getElapsedTime().asSeconds() > 0.5) {
 			if (std::rand() % 100 > 50) sign = (sign == -1) ? 1 : -1;
 			frenzyTimer.restart();
-			if (std::rand() % 100 < 5) delObjectStatic(this);
+			if (std::rand() % 100 < 0) delObjectStatic(this);
 		}
 
 		rotation += delta.asSeconds() * rotateSpeed * sign;
@@ -112,11 +112,13 @@ void Turret::changeState(int newState) {
 }
 
 void Turret::takeDamage(float damage, Entity* source) {
-	changeState(ACTIVE);
+	if (source && source->getTag() != "Turret") {
+		changeState(ACTIVE);
 
-	enemy = source;
+		enemy = source;
 
-	Entity::takeDamage(damage, source);
+		Entity::takeDamage(damage, source);
+	}
 }
 
 void Turret::onDeath(Entity* killer) {

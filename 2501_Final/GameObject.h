@@ -40,6 +40,7 @@ public:
 
 	static bool SPAWNING;
 	static bool FINISHEDSPAWN;
+	static bool WIN;
 
 	static bool DEBUG;
 };

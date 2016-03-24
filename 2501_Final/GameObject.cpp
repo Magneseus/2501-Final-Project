@@ -14,6 +14,7 @@ sf::Font Global::niceFont;
 Entity* Global::player = NULL;
 bool Global::SPAWNING = false;
 bool Global::FINISHEDSPAWN = false;
+bool Global::WIN = false;
 bool Global::DEBUG = true;
 
 SpriteSheet* Global::globalSpriteSheet;

@@ -23,6 +23,8 @@ Projectile::~Projectile() {}
 int Projectile::getDamage() { return damage; }
 
 void Projectile::update(const sf::Time& delta) {
+	if (!parent) onDeath(NULL);
+
 	vel.setMag(topSpeed);
 
 	Entity::update(delta);

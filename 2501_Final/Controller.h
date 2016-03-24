@@ -7,6 +7,7 @@
 #include "StaticSolids.h"
 #include "UI.h"
 #include "Trigger.h"
+#include "Mainframe.h"
 
 #include <SFML\Window.hpp>
 
