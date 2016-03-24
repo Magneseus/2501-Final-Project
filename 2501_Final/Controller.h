@@ -5,6 +5,8 @@
 #include "GameObject.h"
 #include "Player.h"
 #include "StaticSolids.h"
+#include "UI.h"
+#include "Trigger.h"
 
 #include <SFML\Window.hpp>
 
