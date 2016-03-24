@@ -163,8 +163,8 @@ void Controller::initObjects()
 
 	
 	// Hangar shield
-	PlayerShield* w4 = new PlayerShield(vec::Vector2(-64, -64 * 5),
-		vec::Vector2(0, 64 * 5),
+	PlayerShield* w4 = new PlayerShield(vec::Vector2(-32, -64 * 5),
+		vec::Vector2(32, 64 * 5),
 		wallTex);
 	w4->setPosition(vec::Vector2(64 * 5, 0));
 	addObject(w4);
