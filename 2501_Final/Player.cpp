@@ -254,6 +254,8 @@ void Player::getLoadoutThree() {
 
 void Player::onDeath(Entity* killer) {
 	std::cout << "Player died from " << killer->getTag().toAnsiString() << "." << std::endl;
+	exitVehicle();
+	spawn();
 }
 
 void Player::onCollide(Collidable& other)

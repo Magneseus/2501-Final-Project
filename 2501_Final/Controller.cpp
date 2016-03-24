@@ -126,6 +126,46 @@ void Controller::gameController()
 }
 
 
+// TEMPORARY FUNCTION
+void Controller::enemyHangar()
+{
+	// Hangar shield
+	sf::Texture* shieldTex = Global::globalSpriteSheet->getTex("shield_64.png");
+	shieldTex->setRepeated(true);
+
+	vec::Vector2 offset(5000, 0);
+
+	PlayerShield* w4 = new PlayerShield(vec::Vector2(-32, -64 * 5),
+		vec::Vector2(32, 64 * 5),
+		shieldTex);
+	w4->setPosition(vec::Vector2(-64 * 5, 0) + offset);
+	addObject(w4);
+
+	// Hangar Walls
+	sf::Texture* wallTex = Global::globalSpriteSheet->getTex(sf::String("wall_64.png"));
+	wallTex->setRepeated(true);
+
+	Wall* w1 = new Wall(vec::Vector2(-32, -64 * 5),
+		vec::Vector2(32, 64 * 5),
+		wallTex);
+	w1->setPosition(vec::Vector2(64 * 5, 0) + offset);
+	addObject(w1);
+
+	Wall* w2 = new Wall(vec::Vector2(-32.f, -64 * 5.5f),
+		vec::Vector2(32.f, 64 * 5.5f),
+		wallTex);
+	w2->setPosition(vec::Vector2(0, -64 * 5) + offset);
+	w2->setRotation(90);
+	addObject(w2);
+
+	Wall* w3 = new Wall(vec::Vector2(-32.f, -64 * 5.5f),
+		vec::Vector2(32.f, 64 * 5.5f),
+		wallTex);
+	w3->setPosition(vec::Vector2(0, 64 * 5) + offset);
+	w3->setRotation(90);
+	addObject(w3);
+}
+
 
 /*
 	This function creates and adds many GameObjects to the initial list for the game.
@@ -171,7 +211,9 @@ void Controller::initObjects()
 	w3->setPosition(vec::Vector2(0, 64 * 5));
 	w3->setRotation(90);
 	addObject(w3);
-	
+
+	enemyHangar();
+
 	// Hangar roof
 
 	// Vehicles

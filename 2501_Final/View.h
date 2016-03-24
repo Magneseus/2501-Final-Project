@@ -36,7 +36,10 @@ public:
 	void spawnRenderables();
 	
 	sf::Texture hangar_tile;
-	sf::Sprite hangar;
+	sf::Sprite hangar, enemyHangar;
+
+	sf::Texture backgroundTex;
+	sf::Sprite background;
 
 private:
 	Model* model;
