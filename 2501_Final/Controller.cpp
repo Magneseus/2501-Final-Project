@@ -132,11 +132,11 @@ void Controller::gameController()
 */
 void Controller::initObjects()
 {
-
+	// Player
 	p = new Player();
 	addObject(p);
 
-	// Walls
+	// Hangar Walls
 	
 	sf::Texture* wallTex = Global::globalSpriteSheet->getTex(sf::String("wall_64.png"));
 	wallTex->setRepeated(true);
@@ -170,6 +170,8 @@ void Controller::initObjects()
 	addObject(w4);
 
 
+
+	// Vehicles
 	Vehicle* vehicle = new TransportShip();
 	vehicle->setPosition(vec::Vector2(200, -200));
 	vehicle->vel = vec::Vector2(10, 10);
@@ -180,12 +182,16 @@ void Controller::initObjects()
 	vehicle->vel = vec::Vector2(10, 10);
 
 	addObject(vehicle);
+	vehicle = NULL;
 
+	// Enemies
 	Turret* turret = new Turret(vec::Vector2(500, 100), new Weapon(3, 50, 250), 90, 180);
 	addObject(turret);
 
-	vehicle = NULL;
+	// General visual stuff
+	view->spawnRenderables();
 
+	// UI
 	view->menu->clear();
 	view->menu->addButton(100, 100, 100, 50, "Click Me", std::bind(&UI::print, view->menu));
 }

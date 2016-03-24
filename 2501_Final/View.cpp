@@ -7,19 +7,11 @@ View::View(Model* m)
 	WINDOW_WIDTH(800),
 	WINDOW_HEIGHT(800),
 	window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Space Pirates...?"),
-	showFPS(true)
+	showFPS(true),
+	renderablesSpawned(false)
 {
 	// Set the middle of the screen
 	Global::middleWindowCoords = sf::Vector2i(WINDOW_WIDTH / 2, WINDOW_HEIGHT / 2);
-
-	// Random hangar tiles
-	hangar_tile.loadFromFile("img/tile_64.png");
-	hangar_tile.setRepeated(true);
-
-	hangar.setTexture(hangar_tile);
-	hangar.setTextureRect(sf::IntRect(0, 0, 64 * 10, 64 * 10));
-	hangar.setOrigin(64 * 5, 64 * 5);
-	hangar.setPosition(0, 0);
 
 	// Load some fonts
 	if (!Global::niceFont.loadFromFile("fonts/FiraSans-Regular.otf"))
@@ -42,7 +34,10 @@ void View::render()
 {
 	window.clear();
 
-	window.draw(hangar, globalTransform);
+	if (renderablesSpawned)
+	{
+		window.draw(hangar, globalTransform);
+	}
 
 	for (auto it = drawables.begin(); it != drawables.end(); )
 	{
@@ -186,4 +181,19 @@ void View::addFPS(const sf::Time& timeForFrame)
 
 	if (fps.size() > 20)
 		fps.pop_front();
+}
+
+void View::spawnRenderables()
+{
+	// Random hangar tiles
+	hangar_tile.loadFromFile("img/tile_64.png");
+	hangar_tile.setRepeated(true);
+
+	hangar.setTexture(hangar_tile);
+	hangar.setTextureRect(sf::IntRect(0, 0, 64 * 10, 64 * 10));
+	hangar.setOrigin(64 * 5, 64 * 5);
+	hangar.setPosition(0, 0);
+
+
+	renderablesSpawned = true;
 }

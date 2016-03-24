@@ -24,7 +24,6 @@ public:
 	sf::Transform getTransform();
 
 	void addFPS(const sf::Time&);
-	void toggleFPS();
 
 	int WINDOW_WIDTH, WINDOW_HEIGHT;
 	sf::RenderWindow window;
@@ -33,6 +32,8 @@ public:
 
 	//sf::Texture *a, *b, *c, *d;
 	//AnimatedSprite* temp;
+
+	void spawnRenderables();
 	
 	sf::Texture hangar_tile;
 	sf::Sprite hangar;
@@ -45,4 +46,5 @@ private:
 	std::deque<float> fps;
 	sf::Text fpsText;
 	bool showFPS;
+	bool renderablesSpawned;
 };
