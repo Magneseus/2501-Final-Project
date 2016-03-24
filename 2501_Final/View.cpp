@@ -40,10 +40,10 @@ void View::render()
 		ppos *= -0.1f;
 
 		background.setPosition(ppos.getSfVec());
-
 		window.draw(background, globalTransform);
 
 		window.draw(hangar, globalTransform);
+		window.draw(enemyHangar, globalTransform);
 	}
 
 	for (auto it = drawables.begin(); it != drawables.end(); )
@@ -201,6 +201,11 @@ void View::spawnRenderables()
 	hangar.setOrigin(64 * 5, 64 * 5);
 	hangar.setPosition(0, 0);
 
+	enemyHangar.setTexture(hangar_tile);
+	enemyHangar.setTextureRect(sf::IntRect(0, 0, 64 * 10, 64 * 10));
+	enemyHangar.setOrigin(64 * 5, 64 * 5);
+	enemyHangar.setPosition(5000, 0);
+
 
 	// Background img
 	backgroundTex.loadFromFile("img/space.jpg");
@@ -211,7 +216,7 @@ void View::spawnRenderables()
 
 	background.setOrigin(sf::Vector2f(backgroundTex.getSize().x/2, backgroundTex.getSize().y/2));
 	background.setScale(1.5, 1.5);
-	background.setPosition(0, 0);
+	background.setPosition(-400, -1000);
 
 
 	renderablesSpawned = true;

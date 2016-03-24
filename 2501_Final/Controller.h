@@ -30,6 +30,8 @@ private:
 	bool delObject(GameObject*);
 
 	void initObjects();
+	//TMP
+	void enemyHangar();
 
 	Model* model;
 	View* view;
