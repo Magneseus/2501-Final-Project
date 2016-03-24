@@ -143,25 +143,42 @@ void Controller::enemyHangar()
 	sf::Texture* wallTex = Global::globalSpriteSheet->getTex(sf::String("wall_64.png"));
 	wallTex->setRepeated(true);
 
-	Wall* w1 = new Wall(vec::Vector2(-32, -64 * 5),
+	// backwall
+	Wall* w = new Wall(vec::Vector2(-32, -64 * 10),
+		vec::Vector2(32, 64 * 10),
+		wallTex);
+	w->setPosition(vec::Vector2(64 * 20, 0) + offset);
+	addObject(w);
+
+	// entry top
+	w = new Wall(vec::Vector2(-32.f, -64 * 5.5f),
+		vec::Vector2(32.f, 64 * 5.5f),
+		wallTex);
+	w->setPosition(vec::Vector2(0, -64 * 5) + offset);
+	w->setRotation(90);
+	addObject(w);
+
+	// entry bottom
+	w = new Wall(vec::Vector2(-32.f, -64 * 5.5f),
+		vec::Vector2(32.f, 64 * 5.5f),
+		wallTex);
+	w->setPosition(vec::Vector2(0, 64 * 5) + offset);
+	w->setRotation(90);
+	addObject(w);
+
+	// top corridor left
+	w = new Wall(vec::Vector2(-32, -64 * 5),
 		vec::Vector2(32, 64 * 5),
 		wallTex);
-	w1->setPosition(vec::Vector2(64 * 5, 0) + offset);
-	addObject(w1);
+	w->setPosition(vec::Vector2(64 * 5.0f, -64 * 9.5f) + offset);
+	addObject(w);
 
-	Wall* w2 = new Wall(vec::Vector2(-32.f, -64 * 5.5f),
-		vec::Vector2(32.f, 64 * 5.5f),
+	// top corridor right
+	w = new Wall(vec::Vector2(-32, -64 * 3),
+		vec::Vector2(32, 64 * 3),
 		wallTex);
-	w2->setPosition(vec::Vector2(0, -64 * 5) + offset);
-	w2->setRotation(90);
-	addObject(w2);
-
-	Wall* w3 = new Wall(vec::Vector2(-32.f, -64 * 5.5f),
-		vec::Vector2(32.f, 64 * 5.5f),
-		wallTex);
-	w3->setPosition(vec::Vector2(0, 64 * 5) + offset);
-	w3->setRotation(90);
-	addObject(w3);
+	w->setPosition(vec::Vector2(64 * 7.0f, -64 * 9.0f) + offset);
+	addObject(w);
 }
 
 
@@ -173,6 +190,7 @@ void Controller::initObjects()
 	// Player
 	p = new Player();
 	addObject(p);
+	p->setPosition(vec::Vector2(5000, 0));
 
 	Global::player = p;
 
