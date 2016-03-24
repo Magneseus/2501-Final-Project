@@ -36,6 +36,11 @@ void View::render()
 
 	if (renderablesSpawned)
 	{
+		vec::Vector2 ppos = globalTransform.transformPoint(sf::Vector2f(0, 0));
+		ppos *= -0.1f;
+
+		background.setPosition(ppos.getSfVec());
+
 		window.draw(background, globalTransform);
 
 		window.draw(hangar, globalTransform);
@@ -199,8 +204,11 @@ void View::spawnRenderables()
 
 	// Background img
 	backgroundTex.loadFromFile("img/space.jpg");
+	backgroundTex.setRepeated(true);
 
 	background.setTexture(backgroundTex);
+	background.setTextureRect(sf::IntRect(-10000, -10000, 10000, 10000));
+
 	background.setOrigin(sf::Vector2f(backgroundTex.getSize().x/2, backgroundTex.getSize().y/2));
 	background.setScale(1.5, 1.5);
 	background.setPosition(0, 0);
