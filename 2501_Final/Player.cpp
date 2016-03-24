@@ -216,6 +216,8 @@ void Player::spawn() {
 	topSpeed = onFootTopSpeed;
 	rotateSpeed = onFootRotateSpeed;
 
+	curHealth = maxHealth;
+
 	Global::SPAWNING = true;
 }
 
@@ -254,6 +256,7 @@ void Player::getLoadoutThree() {
 
 void Player::onDeath(Entity* killer) {
 	std::cout << "Player died from " << killer->getTag().toAnsiString() << "." << std::endl;
+	vel.setMag(0);
 	exitVehicle();
 	spawn();
 }
