@@ -1,8 +1,8 @@
 
 #include "Trigger.h"
 
-Trigger::Trigger(void (*func)()) {
-	react = func;
+Trigger::Trigger(std::function<void()> callback) {
+	react = callback;
 }
 
 Trigger::~Trigger() {

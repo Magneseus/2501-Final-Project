@@ -1,7 +1,5 @@
 #include "Controller.h"
 
-#include "UI.h"
-
 Controller::Controller(Model* m, View* v)
 	: model(m),
 	view(v),
@@ -138,11 +136,20 @@ void Controller::initObjects()
 
 	Global::player = p;
 
-	// Hangar Walls
+	// Hangar shield
+	sf::Texture* shieldTex = Global::globalSpriteSheet->getTex("shield_64.png");
+	shieldTex->setRepeated(true);
+
+	PlayerShield* w4 = new PlayerShield(vec::Vector2(-32, -64 * 5),
+		vec::Vector2(32, 64 * 5),
+		shieldTex);
+	w4->setPosition(vec::Vector2(64 * 5, 0));
+	addObject(w4);
 	
+	// Hangar Walls
 	sf::Texture* wallTex = Global::globalSpriteSheet->getTex(sf::String("wall_64.png"));
 	wallTex->setRepeated(true);
-	
+
 	Wall* w1 = new Wall(vec::Vector2(-32, -64 * 5),
 		vec::Vector2(32, 64 * 5),
 		wallTex);
@@ -169,6 +176,8 @@ void Controller::initObjects()
 		wallTex);
 	w4->setPosition(vec::Vector2(64 * 5, 0));
 	addObject(w4);
+	
+	// Hangar roof
 
 	// Vehicles
 	Vehicle* vehicle = new TransportShip();

@@ -2,6 +2,8 @@
 
 #include "GameObject.h"
 
+#include <functional>
+
 /*					    	TRIGGER
 	A concrete class that handles in game (invisible) triggers. 
 
@@ -10,11 +12,11 @@
 
 class Trigger : public Collidable {
 public:
-	Trigger(void (*)());
+	Trigger(std::function<void()> callback);
 	~Trigger();
 
 	virtual void onCollide(const Collidable& other);
 
 private:
-	void(*react)();
+	std::function<void()> react;
 };

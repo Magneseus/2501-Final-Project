@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with TexturePacker http://www.codeandweb.com/texturepacker-->
-<!-- $TexturePacker:SmartUpdate:7292016175518399a1e85a3730cd8d6b:bcc235250ca0779844191a66be1e4dbd:24921e5b48017f27cae2b1aaaf32a594$ -->
+<!-- $TexturePacker:SmartUpdate:9a83164b9aae2166d5acd748eb2db874:a315fbfc78929a51dee7b86b5fb32843:24921e5b48017f27cae2b1aaaf32a594$ -->
 <!--Format:
 n  => name of the sprite
 x  => sprite x pos in texture
@@ -19,15 +19,16 @@ vertices   => points in sprite coordinate system (x0,y0,x1,y1,x2,y2, ...)
 verticesUV => points in sheet coordinate system (x0,y0,x1,y1,x2,y2, ...)
 triangles  => sprite triangulation, 3 vertex indices per triangle
 -->
-<TextureAtlas imagePath="masterSheet.png" width="480" height="121">
+<TextureAtlas imagePath="masterSheet.png" width="226" height="240">
     <sprite n="basic_ship.png" x="1" y="1" w="85" h="85" pX="0.352941" pY="0.494118"/>
-    <sprite n="basic_thrust.png" x="88" y="1" w="85" h="85" pX="0.352941" pY="0.494118"/>
-    <sprite n="player.png" x="349" y="67" w="50" h="50" pX="0.5" pY="0.5"/>
-    <sprite n="smallturret_active.png" x="1" y="88" w="39" h="32" pX="0.410256" pY="0.5"/>
-    <sprite n="smallturret_idle.png" x="42" y="88" w="39" h="32" pX="0.410256" pY="0.5"/>
-    <sprite n="smallturret_off.png" x="83" y="88" w="39" h="32" pX="0.410256" pY="0.5"/>
-    <sprite n="tile_64.png" x="349" y="1" w="64" h="64" pX="0.5" pY="0.5"/>
-    <sprite n="transport_ship.png" x="175" y="1" w="85" h="85" pX="0.5" pY="0.5"/>
-    <sprite n="transport_thrust.png" x="262" y="1" w="85" h="85" pX="0.5" pY="0.5"/>
-    <sprite n="wall_64.png" x="415" y="1" w="64" h="64" pX="0.5" pY="0.5"/>
+    <sprite n="basic_thrust.png" x="1" y="88" w="85" h="85" pX="0.352941" pY="0.494118"/>
+    <sprite n="player.png" x="175" y="1" w="50" h="50" pX="0.5" pY="0.5"/>
+    <sprite n="shield_64.png" x="1" y="175" w="64" h="64" pX="0.5" pY="0.5"/>
+    <sprite n="smallturret_active.png" x="175" y="53" w="39" h="32" pX="0.410256" pY="0.5"/>
+    <sprite n="smallturret_idle.png" x="175" y="87" w="39" h="32" pX="0.410256" pY="0.5"/>
+    <sprite n="smallturret_off.png" x="175" y="121" w="39" h="32" pX="0.410256" pY="0.5"/>
+    <sprite n="tile_64.png" x="67" y="175" w="64" h="64" pX="0.5" pY="0.5"/>
+    <sprite n="transport_ship.png" x="88" y="1" w="85" h="85" pX="0.5" pY="0.5"/>
+    <sprite n="transport_thrust.png" x="88" y="88" w="85" h="85" pX="0.5" pY="0.5"/>
+    <sprite n="wall_64.png" x="133" y="175" w="64" h="64" pX="0.5" pY="0.5"/>
 </TextureAtlas>
