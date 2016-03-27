@@ -19,6 +19,7 @@ View::View(Model* m)
 		std::cout << "Nice font not loaded!\n";
 	}
 	fpsText.setFont(Global::niceFont);
+	mCoordsText.setFont(Global::niceFont);
 
 	menu = new UI();
 
@@ -99,9 +100,27 @@ void View::render()
 			fpsText.setString(fpsString.str());
 			fpsText.setCharacterSize(20);
 			fpsText.setColor(sf::Color::White);
-			fpsText.setPosition(sf::Vector2f(0, 0));
+			fpsText.setPosition(sf::Vector2f(2, 2));
 			window.draw(fpsText);
 		}
+
+		// Display co-ordinates
+		sf::Vector2f worldPosf;
+		worldPosf += vec::Vector2(Global::mouseWindowCoords).operator*=(-1).getSfVec();
+		worldPosf = globalTransform.transformPoint(worldPosf);
+		worldPosf.x *= -1;
+
+		worldPosf.x -= std::fmodf(worldPosf.x, 1);
+		worldPosf.y -= std::fmodf(worldPosf.y, 1);
+
+		std::stringstream mString;
+		mString << "X:" << worldPosf.x << "  " << "Y: " << worldPosf.y;
+
+		mCoordsText.setString(mString.str());
+		mCoordsText.setCharacterSize(20);
+		mCoordsText.setColor(sf::Color::White);
+		mCoordsText.setPosition(sf::Vector2f(2, window.getSize().y - 22));
+		window.draw(mCoordsText);
 	}
 	
 	window.draw(*menu);

@@ -47,7 +47,7 @@ private:
 	sf::Transform globalTransform;
 
 	std::deque<float> fps;
-	sf::Text fpsText;
+	sf::Text fpsText, mCoordsText;
 	bool showFPS;
 	bool renderablesSpawned;
 };
