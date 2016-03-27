@@ -70,18 +70,21 @@ void Model::update(const sf::Time& delta)
 		possibleCollisions.clear();
 		collisionTree->getList(possibleCollisions, *colA);
 
+		bool startColliding = false;
+
 		for (auto colB = possibleCollisions.begin(); colB != possibleCollisions.end(); ++colB)
 		{
 			// Normal vector of collision
 			vec::Vector2 colNormal;
 
 			// If they are determined to be colliding, call the callback function for both
-			if (*colA != *colB && Collidable::collide(**colA, **colB, colNormal))
+			if (startColliding && Collidable::collide(**colA, **colB, colNormal))
 			{
 				// Move objects if required
 				if ((*colA)->isSolid() && (*colB)->isSolid())
 				{
 					Collidable::collideBody(**colA, colNormal);
+					Collidable::collideBody(**colB, colNormal * -1.0f);
 					
 					// If we can update the object, set its velocity to 0
 					if ((*colA)->isUpdatable())
@@ -92,11 +95,26 @@ void Model::update(const sf::Time& delta)
 							entA->vel.setMag(0);
 						}
 					}
+
+					// If we can update the object, set its velocity to 0
+					if ((*colB)->isUpdatable())
+					{
+						Entity* entB = dynamic_cast<Entity*>(*colB);
+						if (entB != NULL)
+						{
+							entB->vel.setMag(0);
+						}
+					}
 					
 				}
 
 				(*colA)->onCollide(**colB);
+				(*colB)->onCollide(**colA);
 			}
+
+			// Only start colliding once we've reached an element past the current element
+			if (*colA == *colB)
+				startColliding = true;
 		}
 	}
 }

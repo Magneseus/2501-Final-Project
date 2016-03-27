@@ -153,7 +153,14 @@ public:
 	// Collides two hitboxes together
 	static bool collide(Collidable& c1, Collidable& c2, vec::Vector2& normal = vec::Vector2())
 	{
-		return c1.col.collide(c2.col, normal);
+		bool ret = c1.col.collide(c2.col, normal);
+		
+		// Check that the normal is correct
+		vec::Vector2 d = c1.getPosition() - c2.getPosition();
+		if (normal.angleBetween(d) > PI / 2)
+			normal *= -1;
+		
+		return ret;
 	}
 
 	// Pushes a hitbox by a normal

@@ -8,6 +8,7 @@ void Vehicle::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 }
 
 void Vehicle::onCollide(Collidable& other) {
+	
 }
 
 float Vehicle::getAcceleration()	{ return baseAccel; }
@@ -102,4 +103,3 @@ TransportShip::TransportShip() {
 }
 
 TransportShip::~TransportShip() {}
-

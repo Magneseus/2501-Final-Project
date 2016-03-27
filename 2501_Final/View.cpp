@@ -77,7 +77,7 @@ void View::render()
 	{
 		// DEBUG
 		for (auto it = Debug::debugDrawables.begin(); it != Debug::debugDrawables.end(); ++it)
-		{
+		{	
 			window.draw(**it, globalTransform);
 			delete *it;
 		}

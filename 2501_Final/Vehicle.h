@@ -47,8 +47,6 @@ class BasicShip : public Vehicle {
 public:
 	BasicShip();
 	~BasicShip();
-
-	//void update(const sf::Time&);
 };
 
 class TransportShip : public Vehicle {
