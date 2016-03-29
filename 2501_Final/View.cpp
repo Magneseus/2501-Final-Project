@@ -36,7 +36,7 @@ void View::render()
 	window.clear();
 
 	// Some debugging zoom capabilities
-	if (Global::DEBUG)
+	if (Global::DEBUG && Global::INFOCUS)
 	{
 		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Equal))
 		{

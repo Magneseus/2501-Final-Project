@@ -44,56 +44,59 @@ void Player::update(const sf::Time& delta) {
 		else {
 			vehicle->ship->changeState(0);
 		}
+		
+		if (Global::INFOCUS)
+		{
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
+				if (vehicle == NULL) {
+					vel.setY(-topSpeed);
+				}
+				else {
+					motion = FORWARD;
+					vehicle->ship->changeState(1);
+				}
+			}
+			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
+				if (vehicle == NULL) {
+					vel.setY(topSpeed);
+				}
+				else {
+					motion = REVERSE;
+				}
+			}
 
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::W)) {
-			if (vehicle == NULL) {
-				vel.setY(-topSpeed);
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
+				if (vehicle == NULL) {
+					vel.setX(topSpeed);
+				}
+				else {
+					strafe = RIGHT;
+				}
+			}
+			else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
+				if (vehicle == NULL) {
+					vel.setX(-topSpeed);
+				}
+				else {
+					strafe = LEFT;
+				}
+			}
+
+			if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z)) {
+				brakesOn = true;
 			}
 			else {
-				motion = FORWARD;
-				vehicle->ship->changeState(1);
+				brakesOn = false;
 			}
-		}
-		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
-			if (vehicle == NULL) {
-				vel.setY(topSpeed);
-			}
-			else {
-				motion = REVERSE;
-			}
-		}
 
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)) {
-			if (vehicle == NULL) {
-				vel.setX(topSpeed);
+			if (vehicle && inputs.F) {
+				inputs.F = false;
+				exitVehicle();
 			}
-			else {
-				strafe = RIGHT;
-			}
-		}
-		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::A)) {
-			if (vehicle == NULL) {
-				vel.setX(-topSpeed);
-			}
-			else {
-				strafe = LEFT;
-			}
-		}
 
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z)) {
-			brakesOn = true;
+			target = vec::Vector2(Global::mouseWindowCoords.x - Global::middleWindowCoords.x + position.getX(),
+				Global::mouseWindowCoords.y - Global::middleWindowCoords.y + position.getY());
 		}
-		else {
-			brakesOn = false;
-		}
-
-		if (vehicle && inputs.F) {
-			inputs.F = false;
-			exitVehicle();
-		}
-
-		target = vec::Vector2(Global::mouseWindowCoords.x - Global::middleWindowCoords.x + position.getX(),
-			Global::mouseWindowCoords.y - Global::middleWindowCoords.y + position.getY());
 
 		Entity::update(delta);
 
@@ -115,25 +118,28 @@ void Player::update(const sf::Time& delta) {
 			//shipTexture = shipStill;
 		}
 
-		if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
+		if (Global::INFOCUS)
+		{
+			if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
+				if (vehicle == NULL) {
+					// on foot shoot
+					currentWeapon->shoot(toRadians(rotation), position, this);
+				}
+				else {
+					// in ship shoot
+					currentLoadout->primary->shoot(toRadians(rotation), position, this);
+				}
+			}
+
 			if (vehicle == NULL) {
-				// on foot shoot
-				currentWeapon->shoot(toRadians(rotation), position, this);
+				if (inputs.RClick) {
+					switchWeapons();
+				}
 			}
 			else {
-				// in ship shoot
-				currentLoadout->primary->shoot(toRadians(rotation), position, this);
-			}
-		}
-
-		if (vehicle == NULL) {
-			if (inputs.RClick) {
-				switchWeapons();
-			}
-		}
-		else {
-			if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Right)) {
-				currentLoadout->secondary->shoot(toRadians(rotation), position, this);
+				if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Right)) {
+					currentLoadout->secondary->shoot(toRadians(rotation), position, this);
+				}
 			}
 		}
 	}

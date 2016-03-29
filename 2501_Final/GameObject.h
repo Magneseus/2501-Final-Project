@@ -44,6 +44,7 @@ public:
 	static bool WIN;
 
 	static bool DEBUG;
+	static bool INFOCUS;
 
 	static float ZOOM;
 };

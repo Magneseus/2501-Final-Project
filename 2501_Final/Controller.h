@@ -38,6 +38,6 @@ private:
 	View* view;
 
 	std::vector<GameObject*> gameObjects;
-
 	Player* p;
+	bool inFocus;
 };

@@ -3,11 +3,11 @@
 Controller::Controller(Model* m, View* v)
 	: model(m),
 	view(v),
-	GSTATE(GSTATES::GAME)
+	GSTATE(GSTATES::GAME),
+	inFocus(true)
 {
 	// Load the master spritesheet
 	Global::globalSpriteSheet = new SpriteSheet(sf::String("img/masterSheet.png"));
-
 }
 
 Controller::~Controller()
@@ -34,13 +34,22 @@ void Controller::input()
 			view->window.close();
 			break;
 
+		case sf::Event::GainedFocus:
+			inFocus = true;
+			Global::INFOCUS = true;
+			break;
+		case sf::Event::LostFocus:
+			inFocus = false;
+			Global::INFOCUS = false;
+			break;
+
 		case sf::Event::KeyReleased:
 			if (e.key.code == sf::Keyboard::Escape)
 				view->window.close();
 			break;
 
 		case sf::Event::KeyPressed:
-			if (p && e.key.code == sf::Keyboard::F) p->inputs.F = true;
+			if (inFocus && p && e.key.code == sf::Keyboard::F) p->inputs.F = true;
 			break;
 
 		case sf::Event::Resized:
@@ -50,8 +59,8 @@ void Controller::input()
 			break;
 
 		case sf::Event::MouseButtonPressed:
-			if (view->menu->processClick(e.mouseButton.x, e.mouseButton.y)) break;
-			if (p && e.mouseButton.button == sf::Mouse::Right) p->inputs.RClick = true;
+			if (inFocus && view->menu->processClick(e.mouseButton.x, e.mouseButton.y)) break;
+			if (inFocus && p && e.mouseButton.button == sf::Mouse::Right) p->inputs.RClick = true;
 			break;
 		}
 
@@ -59,7 +68,7 @@ void Controller::input()
 			break;
 	}
 
-		// REAL-TIME INPUT
+	// REAL-TIME INPUT
 	// Set the static mouse coordinates
 	Global::mouseWindowCoords = sf::Mouse::getPosition(view->window);
 }
