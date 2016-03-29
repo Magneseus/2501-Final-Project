@@ -71,6 +71,35 @@ void Controller::input()
 	// REAL-TIME INPUT
 	// Set the static mouse coordinates
 	Global::mouseWindowCoords = sf::Mouse::getPosition(view->window);
+
+
+	// Wall loading
+	if (Global::DEBUG)
+	{
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::R))
+		{
+			// Delete old objects
+			for (auto it = gameObjects.begin(); it != gameObjects.end(); ++it)
+			{
+				if ((*it)->isCollidable())
+				{
+					Collidable* c = dynamic_cast<Collidable*>(*it);
+					if (c != NULL && c->getTag() == sf::String("Wall_T"))
+					{
+						delObject(*it);
+					}
+				}
+			}
+
+			// Add new walls
+			std::vector<Wall*> ws = loadWalls(sf::String("txts/walls.txt"), Global::globalSpriteSheet->getTex("wall_64.png"));
+			for (auto it = ws.begin(); it != ws.end(); ++it)
+			{
+				(*it)->setTag(sf::String("Wall_T"));
+				addObject(*it);
+			}
+		}
+	}
 }
 
 void Controller::gameController()
@@ -150,30 +179,6 @@ void Controller::enemyHangar()
 	w4->setPosition(vec::Vector2(-64 * 5, 0) + offset);
 	addObject(w4);
 
-	// Hangar Walls
-	sf::Texture* wallTex = Global::globalSpriteSheet->getTex(sf::String("wall_64.png"));
-	wallTex->setRepeated(true);
-
-	Wall* w1 = new Wall(vec::Vector2(-32, -64 * 5),
-		vec::Vector2(32, 64 * 5),
-		wallTex);
-	w1->setPosition(vec::Vector2(64 * 5, 0) + offset);
-	addObject(w1);
-
-	Wall* w2 = new Wall(vec::Vector2(-32.f, -64 * 5.5f),
-		vec::Vector2(32.f, 64 * 5.5f),
-		wallTex);
-	w2->setPosition(vec::Vector2(0, -64 * 5) + offset);
-	w2->setRotation(90);
-	addObject(w2);
-
-	Wall* w3 = new Wall(vec::Vector2(-32.f, -64 * 5.5f),
-		vec::Vector2(32.f, 64 * 5.5f),
-		wallTex);
-	w3->setPosition(vec::Vector2(0, 64 * 5) + offset);
-	w3->setRotation(90);
-	addObject(w3);
-
 	Turret* t1 = new Turret(vec::Vector2(-350, -350) + offset, new Weapon(2, 10, 250), 90, 360);
 	addObject(t1);
 
@@ -218,29 +223,15 @@ void Controller::initObjects()
 	sf::Texture* wallTex = Global::globalSpriteSheet->getTex(sf::String("wall_64.png"));
 	wallTex->setRepeated(true);
 
-	Wall* w1 = new Wall(vec::Vector2(-32, -64 * 5),
-		vec::Vector2(32, 64 * 5),
-		wallTex);
-	w1->setPosition(vec::Vector2(-64*5, 0));
-	addObject(w1);
-
-	Wall* w2 = new Wall(vec::Vector2(-32.f, -64 * 5.5f),
-		vec::Vector2(32.f, 64 * 5.5f),
-		wallTex);
-	w2->setPosition(vec::Vector2(0, -64 * 5));
-	w2->setRotation(90);
-	addObject(w2);
-
-	Wall* w3 = new Wall(vec::Vector2(-32.f, -64 * 5.5f),
-		vec::Vector2(32.f, 64 * 5.5f),
-		wallTex);
-	w3->setPosition(vec::Vector2(0, 64 * 5));
-	w3->setRotation(90);
-	addObject(w3);
-
 	enemyHangar();
 
-	// Hangar roof
+	// Load all walls from file
+	std::vector<Wall*> ws = loadWalls(sf::String("txts/walls.txt"), Global::globalSpriteSheet->getTex("wall_64.png"));
+	for (auto it = ws.begin(); it != ws.end(); ++it)
+	{
+		(*it)->setTag(sf::String("Wall_T"));
+		addObject(*it);
+	}
 
 	// Vehicles
 	Vehicle* vehicle = new TransportShip();

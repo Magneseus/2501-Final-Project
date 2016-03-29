@@ -6,6 +6,7 @@
 */
 
 #include "GameObject.h"
+#include <fstream>
 
 class Wall : public Collidable, public Drawable
 {
@@ -31,3 +32,5 @@ public:
 
 	virtual void onCollide(Collidable& other);
 };
+
+std::vector<Wall*> loadWalls(sf::String& fileName, sf::Texture* wallTex);

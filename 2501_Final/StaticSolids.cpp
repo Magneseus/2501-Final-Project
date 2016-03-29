@@ -74,3 +74,64 @@ void PlayerShield::onCollide(Collidable& other)
 		Collidable::collideBody(other, normal);
 	}
 }
+
+
+
+
+// File Functions
+
+
+/* This function will load a file of wall information and return the created objects
+ * Uses the default wall texture
+ *
+ * File format:
+ * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ * NUMBER_OF_WALLS
+ * 
+ * WALL_X WALL_Y WALL_W WALL_H WALL_ROT
+ * ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+ */
+std::vector<Wall*> loadWalls(sf::String& fileName, sf::Texture* wallTex)
+{
+	std::vector<Wall*> walls;
+
+	// Load the file
+	std::ifstream FILE(fileName.toAnsiString());
+
+	if (FILE.is_open())
+	{
+		// Get # walls
+		int nWalls = 0;
+		FILE >> nWalls;
+
+		// Read in the information for the walls
+		for (int i = 0; i < nWalls; ++i)
+		{
+			int WX = 0, WY = 0;
+			int WW = 0, WH = 0;
+			int WR = 0;
+			// X & Y
+			FILE >> WX;
+			FILE >> WY;
+
+			// Width & Height
+			FILE >> WW;
+			FILE >> WH;
+
+			// Rotation
+			FILE >> WR;
+
+			// Make the new wall and add it to the list
+			Wall* w = new Wall(
+				vec::Vector2(-WW/2, -WH/2),
+				vec::Vector2(WW/2, WH/2),
+				wallTex);
+			w->setPosition(vec::Vector2(WX, WY));
+			w->setRotation(WR);
+
+			walls.push_back(w);
+		}
+	}
+
+	return walls;
+}
