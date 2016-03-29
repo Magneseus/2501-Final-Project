@@ -44,6 +44,8 @@ public:
 	static bool WIN;
 
 	static bool DEBUG;
+
+	static float ZOOM;
 };
 
 /*                   	GAME OBJECT

@@ -35,6 +35,24 @@ void View::render()
 {
 	window.clear();
 
+	// Some debugging zoom capabilities
+	if (Global::DEBUG)
+	{
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Equal))
+		{
+			Global::ZOOM += 0.1f;
+		}
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Dash))
+		{
+			Global::ZOOM -= 0.1f;
+		}
+	}
+
+	// Zoom the screen in/out
+	sf::View zoomView(sf::FloatRect(0, 0, WINDOW_WIDTH, WINDOW_HEIGHT));
+	zoomView.zoom(Global::ZOOM);
+	window.setView(zoomView);
+
 	if (renderablesSpawned)
 	{
 		vec::Vector2 ppos = globalTransform.transformPoint(sf::Vector2f(0, 0));
@@ -78,12 +96,22 @@ void View::render()
 	{
 		// DEBUG
 		for (auto it = Debug::debugDrawables.begin(); it != Debug::debugDrawables.end(); ++it)
-		{	
+		{
 			window.draw(**it, globalTransform);
 			delete *it;
 		}
 		Debug::debugDrawables.clear();
+	}
 
+
+
+	//   UI STUFF
+	
+	// Reset window to normal
+	window.setView(window.getDefaultView());
+
+	if (Global::DEBUG)
+	{
 		// display FPS
 		if (showFPS)
 		{
@@ -123,6 +151,7 @@ void View::render()
 		window.draw(mCoordsText);
 	}
 	
+	// UI stuff
 	window.draw(*menu);
 
 	window.display();

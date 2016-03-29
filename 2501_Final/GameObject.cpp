@@ -18,6 +18,8 @@ bool Global::FINISHEDSPAWN = false;
 bool Global::WIN = false;
 bool Global::DEBUG = true;
 
+float Global::ZOOM = 1.0f;
+
 SpriteSheet* Global::globalSpriteSheet;
 
 void Entity::debugDraw(sf::RenderTarget& target, sf::RenderStates states) const
