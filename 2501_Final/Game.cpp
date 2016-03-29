@@ -34,7 +34,11 @@ void Game::loop()
 			Global::FINISHEDSPAWN = false;
 		}
 
-		if (Global::WIN) createWinScreen();
+		if (Global::WIN)
+		{
+			createWinScreen();
+			Global::WIN = false;
+		}
 
 		controller->input();
 		if(controller->p) controller->gameController();

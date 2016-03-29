@@ -31,6 +31,7 @@ class Global
 {
 public:
 	static sf::Vector2i mouseWindowCoords;
+	static sf::Vector2f mouseWorldCoords;
 	static sf::Vector2i middleWindowCoords;
 	static sf::Font niceFont;
 

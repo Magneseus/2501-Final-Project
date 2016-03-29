@@ -9,6 +9,7 @@ std::vector<GameObject*> GameObject::staticGameObjectsRem;
 
 // Some more sp00ky global/static stuff
 sf::Vector2i Global::mouseWindowCoords;
+sf::Vector2f Global::mouseWorldCoords;
 sf::Vector2i Global::middleWindowCoords;
 sf::Font Global::niceFont;
 Entity* Global::player = NULL;
