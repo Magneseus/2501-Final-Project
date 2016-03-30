@@ -16,7 +16,7 @@ Entity* Global::player = NULL;
 bool Global::SPAWNING = false;
 bool Global::FINISHEDSPAWN = false;
 bool Global::WIN = false;
-bool Global::DEBUG = false;
+bool Global::DEBUG = true;
 bool Global::INFOCUS = true;
 
 float Global::ZOOM = 1.0f;

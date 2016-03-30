@@ -32,5 +32,3 @@ public:
 
 	virtual void onCollide(Collidable& other);
 };
-
-std::vector<Wall*> loadWalls(sf::String& fileName, sf::Texture* wallTex);

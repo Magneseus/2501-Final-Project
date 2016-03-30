@@ -8,6 +8,7 @@
 #include "UI.h"
 #include "Trigger.h"
 #include "Mainframe.h"
+#include "Loading.h"
 
 #include <SFML\Window.hpp>
 

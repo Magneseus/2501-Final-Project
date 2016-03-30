@@ -84,7 +84,7 @@ void Controller::input()
 				if ((*it)->isCollidable())
 				{
 					Collidable* c = dynamic_cast<Collidable*>(*it);
-					if (c != NULL && c->getTag() == sf::String("Wall_T"))
+					if (c != NULL && c->getTag() == sf::String("Obj_T"))
 					{
 						delObject(*it);
 					}
@@ -92,10 +92,9 @@ void Controller::input()
 			}
 
 			// Add new walls
-			std::vector<Wall*> ws = loadWalls(sf::String("txts/walls.txt"), Global::globalSpriteSheet->getTex("wall_64.png"));
+			std::vector<GameObject*> ws = loadObjects(sf::String("txts/walls.txt"));
 			for (auto it = ws.begin(); it != ws.end(); ++it)
 			{
-				(*it)->setTag(sf::String("Wall_T"));
 				addObject(*it);
 			}
 		}
@@ -210,6 +209,7 @@ void Controller::initObjects()
 	Global::player = p;
 
 	// Hangar shield
+	/*
 	sf::Texture* shieldTex = Global::globalSpriteSheet->getTex("shield_64.png");
 	shieldTex->setRepeated(true);
 
@@ -222,14 +222,14 @@ void Controller::initObjects()
 	// Hangar Walls
 	sf::Texture* wallTex = Global::globalSpriteSheet->getTex(sf::String("wall_64.png"));
 	wallTex->setRepeated(true);
+	*/
 
 	enemyHangar();
 
 	// Load all walls from file
-	std::vector<Wall*> ws = loadWalls(sf::String("txts/walls.txt"), Global::globalSpriteSheet->getTex("wall_64.png"));
+	std::vector<GameObject*> ws = loadObjects(sf::String("txts/walls.txt"));
 	for (auto it = ws.begin(); it != ws.end(); ++it)
 	{
-		(*it)->setTag(sf::String("Wall_T"));
 		addObject(*it);
 	}
 

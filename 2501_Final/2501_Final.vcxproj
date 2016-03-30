@@ -132,6 +132,7 @@
     <ClCompile Include="Debug.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="Loading.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Mainframe.cpp" />
     <ClCompile Include="Model.cpp" />
@@ -156,6 +157,7 @@
     <ClInclude Include="Debug.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameObject.h" />
+    <ClInclude Include="Loading.h" />
     <ClInclude Include="Mainframe.h" />
     <ClInclude Include="Model.h" />
     <ClInclude Include="Player.h" />
