@@ -29,6 +29,7 @@ public:
 
 private:
 	void addObject(GameObject*);
+	void addObjectBeginning(GameObject*);
 	bool delObject(GameObject*);
 
 	void initObjects();

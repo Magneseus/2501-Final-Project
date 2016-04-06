@@ -16,7 +16,7 @@ public:
 	~View();
 	
 	void render();
-	void addDrawable(Drawable*);
+	void addDrawable(Drawable*, bool addBack=false);
 	bool delDrawable(Drawable*);
 	bool remDrawable(Drawable*);
 	

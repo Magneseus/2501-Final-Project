@@ -11,11 +11,11 @@ public:
 	~Model();
 	
 	void update(const sf::Time&);
-	void addUpdatable(Updatable*);
+	void addUpdatable(Updatable*, bool addBack=false);
 	bool delUpdatable(Updatable*);
 	bool remUpdatable(Updatable*);
 
-	void addCollidable(Collidable*);
+	void addCollidable(Collidable*, bool addBack=false);
 	bool delCollidable(Collidable*);
 	bool remCollidable(Collidable*);
 	

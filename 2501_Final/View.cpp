@@ -160,12 +160,15 @@ void View::render()
 /*
 	This function simply adds a drawable object to the list to be rendered.
 */
-void View::addDrawable(Drawable* d)
+void View::addDrawable(Drawable* d, bool addBack)
 {
 	// If we have a null pointer, don't add it to the list
 	if (!d) return;
 
-	drawables.push_back(d);
+	if (!addBack)
+		drawables.push_back(d);
+	else
+		drawables.insert(drawables.begin(), d);
 }
 
 /*

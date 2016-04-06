@@ -81,13 +81,9 @@ void Controller::input()
 			// Delete old objects
 			for (auto it = gameObjects.begin(); it != gameObjects.end(); ++it)
 			{
-				if ((*it)->isCollidable())
+				if (*it != NULL && (*it)->getTag() == sf::String("Obj_T"))
 				{
-					Collidable* c = dynamic_cast<Collidable*>(*it);
-					if (c != NULL && c->getTag() == sf::String("Obj_T"))
-					{
-						delObject(*it);
-					}
+					delObject(*it);
 				}
 			}
 
@@ -95,7 +91,7 @@ void Controller::input()
 			std::vector<GameObject*> ws = loadObjects(sf::String("txts/walls.txt"));
 			for (auto it = ws.begin(); it != ws.end(); ++it)
 			{
-				addObject(*it);
+				addObjectBeginning(*it);
 			}
 		}
 	}
@@ -207,7 +203,7 @@ void Controller::initObjects()
 	std::vector<GameObject*> ws = loadObjects(sf::String("txts/walls.txt"));
 	for (auto it = ws.begin(); it != ws.end(); ++it)
 	{
-		addObject(*it);
+		addObjectBeginning(*it);
 	}
 
 	// Player
@@ -280,6 +276,26 @@ void Controller::addObject(GameObject* newObject)
 		view->addDrawable(dynamic_cast<Drawable*>(newObject));
 	if (newObject->isCollidable())
 		model->addCollidable(dynamic_cast<Collidable*>(newObject));
+}
+
+/*
+	This function adds a GameObject instances to the world, at the beginning of the list.
+*/
+void Controller::addObjectBeginning(GameObject* newObject)
+{
+	// If we have a null pointer, don't add it to the list
+	if (!newObject) return;
+
+	// Add it to the master list
+	gameObjects.insert(gameObjects.begin(), newObject);
+
+	// Add it to the appropriate lists
+	if (newObject->isUpdatable())
+		model->addUpdatable(dynamic_cast<Updatable*>(newObject), true);
+	if (newObject->isDrawable())
+		view->addDrawable(dynamic_cast<Drawable*>(newObject), true);
+	if (newObject->isCollidable())
+		model->addCollidable(dynamic_cast<Collidable*>(newObject), true);
 }
 
 /*

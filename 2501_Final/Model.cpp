@@ -128,12 +128,15 @@ void Model::update(const sf::Time& delta)
 /*
 This function simply adds a Updatable object to the list to be rendered.
 */
-void Model::addUpdatable(Updatable* u)
+void Model::addUpdatable(Updatable* u, bool addBack)
 {
 	// If we have a null pointer, don't add it to the list
 	if (!u) return;
 
-	updatables.push_back(u);
+	if (!addBack)
+		updatables.push_back(u);
+	else
+		updatables.insert(updatables.begin(), u);
 }
 
 /*
@@ -185,12 +188,15 @@ bool Model::remUpdatable(Updatable* u)
 /*
 This function simply adds a Collidable object to the list to be rendered.
 */
-void Model::addCollidable(Collidable* u)
+void Model::addCollidable(Collidable* u, bool addBack)
 {
 	// If we have a null pointer, don't add it to the list
 	if (!u) return;
 
-	collidables.push_back(u);
+	if (!addBack)
+		collidables.push_back(u);
+	else
+		collidables.insert(collidables.begin(), u);
 }
 
 /*
