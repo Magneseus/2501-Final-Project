@@ -88,11 +88,15 @@ Tile::Tile(sf::Texture* tex_, std::vector<vec::Vector2>& points_, vec::Vector2& 
 {
 	tileTex->setRepeated(true);
 
+	this->setPosition(position_);
+
 	for (auto it = points_.begin(); it != points_.end(); ++it)
 	{
-		sf::Vector2f vPos = (*it + position_).getSfVec();
+		sf::Vector2f t = (*it + position_).getSfVec();
+		sf::Vector2f vPos = t;
 
-		sf::Vertex v(vPos, (*it).getSfVec());
+		sf::Vertex v(vPos, vPos);
+		tileShape.append(v);
 	}
 }
 

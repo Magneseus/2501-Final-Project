@@ -166,6 +166,8 @@ Tile* loadTile(std::ifstream& fileStream)
 	// X & Y
 	fileStream >> TX;
 	fileStream >> TY;
+
+	std::cout << TX << " : " << TY << std::endl;
 	
 	// Texture
 	fileStream >> TEXTURE;
@@ -179,8 +181,6 @@ Tile* loadTile(std::ifstream& fileStream)
 
 	for (int i = 0; i < COUNT; ++i)
 	{
-		std::cout << "TEST";
-
 		float PX = 0.0f, PY = 0.0f;
 
 		fileStream >> PX;

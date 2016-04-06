@@ -202,6 +202,13 @@ void Controller::enemyHangar()
 */
 void Controller::initObjects()
 {
+	// Load all walls from file
+	std::vector<GameObject*> ws = loadObjects(sf::String("txts/walls.txt"));
+	for (auto it = ws.begin(); it != ws.end(); ++it)
+	{
+		addObject(*it);
+	}
+
 	// Player
 	p = new Player();
 	addObject(p);
@@ -225,13 +232,6 @@ void Controller::initObjects()
 	*/
 
 	enemyHangar();
-
-	// Load all walls from file
-	std::vector<GameObject*> ws = loadObjects(sf::String("txts/walls.txt"));
-	for (auto it = ws.begin(); it != ws.end(); ++it)
-	{
-		addObject(*it);
-	}
 
 	// Vehicles
 	Vehicle* vehicle = new TransportShip();
