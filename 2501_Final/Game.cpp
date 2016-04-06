@@ -9,7 +9,6 @@ Game::Game()
 	timePerFrame = sf::seconds(1.0f / frameRate);
 
 	createMainMenu();
-
 }
 
 Game::~Game()
@@ -25,12 +24,12 @@ void Game::loop()
 	{
 		if (Global::SPAWNING) {
 			createSpawnMenu();
+			Global::SPAWNING = false;
 		}
 
 		if (Global::FINISHEDSPAWN) {
 			view->menu->clear();
 
-			Global::SPAWNING = false;
 			Global::FINISHEDSPAWN = false;
 		}
 

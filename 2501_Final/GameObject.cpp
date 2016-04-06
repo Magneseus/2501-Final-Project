@@ -13,6 +13,7 @@ sf::Vector2f Global::mouseWorldCoords;
 sf::Vector2i Global::middleWindowCoords;
 sf::Font Global::niceFont;
 Entity* Global::player = NULL;
+
 bool Global::SPAWNING = false;
 bool Global::FINISHEDSPAWN = false;
 bool Global::WIN = false;
@@ -85,22 +86,12 @@ void Entity::update(const sf::Time& delta) {
 	position += vel * delta.asSeconds();
 }
 
-void Entity::takeDamage(float amount, Entity* source) {
-	if (Global::DEBUG) {
-		std::cout << getTag().toAnsiString() << " HP[" << curHealth << "/" << maxHealth <<
-			"] is taking " << amount << " damage from " <<
-			source->getTag().toAnsiString() << "." << std::endl;
-	}
-
+void Entity::takeDamage(float amount) {
 	healthBarTimer.restart();
 
 	curHealth = std::fmax(curHealth - amount, 0);
 	if (curHealth <= 0) {
-		if (Global::DEBUG) {
-			std::cout << source->getTag().toAnsiString() << " destroyed " <<
-				this->getTag().toAnsiString() << "." << std::endl;
-		}
-		onDeath(source);
+		onDeath();
 	}
 }
 

@@ -5,6 +5,8 @@ Turret::Turret(vec::Vector2 p, Weapon* w, float min, float max) {
 	position = p;
 	main = w;
 
+	if (max == 0) max = 360;
+
 	minRotation = min;
 	maxRotation = max;
 
@@ -41,6 +43,15 @@ Turret::Turret(vec::Vector2 p, Weapon* w, float min, float max) {
 	col.moveTo(position);
 
 	setTag(sf::String("Turret"));
+
+	friendlyTags.push_back(getTag());
+	friendlyTags.push_back("Boss");
+}
+
+Turret::Turret(vec::Vector2 p, Weapon* w, float min, float max, std::function<void()> callback) : 
+	Turret(p, w, min, max) {
+
+	deathCallback = callback;
 }
 
 Turret::~Turret() {}
@@ -50,12 +61,15 @@ void Turret::update(const sf::Time& delta) {
 		if (frenzyTimer.getElapsedTime().asSeconds() > 0.5) {
 			if (std::rand() % 100 > 50) sign = (sign == -1) ? 1 : -1;
 			frenzyTimer.restart();
-			if (std::rand() % 100 < 0) delObjectStatic(this);
+			if (std::rand() % 100 < 5) {
+				if (deathCallback && !Global::WIN) deathCallback();	// don't call death callback until actually dead
+				delObjectStatic(this);
+			}
 		}
 
 		rotation += delta.asSeconds() * rotateSpeed * sign;
 
-		main->shoot(toRadians(rotation), position, this);
+		main->shoot(toRadians(rotation), position, friendlyTags);
 	} else if (state == ACTIVE) {
 		target = enemy->getPosition();
 
@@ -66,7 +80,7 @@ void Turret::update(const sf::Time& delta) {
 			rotation = prevRotation;
 		}
 
-		main->shoot(toRadians(rotation), position, this);
+		main->shoot(toRadians(rotation), position, friendlyTags);
 	} else {
 		// do we keep turning?
 		if (rotation > maxRotation) {
@@ -99,9 +113,12 @@ void Turret::update(const sf::Time& delta) {
 
 void Turret::changeState(int newState) {
 	state = newState;
-	s->changeState(newState);
+//	s->changeState(newState);
+
 	if (state == ACTIVE) {
 		rotateSpeed = activeRotateSpeed;
+
+		enemy = Global::player;
 	}
 	else if (state == IDLE) {
 		rotateSpeed = idleRotateSpeed;
@@ -111,17 +128,15 @@ void Turret::changeState(int newState) {
 	}
 }
 
-void Turret::takeDamage(float damage, Entity* source) {
-	if (source && source->getTag() != "Turret") {
-		changeState(ACTIVE);
+void Turret::takeDamage(float damage) {
+		if(state == IDLE) changeState(ACTIVE);
 
-		enemy = source;
-
-		Entity::takeDamage(damage, source);
-	}
+		Entity::takeDamage(damage);
 }
 
-void Turret::onDeath(Entity* killer) {
+void Turret::onDeath() {
+	if (state == FRENZIED) return; // don't keep dying
+
 	changeState(FRENZIED);
 }
 

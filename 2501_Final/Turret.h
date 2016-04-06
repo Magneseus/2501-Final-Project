@@ -1,12 +1,17 @@
 #pragma once
 
+#include <functional>
+
 #include "GameObject.h"
 #include "Weapon.h"
 #include "AnimatedSprite.h"
 
 class Turret : public Entity {
+	friend class Mainframe;
+
 public:
 	Turret(vec::Vector2 p, Weapon* w, float min, float max);
+	Turret(vec::Vector2 p, Weapon* w, float min, float max, std::function<void()> callback);
 	~Turret();
 
 	virtual void onCollide(Collidable& other);
@@ -24,8 +29,10 @@ private:
 
 	sf::Clock frenzyTimer;
 
-	virtual void takeDamage(float amount, Entity* source);
-	virtual void onDeath(Entity*);
+	virtual void takeDamage(float amount);
+	virtual void onDeath();
+
+	std::function<void()> deathCallback;	// used for spawned turrets
 
 	int maxRotation, minRotation;	// in degrees
 	int sign = 1;	// 1 clockwise, -1 counterclockwise

@@ -53,7 +53,7 @@ private:
 	const float onFootTopSpeed = 100;
 	const float onFootRotateSpeed = 180;
 
-	virtual void onDeath(Entity*);
+	virtual void onDeath();
 
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;	// from Drawable
 	void switchLoadouts(Loadout* newest);

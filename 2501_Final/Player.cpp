@@ -15,6 +15,8 @@ Player::Player()
 	
 	player.setOrigin(25, 25);
 
+	currentLoadout = NULL;
+
 	// Add a collison box for player
 	//Rect* r = new Rect(vec::Vector2(-20, -20), vec::Vector2(20, 20));
 	//col.addShape(r);
@@ -24,6 +26,8 @@ Player::Player()
 
 	// Set collision box tag
 	setTag(sf::String("Player"));
+	friendlyTags.push_back("Player");
+	friendlyTags.push_back("Vehicle");
 }
 
 Player::~Player()
@@ -120,25 +124,28 @@ void Player::update(const sf::Time& delta) {
 
 		if (Global::INFOCUS)
 		{
-			if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
+			if (currentLoadout) {	// not spawning
+				if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
+					if (vehicle == NULL) {
+						// on foot shoot
+						currentWeapon->shoot(toRadians(rotation), position, friendlyTags);
+					}
+					else {
+						// in ship shoot
+						currentLoadout->primary->shoot(toRadians(rotation), position, friendlyTags);
+					}
+				}
+
 				if (vehicle == NULL) {
-					// on foot shoot
-					currentWeapon->shoot(toRadians(rotation), position, this);
+					if (inputs.RClick) {
+						switchWeapons();
+					}
 				}
 				else {
-					// in ship shoot
-					currentLoadout->primary->shoot(toRadians(rotation), position, this);
-				}
-			}
+					if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Right)) {
 
-			if (vehicle == NULL) {
-				if (inputs.RClick) {
-					switchWeapons();
-				}
-			}
-			else {
-				if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Right)) {
-					currentLoadout->secondary->shoot(toRadians(rotation), position, this);
+						currentLoadout->secondary->shoot(toRadians(rotation), position, friendlyTags);
+					}
 				}
 			}
 		}
@@ -228,6 +235,8 @@ void Player::spawn() {
 }
 
 void Player::getLoadoutOne() {
+
+	std::cout << "Chosing loadout 1" << std::endl;
 	// med
 	onFootLoadout = new Loadout();
 	onFootLoadout->primary = new Weapon(1, 10, 250);
@@ -239,6 +248,7 @@ void Player::getLoadoutOne() {
 }
 
 void Player::getLoadoutTwo() {
+	std::cout << "Chosing loadout 2" << std::endl;
 	// light
 	onFootLoadout = new Loadout();
 	onFootLoadout->primary = new Weapon(5, 5, 350);
@@ -250,6 +260,7 @@ void Player::getLoadoutTwo() {
 }
 
 void Player::getLoadoutThree() {
+	std::cout << "Chosing loadout 3" << std::endl;
 	// heavy
 	onFootLoadout = new Loadout();
 	onFootLoadout->primary = new Weapon(1, 25, 150);
@@ -260,8 +271,7 @@ void Player::getLoadoutThree() {
 	switchLoadouts(onFootLoadout);
 }
 
-void Player::onDeath(Entity* killer) {
-	std::cout << "Player died from " << killer->getTag().toAnsiString() << "." << std::endl;
+void Player::onDeath() {
 	vel.setMag(0);
 	exitVehicle();
 	spawn();

@@ -24,7 +24,7 @@ void Vehicle::update(const sf::Time& delta) {
 	setRotation(rotation);
 }
 
-void Vehicle::onDeath(Entity* killer) {
+void Vehicle::onDeath() {
 	delObjectStatic(this);
 }
 

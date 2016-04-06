@@ -46,8 +46,10 @@ public:
 	bool processClick(float clickX, float clickY);
 	
 	void clear();
-	void print();
 
+	sf::String getState();
+	void setState(sf::String);
 private:
 	virtual void draw(sf::RenderTarget&, sf::RenderStates) const;
+	sf::String state;
 };

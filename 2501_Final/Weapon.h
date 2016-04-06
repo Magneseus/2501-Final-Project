@@ -4,14 +4,12 @@
 #include "Projectile.h"
 #include "GameObject.h"
 
-class Entity;
-
 class Weapon {
 public:
 	Weapon(float fr, float dam, float inSpeed);
 	~Weapon();
 
-	void shoot(float angle, vec::Vector2 origin, Entity* parent);
+	void shoot(float angle, vec::Vector2 origin, std::vector<sf::String> allies);
 
 private:
 	float fireRate, damage, speed;

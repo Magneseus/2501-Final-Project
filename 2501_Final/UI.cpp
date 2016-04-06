@@ -65,10 +65,6 @@ void UI::addTextBox(float x, float y, float w, float h, sf::String _text, int fo
 	textboxes.push_back(b);
 }
 
-void UI::print() {
-	std::cout << "hello i am a callback" << std::endl;
-}
-
 bool UI::processClick(float clickX, float clickY) {
 	for (int i = 0; i < buttons.size(); i++) {
 		if (buttons[i]->isClicked(clickX, clickY)) {
@@ -83,6 +79,10 @@ void UI::clear() {
 	buttons.clear();
 	textboxes.clear();
 }
+
+sf::String UI::getState() { return state; }
+
+void UI::setState(sf::String in) { state = in; }
 
 void UI::draw(sf::RenderTarget& w, sf::RenderStates s) const {
 	Button* b;

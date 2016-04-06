@@ -1,6 +1,8 @@
 #pragma once
 
 #include "GameObject.h"
+#include "Weapon.h"
+#include "Turret.h"
 
 class Mainframe : public Entity {
 public:
@@ -13,10 +15,20 @@ public:
 	sf::Sprite computer;
 	sf::Texture compTexture;
 
-	virtual void takeDamage(float amount, Entity* source);
+	virtual void takeDamage(float amount);
 
 private:
-	virtual void onDeath(Entity* killer);
+	virtual void onDeath();
+
+	enum STATES {HEALTHY, DAMAGED, DYING};
+	int state;
+
+	sf::Clock turretSpawnTimer;
+	int numSpawnedTurrets = 0;
+
+	void turretHasDied();
+
+	void spawnTurret();
 
 	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 };

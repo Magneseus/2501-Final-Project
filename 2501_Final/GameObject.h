@@ -224,7 +224,7 @@ public:
 	virtual ~Entity() {};
 	void update(const sf::Time& delta);
 
-	virtual void takeDamage(float amount, Entity* source);
+	virtual void takeDamage(float amount);
 	virtual void debugDraw(sf::RenderTarget& target, sf::RenderStates states) const;
 
 	vec::Vector2 vel;
@@ -243,10 +243,12 @@ protected:
 
 	sf::Clock healthBarTimer;
 
-	virtual void onDeath(Entity* source) = 0;
+	virtual void onDeath() = 0;
 
 	enum MOVEMENT { FORWARD = 1, REVERSE = -1, STILL = 0,
 					CLWISE = 1, COCLWISE = -1, LEFT = -1, RIGHT = 1 };
+
+	std::vector<sf::String> friendlyTags;
 
 	int motion, turning, strafe;
 };

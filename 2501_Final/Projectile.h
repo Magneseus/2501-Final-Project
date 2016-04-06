@@ -4,7 +4,7 @@
 
 class Projectile : public Entity {
 public:
-	Projectile(Entity* shooter, vec::Vector2 v, vec::Vector2 p, float dam, float speed);
+	Projectile(std::vector<sf::String> tags, vec::Vector2 v, vec::Vector2 p, float dam, float speed);
     ~Projectile();
 
 	int getDamage();
@@ -13,13 +13,13 @@ public:
 	virtual void onCollide(Collidable& other);
 
 private:
-	Entity* parent;
+
 	float damage;
 	sf::Sprite sprite;
 
 	sf::Clock lifeTime;
 
-	virtual void onDeath(Entity*);
+	virtual void onDeath();
 
     virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
 };

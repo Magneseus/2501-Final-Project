@@ -1,8 +1,8 @@
 
 #include "Projectile.h"
 
-Projectile::Projectile(Entity* shooter, vec::Vector2 p, vec::Vector2 v, float dam, float speed) {
-	parent = shooter;
+Projectile::Projectile(std::vector<sf::String> safe, vec::Vector2 p, vec::Vector2 v, float dam, float speed) {
+	friendlyTags = safe;
 
 	vel = v;
 	position = p;
@@ -23,29 +23,36 @@ Projectile::~Projectile() {}
 int Projectile::getDamage() { return damage; }
 
 void Projectile::update(const sf::Time& delta) {
-	if (!parent) onDeath(NULL);
-
 	vel.setMag(topSpeed);
 
 	Entity::update(delta);
 
 	if (lifeTime.getElapsedTime().asSeconds() >= 5) {
-		std::cout << "A projectile has expired." << std::endl;
-		onDeath(NULL);
+		onDeath();
 	}
 }
 
-void Projectile::onDeath(Entity* killer) { delObjectStatic(this); }
+void Projectile::onDeath() { delObjectStatic(this); }
 
 void Projectile::onCollide(Collidable& other) {
 	if (other.getTag() == "Projectile") return;
 
-	Entity* temp = dynamic_cast<Entity*>(&other);
+	bool doDamage = true;
 
-	if (temp != parent) {
-		if (temp) temp->takeDamage(damage, parent);
-		onDeath(temp);
+	Entity* temp = dynamic_cast<Entity*>(&other);
+ 
+	if (temp == NULL) doDamage = false;
+
+	for (int i = 0; i < friendlyTags.size(); i++) {
+		if (other.getTag() == friendlyTags[i]) {
+			return;
+			//doDamage = false;
+		}
 	}
+
+	if (doDamage) temp->takeDamage(damage);
+
+	onDeath();
 }
 
 void Projectile::draw(sf::RenderTarget& target, sf::RenderStates states) const {

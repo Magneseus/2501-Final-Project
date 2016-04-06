@@ -170,7 +170,7 @@ void Controller::enemyHangar()
 	sf::Texture* shieldTex = Global::globalSpriteSheet->getTex("shield_64.png");
 	shieldTex->setRepeated(true);
 
-	vec::Vector2 offset(5000, 0);
+	vec::Vector2 offset(1000, 0);
 
 	PlayerShield* w4 = new PlayerShield(vec::Vector2(-32, -64 * 5),
 		vec::Vector2(32, 64 * 5),
@@ -178,6 +178,7 @@ void Controller::enemyHangar()
 	w4->setPosition(vec::Vector2(-64 * 5, 0) + offset);
 	addObject(w4);
 
+	/*
 	Turret* t1 = new Turret(vec::Vector2(-350, -350) + offset, new Weapon(2, 10, 250), 90, 360);
 	addObject(t1);
 
@@ -189,7 +190,7 @@ void Controller::enemyHangar()
 
 	Turret* t4 = new Turret(vec::Vector2(50, -50) + offset, new Weapon(1, 1, 100), 90, 270);
 	addObject(t4);
-
+	*/
 	Mainframe* m = new Mainframe();
 
 	m->setPosition(vec::Vector2(offset.getX() + 200, offset.getY()));
@@ -207,6 +208,9 @@ void Controller::initObjects()
 	addObject(p);
 
 	Global::player = p;
+
+	//Turret* t = new Turret(vec::Vector2(50, -50), new Weapon(1, 1, 100), 0, 360);
+	//addObject(t);
 
 	// Hangar shield
 	/*
