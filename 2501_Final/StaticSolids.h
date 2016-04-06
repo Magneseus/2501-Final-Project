@@ -32,3 +32,18 @@ public:
 
 	virtual void onCollide(Collidable& other);
 };
+
+class Tile : public Drawable
+{
+public:
+	Tile(sf::Texture* _tex, std::vector<vec::Vector2>& points, vec::Vector2& position);
+	~Tile();
+
+	void setPosition(vec::Vector2 newPos);
+
+private:
+	virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
+
+	sf::VertexArray tileShape;
+	sf::Texture* tileTex;
+};

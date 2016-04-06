@@ -72,6 +72,10 @@ public:
 	// Functions for manipulating type
 	void andType(int x) { gameObjectType &= x; }
 
+	// Tag functions
+	const sf::String getTag() const { return tag; }
+	void setTag(sf::String& newTag) { tag = newTag; }
+
 	// Getter & Setters for position/rotation
 	vec::Vector2 getPosition() { return position; }
 	void setPosition(vec::Vector2 _position) { position = _position; }
@@ -97,6 +101,7 @@ public:
 protected:
 	vec::Vector2 position;
 	double rotation;
+	sf::String tag;
 
 	bool should_remove = false;
 	int gameObjectType = 0;
@@ -191,9 +196,6 @@ public:
 			c.setPosition(c.getPosition() + normal);
 		}
 	}
-
-	const sf::String getTag() const { return tag; }
-	void setTag(sf::String& newTag) { tag = newTag; }
 	
 	bool isSolid() { return solid; }
 	bool isStatic() { return staticObject; }
@@ -206,7 +208,6 @@ public:
 	vec::Vector2 prevPos;
 
 protected:
-	sf::String tag;
 	Collider col;
 
 private:

@@ -74,3 +74,49 @@ void PlayerShield::onCollide(Collidable& other)
 		Collidable::collideBody(other, normal);
 	}
 }
+
+
+
+
+
+
+//    TILE (Just a drawable thing)    //
+
+Tile::Tile(sf::Texture* tex_, std::vector<vec::Vector2>& points_, vec::Vector2& position_)
+	: tileShape(sf::TrianglesStrip, points_.size()),
+	tileTex(tex_)
+{
+	tileTex->setRepeated(true);
+
+	this->setPosition(position_);
+
+	for (auto it = points_.begin(); it != points_.end(); ++it)
+	{
+		sf::Vector2f t = (*it + position_).getSfVec();
+		sf::Vector2f vPos = t;
+
+		sf::Vertex v(vPos, vPos);
+		tileShape.append(v);
+	}
+}
+
+Tile::~Tile() {}
+
+
+
+void Tile::setPosition(vec::Vector2 newPos)
+{
+	sf::Vector2f dif = (newPos - getPosition()).getSfVec();
+	GameObject::setPosition(newPos);
+
+	for (int i = 0; i < tileShape.getVertexCount(); ++i)
+	{
+		tileShape[i].position += dif;
+	}
+}
+
+void Tile::draw(sf::RenderTarget& target, sf::RenderStates states) const
+{
+	states.texture = tileTex;
+	target.draw(tileShape, states);
+}
