@@ -49,6 +49,12 @@ std::vector<GameObject*> loadObjects(sf::String& fileName)
 				obj = loadPlayerShield(FILE);
 				break;
 
+			// Tiles
+			case 'f':
+			case 'F':
+				obj = loadTile(FILE);
+				break;
+
 			// Turrets
 			case 't':
 			case 'T':
@@ -148,4 +154,45 @@ PlayerShield* loadPlayerShield(std::ifstream& fileStream)
 		s->setTag(sf::String("Obj_T"));
 
 	return s;
+}
+
+// Loading tiles
+Tile* loadTile(std::ifstream& fileStream)
+{
+	int TX = 0, TY = 0;
+	int COUNT = 0;
+	std::string TEXTURE;
+
+	// X & Y
+	fileStream >> TX;
+	fileStream >> TY;
+	
+	// Texture
+	fileStream >> TEXTURE;
+
+	sf::Texture* tileTex = Global::globalSpriteSheet->getTex(sf::String(TEXTURE));
+
+	// Number of points
+	fileStream >> COUNT;
+
+	std::vector<vec::Vector2> POINTS;
+
+	for (int i = 0; i < COUNT; ++i)
+	{
+		std::cout << "TEST";
+
+		float PX = 0.0f, PY = 0.0f;
+
+		fileStream >> PX;
+		fileStream >> PY;
+
+		POINTS.push_back(vec::Vector2(PX, PY));
+	}
+
+	Tile* t = new Tile(tileTex, POINTS, vec::Vector2(TX, TY));
+
+	if (Global::DEBUG)
+		t->setTag(sf::String("Obj_T"));
+
+	return t;
 }

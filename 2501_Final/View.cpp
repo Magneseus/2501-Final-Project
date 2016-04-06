@@ -247,7 +247,7 @@ void View::spawnRenderables()
 	hangar.setTexture(hangar_tile);
 	hangar.setTextureRect(sf::IntRect(0, 0, 64 * 10, 64 * 10));
 	hangar.setOrigin(64 * 5, 64 * 5);
-	hangar.setPosition(0, 0);
+	hangar.setPosition(1000, 1000);
 
 	enemyHangar.setTexture(hangar_tile);
 	enemyHangar.setTextureRect(sf::IntRect(0, 0, 64 * 10, 64 * 10));
