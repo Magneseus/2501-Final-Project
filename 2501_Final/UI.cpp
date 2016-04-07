@@ -80,9 +80,9 @@ void UI::clear() {
 	textboxes.clear();
 }
 
-sf::String UI::getState() { return state; }
+int UI::getState() { return state; }
 
-void UI::setState(sf::String in) { state = in; }
+void UI::setState(int in) { state = in; }
 
 void UI::draw(sf::RenderTarget& w, sf::RenderStates s) const {
 	Button* b;

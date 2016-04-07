@@ -22,7 +22,26 @@ void Game::loop()
 {
 	while (view->window.isOpen())
 	{
-		if (Global::SPAWNING) {
+
+		// check to ensure game state matches UI state
+
+		if (Global::getState() != view->menu->getState()) {
+			view->menu->setState(Global::getState());
+
+			switch (Global::getState()) {
+			case Global::S_SPAWNING:
+				createSpawnMenu();
+				break;
+			case Global::S_WIN:
+				createWinScreen();
+				break;
+			case Global::S_PLAY:
+				view->menu->clear();
+				break;
+			}
+		}
+
+		/*if (Global::SPAWNING) {
 			createSpawnMenu();
 			Global::SPAWNING = false;
 		}
@@ -37,7 +56,9 @@ void Game::loop()
 		{
 			createWinScreen();
 			Global::WIN = false;
-		}
+		}*/
+
+		std::cout << Global::getState() << std::endl;
 
 		controller->input();
 		if(controller->p) controller->gameController();

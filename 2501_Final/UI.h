@@ -47,9 +47,10 @@ public:
 	
 	void clear();
 
-	sf::String getState();
-	void setState(sf::String);
+	int getState();
+	void setState(int);
+
 private:
 	virtual void draw(sf::RenderTarget&, sf::RenderStates) const;
-	sf::String state;
+	int state;
 };

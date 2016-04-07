@@ -39,14 +39,18 @@ public:
 
 	static Entity* player;
 
-	static bool SPAWNING;
-	static bool FINISHEDSPAWN;
-	static bool WIN;
+	static enum STATES{S_PLAY, S_SPAWNING, S_WIN};
+	static void setState(int in);
+	static int getState();
+	static bool GAMEOVER;
 
 	static bool DEBUG;
 	static bool INFOCUS;
 
 	static float ZOOM;
+
+private:
+	static int game_state;
 };
 
 /*                   	GAME OBJECT

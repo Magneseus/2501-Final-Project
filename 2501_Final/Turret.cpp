@@ -62,7 +62,8 @@ void Turret::update(const sf::Time& delta) {
 			if (std::rand() % 100 > 50) sign = (sign == -1) ? 1 : -1;
 			frenzyTimer.restart();
 			if (std::rand() % 100 < 5) {
-				if (deathCallback && !Global::WIN) deathCallback();	// don't call death callback until actually dead
+				std::cout << Global::getState() << std::endl;
+				if (deathCallback && !Global::GAMEOVER) deathCallback();	// don't call death callback until actually dead
 				delObjectStatic(this);
 			}
 		}
@@ -113,7 +114,7 @@ void Turret::update(const sf::Time& delta) {
 
 void Turret::changeState(int newState) {
 	state = newState;
-//	s->changeState(newState);
+	s->changeState(newState);
 
 	if (state == ACTIVE) {
 		rotateSpeed = activeRotateSpeed;

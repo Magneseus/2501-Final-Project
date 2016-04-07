@@ -36,7 +36,7 @@ Player::~Player()
 }
 
 void Player::update(const sf::Time& delta) {
-	if (!Global::SPAWNING) {
+	if (Global::getState() != Global::S_SPAWNING) {
 		motion = STILL;
 		turning = STILL;
 		strafe = STILL;
@@ -231,7 +231,7 @@ void Player::spawn() {
 
 	curHealth = maxHealth;
 
-	Global::SPAWNING = true;
+	Global::setState(Global::S_SPAWNING);
 }
 
 void Player::getLoadoutOne() {
@@ -242,7 +242,7 @@ void Player::getLoadoutOne() {
 	onFootLoadout->primary = new Weapon(1, 10, 250);
 	onFootLoadout->secondary = new Weapon(2, 5, 350);
 
-	Global::FINISHEDSPAWN = true;
+	Global::setState(Global::S_PLAY);
 
 	switchLoadouts(onFootLoadout);
 }
@@ -254,7 +254,7 @@ void Player::getLoadoutTwo() {
 	onFootLoadout->primary = new Weapon(5, 5, 350);
 	onFootLoadout->secondary = new Weapon(2, 15, 100);
 
-	Global::FINISHEDSPAWN = true;
+	Global::setState(Global::S_PLAY);
 
 	switchLoadouts(onFootLoadout);
 }
@@ -266,7 +266,7 @@ void Player::getLoadoutThree() {
 	onFootLoadout->primary = new Weapon(1, 25, 150);
 	onFootLoadout->secondary = new Weapon(0.5, 20, 500);
 
-	Global::FINISHEDSPAWN = true;
+	Global::setState(Global::S_PLAY);
 
 	switchLoadouts(onFootLoadout);
 }

@@ -14,9 +14,13 @@ sf::Vector2i Global::middleWindowCoords;
 sf::Font Global::niceFont;
 Entity* Global::player = NULL;
 
-bool Global::SPAWNING = false;
-bool Global::FINISHEDSPAWN = false;
-bool Global::WIN = false;
+int Global::getState() { return game_state; }
+void Global::setState(int in) {	game_state = in; }
+
+int Global::game_state = -1;
+
+bool Global::GAMEOVER = false;
+
 bool Global::DEBUG = true;
 bool Global::INFOCUS = true;
 

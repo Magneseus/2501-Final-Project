@@ -47,7 +47,10 @@ void Mainframe::update(const sf::Time&) {
 	}
 
 	if (state == DYING) {
-
+		if (turretSpawnTimer.getElapsedTime().asSeconds() > 5 && numSpawnedTurrets < 2) {
+			turretSpawnTimer.restart();
+			spawnTurret();
+		}
 	} else if (state == DAMAGED) {
 		if (turretSpawnTimer.getElapsedTime().asSeconds() > 5 && numSpawnedTurrets < 2) {
 			turretSpawnTimer.restart();
@@ -81,13 +84,14 @@ void Mainframe::spawnTurret() {
 }
 
 void Mainframe::turretHasDied() {
+	std::cout << "Turret is ded" << std::endl;
 	numSpawnedTurrets--;
 }
 
 void Mainframe::onCollide(Collidable& other) { // nothing 
 }
 
-void Mainframe::onDeath() { Global::WIN = true; delObjectStatic(this); }
+void Mainframe::onDeath() { Global::setState(Global::S_WIN); delObjectStatic(this); }
 
 void Mainframe::draw(sf::RenderTarget& target, sf::RenderStates states) const {
 	target.draw(computer, states);
