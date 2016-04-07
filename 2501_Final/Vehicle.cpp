@@ -35,8 +35,8 @@ BasicShip::BasicShip() {
 	dragValue = 0.15;
 
 	weapons = new Loadout();
-	weapons->primary = new Weapon(5, 10, 500);
-	weapons->secondary = new Weapon(1, 50, 250);
+	weapons->primary = new Weapon("FAST", 5, 10, 500);
+	weapons->secondary = new Weapon("STRONG", 1, 50, 250);
 
 	ship = new AnimatedSprite(Global::globalSpriteSheet, 10);
 
@@ -74,8 +74,8 @@ TransportShip::TransportShip() {
 	dragValue = 0.15;
 
 	weapons = new Loadout();
-	weapons->primary = new Weapon(1, 10, 500);
-	weapons->secondary = new Weapon(0.5, 50, 1000);
+	weapons->primary = new Weapon("FAST", 1, 10, 500);
+	weapons->secondary = new Weapon("SNIPER", 0.5, 50, 1000);
 
 	ship = new AnimatedSprite(Global::globalSpriteSheet , 10);
 

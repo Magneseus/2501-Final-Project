@@ -68,7 +68,7 @@ void Mainframe::spawnTurret() {
 
 	// make weapon
 
-	Weapon* tempWeapon = new Weapon(1, 15, 250);
+	Weapon* tempWeapon = new Weapon("TURRET_GUN", 1, 15, 250);
 
 	// make turret (with callback)
 

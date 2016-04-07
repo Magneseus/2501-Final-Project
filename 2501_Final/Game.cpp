@@ -34,31 +34,13 @@ void Game::loop()
 				break;
 			case Global::S_WIN:
 				createWinScreen();
+				Global::GAMEOVER = true;
 				break;
 			case Global::S_PLAY:
 				view->menu->clear();
 				break;
 			}
 		}
-
-		/*if (Global::SPAWNING) {
-			createSpawnMenu();
-			Global::SPAWNING = false;
-		}
-
-		if (Global::FINISHEDSPAWN) {
-			view->menu->clear();
-
-			Global::FINISHEDSPAWN = false;
-		}
-
-		if (Global::WIN)
-		{
-			createWinScreen();
-			Global::WIN = false;
-		}*/
-
-		std::cout << Global::getState() << std::endl;
 
 		controller->input();
 		if(controller->p) controller->gameController();

@@ -215,6 +215,8 @@ void Player::switchWeapons() {
 	} else {
 		currentWeapon = currentLoadout->primary;
 	}
+
+	std::cout << "Equipped " << currentWeapon->getName().toAnsiString() << "." << std::endl;
 }
 
 void Player::spawn() {
@@ -235,12 +237,10 @@ void Player::spawn() {
 }
 
 void Player::getLoadoutOne() {
-
-	std::cout << "Chosing loadout 1" << std::endl;
 	// med
 	onFootLoadout = new Loadout();
-	onFootLoadout->primary = new Weapon(1, 10, 250);
-	onFootLoadout->secondary = new Weapon(2, 5, 350);
+	onFootLoadout->primary = new Weapon("Rifle", 1, 10, 250);
+	onFootLoadout->secondary = new Weapon("Pistol", 2, 5, 350);
 
 	Global::setState(Global::S_PLAY);
 
@@ -248,11 +248,10 @@ void Player::getLoadoutOne() {
 }
 
 void Player::getLoadoutTwo() {
-	std::cout << "Chosing loadout 2" << std::endl;
 	// light
 	onFootLoadout = new Loadout();
-	onFootLoadout->primary = new Weapon(5, 5, 350);
-	onFootLoadout->secondary = new Weapon(2, 15, 100);
+	onFootLoadout->primary = new Weapon("SMG", 5, 5, 350);
+	onFootLoadout->secondary = new Weapon("Pistol", 2, 15, 100);
 
 	Global::setState(Global::S_PLAY);
 
@@ -260,11 +259,10 @@ void Player::getLoadoutTwo() {
 }
 
 void Player::getLoadoutThree() {
-	std::cout << "Chosing loadout 3" << std::endl;
 	// heavy
 	onFootLoadout = new Loadout();
-	onFootLoadout->primary = new Weapon(1, 25, 150);
-	onFootLoadout->secondary = new Weapon(0.5, 20, 500);
+	onFootLoadout->primary = new Weapon("RPG", 1, 25, 150);
+	onFootLoadout->secondary = new Weapon("Sniper", 0.5, 20, 500);
 
 	Global::setState(Global::S_PLAY);
 
