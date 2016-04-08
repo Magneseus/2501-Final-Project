@@ -49,6 +49,7 @@ namespace vec
 		double cross(const Vector2&) const;
 		double dist(const Vector2&) const;
 		double angleBetween(const Vector2&) const;
+		double heading() const;
 		Vector2& rotate(const double);
 
 	private:

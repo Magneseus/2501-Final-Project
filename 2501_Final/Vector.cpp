@@ -211,6 +211,11 @@ namespace vec
 		return std::acos( dot(r) / (getMagConst() * r.getMagConst()) );
 	}
 
+	double Vector2::heading() const 
+	{
+		return std::atan2(this->getY(), this->getX());
+	}
+
 	Vector2& Vector2::rotate(const double angle)
 	{
 		double _x = x * std::cos(angle) - y * std::sin(angle);
