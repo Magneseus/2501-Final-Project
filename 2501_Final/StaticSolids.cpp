@@ -86,8 +86,6 @@ Tile::Tile(sf::Texture* tex_, std::vector<vec::Vector2>& points_, vec::Vector2& 
 	: tileShape(sf::TrianglesStrip, points_.size()),
 	tileTex(tex_)
 {
-	tileTex->setRepeated(true);
-
 	this->setPosition(position_);
 
 	for (auto it = points_.begin(); it != points_.end(); ++it)
@@ -119,4 +117,60 @@ void Tile::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
 	states.texture = tileTex;
 	target.draw(tileShape, states);
+}
+
+
+
+//    OBJECT (Just a drawable thing)    //
+
+Object::Object(vec::Vector2 tl, vec::Vector2 br, sf::Texture* tex)
+{
+	objectSprite.setTexture(*tex);
+
+	vec::Vector2 pos = tl + ((br - tl) / 2.0f);
+	vec::Vector2 size = br - tl;
+
+	vec::Vector2 sz((int)tex->getSize().x, (int)tex->getSize().y);
+	objectSprite.setScale(size.getX() / sz.getX(), size.getY() / sz.getY());
+
+	sz /= 2.0f;
+	objectSprite.setOrigin(sz.getSfVec());
+
+	vec::Vector2 _tl(size * -0.5f);
+	vec::Vector2 _br(size * 0.5f);
+
+	Rect* r = new Rect(_tl, _br);
+	col.addShape(r);
+
+	setSolid(true);
+	setStatic(true);
+
+	setPosition(pos);
+}
+
+Object::~Object() {}
+
+
+void Object::onCollide(Collidable& other)
+{
+	objectSprite.setPosition(getPosition().getSfVec());
+}
+
+void Object::setPosition(vec::Vector2 newPos)
+{
+	GameObject::setPosition(newPos);
+	objectSprite.setPosition(newPos.getSfVec());
+}
+
+void Object::setRotation(double _rotation)
+{
+	GameObject::setRotation(_rotation);
+	objectSprite.setRotation(_rotation);
+}
+
+void Object::draw(sf::RenderTarget& target, sf::RenderStates states) const
+{
+	target.draw(objectSprite, states);
+	if (Global::DEBUG)
+		target.draw(col, states);
 }

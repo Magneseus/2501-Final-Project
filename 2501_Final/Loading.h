@@ -11,3 +11,4 @@ std::vector<GameObject*> loadObjects(sf::String& fileName);
 Wall* loadWall(std::ifstream& fileStream);
 PlayerShield* loadPlayerShield(std::ifstream& fileStream);
 Tile* loadTile(std::ifstream& fileStream);
+Object* loadObject(std::ifstream& fileStream);

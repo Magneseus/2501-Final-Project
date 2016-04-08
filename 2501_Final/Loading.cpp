@@ -55,6 +55,11 @@ std::vector<GameObject*> loadObjects(sf::String& fileName)
 				obj = loadTile(FILE);
 				break;
 
+			case 'o':
+			case 'O':
+				obj = loadObject(FILE);
+				break;
+
 			// Turrets
 			case 't':
 			case 'T':
@@ -166,13 +171,12 @@ Tile* loadTile(std::ifstream& fileStream)
 	// X & Y
 	fileStream >> TX;
 	fileStream >> TY;
-
-	std::cout << TX << " : " << TY << std::endl;
 	
 	// Texture
 	fileStream >> TEXTURE;
 
 	sf::Texture* tileTex = Global::globalSpriteSheet->getTex(sf::String(TEXTURE));
+	tileTex->setRepeated(true);
 
 	// Number of points
 	fileStream >> COUNT;
@@ -195,4 +199,47 @@ Tile* loadTile(std::ifstream& fileStream)
 		t->setTag(sf::String("Obj_T"));
 
 	return t;
+}
+
+// Object
+Object* loadObject(std::ifstream& fileStream)
+{
+	int OX = 0, OY = 0;
+	int OSX = 0, OSY = 0;
+	int OR = 0;
+	int STATIC = 0;
+	std::string TEXTURE;
+
+	// X & Y
+	fileStream >> OX;
+	fileStream >> OY;
+
+	// Size
+	fileStream >> OSX;
+	fileStream >> OSY;
+
+	// Rotation
+	fileStream >> OR;
+
+	// Texture
+	fileStream >> TEXTURE;
+	sf::Texture* objTex = Global::globalSpriteSheet->getTex(sf::String(TEXTURE));
+
+	// Is Static?
+	fileStream >> STATIC;
+
+	Object* obj = new Object(
+		vec::Vector2(OX, OY),
+		vec::Vector2(OSX, OSY),
+		objTex);
+
+	obj->setRotation(OR);
+
+	if (STATIC == 0)
+		obj->setStatic(false);
+
+	if (Global::DEBUG)
+		obj->setTag(sf::String("Obj_T"));
+
+	return obj;
 }

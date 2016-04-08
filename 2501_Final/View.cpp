@@ -4,8 +4,8 @@
 
 View::View(Model* m)
 	: model(m),
-	WINDOW_WIDTH(800),
-	WINDOW_HEIGHT(600),
+	WINDOW_WIDTH(1600),
+	WINDOW_HEIGHT(1000),
 	window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Space Protectors"),
 	showFPS(true),
 	renderablesSpawned(false)
@@ -269,21 +269,6 @@ void View::addFPS(const sf::Time& timeForFrame)
 
 void View::spawnRenderables()
 {
-	// Random hangar tiles
-	hangar_tile.loadFromFile("img/tile_64.png");
-	hangar_tile.setRepeated(true);
-
-	hangar.setTexture(hangar_tile);
-	hangar.setTextureRect(sf::IntRect(0, 0, 64 * 10, 64 * 10));
-	hangar.setOrigin(64 * 5, 64 * 5);
-	hangar.setPosition(1000, 1000);
-
-	enemyHangar.setTexture(hangar_tile);
-	enemyHangar.setTextureRect(sf::IntRect(0, 0, 64 * 10, 64 * 10));
-	enemyHangar.setOrigin(64 * 5, 64 * 5);
-	enemyHangar.setPosition(5000, 0);
-
-
 	// Background img
 	backgroundTex.loadFromFile("img/space.jpg");
 	backgroundTex.setRepeated(true);
