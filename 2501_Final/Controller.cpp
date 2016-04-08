@@ -190,6 +190,8 @@ void Controller::enemyHangar()
 	Mainframe* m = new Mainframe();
 
 	m->setPosition(vec::Vector2(offset.getX() + 200, offset.getY()));
+
+	Global::objective = m->getPosition();
 	addObject(m);
 }
 

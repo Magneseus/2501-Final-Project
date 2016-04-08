@@ -4,6 +4,7 @@
 #include "GameObject.h"
 #include "SpriteSheet.h"
 #include "UI.h"
+#include "Player.h"
 
 #include <SFML\Window.hpp>
 #include <SFML\Graphics.hpp>
@@ -29,6 +30,19 @@ public:
 	sf::RenderWindow window;
 
 	UI* menu;
+
+	sf::Sprite HUD;
+	sf::Texture HUDTexture;
+
+	sf::Sprite compassNeedle;
+	sf::Sprite compassBase;
+	sf::Texture compassNeedleTex;
+	sf::Texture compassBaseTex;
+
+	sf::Text equippedWeapon;
+	sf::Text holsteredWeapon;
+
+	void drawHUD();
 
 	//sf::Texture *a, *b, *c, *d;
 	//AnimatedSprite* temp;

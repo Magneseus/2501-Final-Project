@@ -62,7 +62,7 @@ void Game::createMainMenu() {
 
 	ui->addTextBox(Global::middleWindowCoords.x, Global::middleWindowCoords.y*0.5,
 		0, 0,
-		"Space Game", 42);
+		"Space Protectors", 42);
 
 	ui->addButton(Global::middleWindowCoords.x, Global::middleWindowCoords.y,
 		150, 50,
@@ -82,7 +82,7 @@ void Game::createCredits() {
 
 	std::stringstream credits;
 
-	credits << "Space Game made by Matt Mayer and Kyle Causton" << std::endl;
+	credits << "Space Protectors made by Matt Mayer and Kyle Causton" << std::endl;
 	credits << "Made for COMP2501 at Carleton University, 2016";
 
 	ui->addTextBox(Global::middleWindowCoords.x, Global::middleWindowCoords.y*0.5,

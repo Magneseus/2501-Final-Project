@@ -14,6 +14,8 @@ sf::Vector2i Global::middleWindowCoords;
 sf::Font Global::niceFont;
 Entity* Global::player = NULL;
 
+vec::Vector2 Global::objective = NULL;
+
 int Global::getState() { return game_state; }
 void Global::setState(int in) {	game_state = in; }
 

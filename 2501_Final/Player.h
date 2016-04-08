@@ -20,6 +20,7 @@ struct InputStorage {
 
 class Player : public Entity
 {
+	friend class View;
 public:
 	Player();
 	~Player();
@@ -41,6 +42,8 @@ public:
 	void getLoadoutOne();
 	void getLoadoutTwo();
 	void getLoadoutThree();
+
+	Weapon* getOtherWeapon();
 
 private:
 	Loadout* currentLoadout;	// player's current loadout (from vehicle)

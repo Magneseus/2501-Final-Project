@@ -13,6 +13,7 @@ Mainframe::Mainframe() {
 	computer.setRotation(90);
 	setRotation(90);
 
+
 	Rect* r = new Rect(vec::Vector2(-121, -97), vec::Vector2(121, 97));
 	col.addShape(r);
 
@@ -24,6 +25,8 @@ Mainframe::Mainframe() {
 	state = HEALTHY;
 
 	setTag(sf::String("Boss"));
+
+	Global::objective = getPosition();
 }
 
 Mainframe::~Mainframe() {}
@@ -33,9 +36,8 @@ void Mainframe::takeDamage(float amount) {
 }
 
 void Mainframe::update(const sf::Time&) {
-	computer.setRotation(90);
-	computer.setPosition(position.getSfVec());
 
+	computer.setPosition(position.getSfVec());
 	float hpPercent = curHealth / maxHealth;
 
 	if (hpPercent < .1) {

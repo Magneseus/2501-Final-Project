@@ -5,8 +5,8 @@
 View::View(Model* m)
 	: model(m),
 	WINDOW_WIDTH(800),
-	WINDOW_HEIGHT(800),
-	window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Space Pirates...?"),
+	WINDOW_HEIGHT(600),
+	window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Space Protectors"),
 	showFPS(true),
 	renderablesSpawned(false)
 {
@@ -23,12 +23,36 @@ View::View(Model* m)
 
 	menu = new UI();
 
+	HUDTexture.loadFromFile("img/HUD.png");
+	HUD.setTexture(HUDTexture);
+	HUD.setPosition(0, WINDOW_HEIGHT - HUDTexture.getSize().y);
+
+	compassBaseTex.loadFromFile("img/compass_base.png");
+	compassBase.setTexture(compassBaseTex);
+	compassBase.setPosition(75, WINDOW_HEIGHT - HUDTexture.getSize().y+15);
+	
+	compassNeedleTex.loadFromFile("img/compass_needle.png");
+	compassNeedle.setTexture(compassNeedleTex);
+	compassNeedle.setPosition(compassBase.getPosition().x + compassNeedleTex.getSize().x / 2, 
+		WINDOW_HEIGHT - HUDTexture.getSize().y + 15 + compassNeedleTex.getSize().y / 2);
+	compassNeedle.setOrigin(compassNeedleTex.getSize().x/2, compassNeedleTex.getSize().y/2);
+
+	equippedWeapon.setFont(Global::niceFont);
+	equippedWeapon.setColor(sf::Color::Black);
+	equippedWeapon.setCharacterSize(18);
+	equippedWeapon.setPosition(25, WINDOW_HEIGHT - HUDTexture.getSize().y + 30);
+
+	holsteredWeapon.setFont(Global::niceFont);
+	holsteredWeapon.setColor(sf::Color::Black);
+	holsteredWeapon.setCharacterSize(12);
+	holsteredWeapon.setPosition(40, WINDOW_HEIGHT - HUDTexture.getSize().y + 60);
+
 	window.setKeyRepeatEnabled(false);	// prevent player from spamming keys accidentally
 }
 
 View::~View()
 {
-	
+	delete menu;
 }
 
 void View::render()
@@ -154,6 +178,8 @@ void View::render()
 	// UI stuff
 	window.draw(*menu);
 
+	if (Global::getState() != -1) drawHUD();
+
 	window.display();
 }
 
@@ -271,4 +297,56 @@ void View::spawnRenderables()
 
 
 	renderablesSpawned = true;
+}
+
+void View::drawHUD() {
+
+	Entity* e = Global::player;
+	window.draw(HUD);
+
+	Player* p = dynamic_cast<Player*>(e);
+	
+	if (p->vehicle != NULL) {
+		window.draw(compassBase);
+
+		vec::Vector2 toObjective(Global::objective);
+		toObjective -= p->position;
+
+		compassNeedle.setRotation(toDegrees(toObjective.heading()));
+
+		window.draw(compassNeedle);
+	} else {
+		sf::String mainWeapon;
+		sf::String holstered;
+
+		if (p->currentLoadout) {
+			mainWeapon = "Current: " + p->currentWeapon->getName().toAnsiString();
+			holstered = "Holstered: " + p->getOtherWeapon()->getName().toAnsiString();
+		}
+
+		equippedWeapon.setString(mainWeapon);
+		holsteredWeapon.setString(holstered);
+
+		window.draw(equippedWeapon);
+		window.draw(holsteredWeapon);
+	}
+
+	sf::RectangleShape barOut;
+	barOut.setSize(sf::Vector2f(200, 10));
+	barOut.setPosition(window.getSize().x/2-100, window.getSize().y - 20);
+	barOut.setOutlineColor(sf::Color::Black);
+	barOut.setOutlineThickness(2);
+	sf::Color grey = sf::Color::Black;
+	grey.r += 100;
+	grey.g += 100;
+	grey.b += 100;
+	barOut.setFillColor(grey);
+
+	sf::RectangleShape barIn(barOut);
+	barIn.setSize(sf::Vector2f(barOut.getSize().x * (p->curHealth / p->maxHealth), barOut.getSize().y));
+	barIn.setFillColor(sf::Color::Red);
+	barIn.setOutlineThickness(0);
+
+	window.draw(barOut);
+	window.draw(barIn);
 }

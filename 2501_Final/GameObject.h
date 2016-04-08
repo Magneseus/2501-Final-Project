@@ -39,6 +39,8 @@ public:
 
 	static Entity* player;
 
+	static vec::Vector2 objective;
+
 	static enum STATES{S_PLAY, S_SPAWNING, S_WIN};
 	static void setState(int in);
 	static int getState();

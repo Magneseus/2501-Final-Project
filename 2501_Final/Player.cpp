@@ -210,13 +210,16 @@ void Player::switchLoadouts(Loadout* newest) {
 }
 
 void Player::switchWeapons() {
-	if (currentWeapon == currentLoadout->primary) {
-		currentWeapon = currentLoadout->secondary;
-	} else {
-		currentWeapon = currentLoadout->primary;
-	}
+	currentWeapon = getOtherWeapon();
+}
 
-	std::cout << "Equipped " << currentWeapon->getName().toAnsiString() << "." << std::endl;
+Weapon* Player::getOtherWeapon() {
+	if (currentWeapon == currentLoadout->primary) {
+		return currentLoadout->secondary;
+	}
+	else {
+		return currentLoadout->primary;
+	}
 }
 
 void Player::spawn() {
@@ -232,6 +235,8 @@ void Player::spawn() {
 	rotateSpeed = onFootRotateSpeed;
 
 	curHealth = maxHealth;
+
+	currentLoadout = NULL;
 
 	Global::setState(Global::S_SPAWNING);
 }
