@@ -276,7 +276,12 @@ void Player::getLoadoutThree() {
 
 void Player::onDeath() {
 	vel.setMag(0);
-	exitVehicle();
+	
+	if (vehicle) {
+		vehicle->takeDamage(999999);
+		exitVehicle();
+	}
+
 	spawn();
 }
 
