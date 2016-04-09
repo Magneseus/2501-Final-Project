@@ -26,6 +26,7 @@ private:
 	void createGameOver();
 	void createSpawnMenu();
 	void createWinScreen();
+	void createHelpMenu();
 
 	sf::Clock clock;
 	sf::Clock renderClock;

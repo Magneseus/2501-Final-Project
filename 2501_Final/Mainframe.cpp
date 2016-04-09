@@ -66,7 +66,10 @@ void Mainframe::update(const sf::Time&) {
 void Mainframe::spawnTurret() {
 	// find position (in range, not colliding with self)
 
-	vec::Vector2 tempPos(this->getPosition().getX()-200, this->getPosition().getY());
+	int tx = (std::rand()%400);
+	int ty = (std::rand()%400) - 200;
+
+	vec::Vector2 tempPos(this->getPosition().getX()-tx, this->getPosition().getY() + ty);
 
 	// make weapon
 

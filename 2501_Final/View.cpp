@@ -4,8 +4,8 @@
 
 View::View(Model* m)
 	: model(m),
-	WINDOW_WIDTH(1600),
-	WINDOW_HEIGHT(1000),
+	WINDOW_WIDTH(800),
+	WINDOW_HEIGHT(600),
 	window(sf::VideoMode(WINDOW_WIDTH, WINDOW_HEIGHT), "Space Protectors"),
 	showFPS(true),
 	renderablesSpawned(false)

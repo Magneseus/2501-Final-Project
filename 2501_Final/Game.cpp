@@ -69,10 +69,39 @@ void Game::createMainMenu() {
 		"Play",
 		std::bind(&Controller::initObjects, controller));
 
+	ui->addButton(Global::middleWindowCoords.x, Global::middleWindowCoords.y * 1.25,
+		150, 50,
+		"Instructions",
+		std::bind(&Game::createHelpMenu, this));
+
 	ui->addButton(Global::middleWindowCoords.x, Global::middleWindowCoords.y * 1.5,
 		150, 50,
 		"Credits",
 		std::bind(&Game::createCredits, this));
+}
+
+void Game::createHelpMenu()
+{
+	UI* ui = view->menu;
+
+	ui->clear();
+
+	std::stringstream inst;
+
+	inst << "Your goal is to destroy the evil enemy AI Mainframe." << std::endl;
+	inst << "You can track it by following your compass when you get into a ship." << std::endl << std::endl;
+
+	inst << "Press F to get in/out of a ship.\nUse WASD to move and the mouse to fire.\nUse Z to slow down in a ship.\nUse your right click to alt. fire.";
+
+	ui->addTextBox(Global::middleWindowCoords.x, Global::middleWindowCoords.y*0.5,
+		0, 0,
+		inst.str(),
+		20);
+
+	ui->addButton(Global::middleWindowCoords.x, Global::middleWindowCoords.y*1.5,
+		150, 50,
+		"Main Menu",
+		std::bind(&Game::createMainMenu, this));
 }
 
 void Game::createCredits() {
