@@ -1,15 +1,13 @@
-2501 Final Project - Vertical Slice
+2501 Final Project
 
 by: Matt Mayer - 100969802
     Kyle Causton - 100947775
 
 ------------------------------------
 
-Not too much in this implementation currently, but you can
-exit and enter the vehicle provided for you on screen.
+Final Implementation
 
-Press WASD to move around, and the mouse cursor to point in
-the direction you want to move.
+Final deadline has come and passed, and we're reasonably happy with our results.
+While it may not be much of a game, we're quite proud of the mechanics and overall design of the program.
 
-Press F to exit and re-enter the ship. (There is a 1 second delay
-between exiting and re-entering a ship).
+(Will write a description of all major components here soon! Probably after exams.)
