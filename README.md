@@ -1,14 +1,19 @@
-2501 Final Project
+# Solarus v3
+#### *A small, physics based spaceship game. Loosely based on the space battles from the Star Wars Battlefront videogames. Can pick from a variety of ships to get in, and go to the right to shoot the big bad brain.*
+
+-------------
+
+#### Debug Mode
+
+![](https://i.imgur.com/kDmyhY0.gif)
+
+The physics system implemented allows for hitboxes to be made up of any number of convex polygons. It also uses a quadtree for increased efficiency when numerous physics entities are present in the calculations.
+
+You can see this visualized in the gif above:
+- purple lines -> hitbox outline
+- red lines -> axis-aligned bounding box
+- green lines -> sectors of the quadtree
 
 Developed by:
 - Matt Mayer
 - Kyle Causton
-
-------------------------------------
-
-Final Implementation
-
-Final deadline has come and passed, and we're reasonably happy with our results.
-While it may not be much of a game, we're quite proud of the mechanics and overall design of the program.
-
-(Will write a description of all major components here soon! Probably after exams.)
