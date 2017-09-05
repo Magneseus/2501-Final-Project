@@ -1,7 +1,8 @@
 2501 Final Project
 
-by: Matt Mayer - 100969802
-    Kyle Causton - 100947775
+Developed by:
+- Matt Mayer
+- Kyle Causton
 
 ------------------------------------
 
