@@ -1,4 +1,4 @@
-# Solarus v3
+# Solarus v2
 #### *A small, physics based spaceship game. Loosely based on the space battles from the Star Wars Battlefront videogames. Can pick from a variety of ships to get in, and go to the right to shoot the big bad brain.*
 
 -------------
