@@ -7,7 +7,7 @@
 
 ![](https://i.imgur.com/kDmyhY0.gif)
 
-The physics system implemented allows for hitboxes to be made up of any number of convex polygons. It also uses a quadtree for increased efficiency when numerous physics entities are present in the calculations.
+The physics system implemented allows for hitboxes to be made up of any number of quadrilaterals and circles. It also uses a quadtree for increased efficiency when numerous physics entities are present in the calculations.
 
 You can see this visualized in the gif above:
 - purple lines -> hitbox outline
